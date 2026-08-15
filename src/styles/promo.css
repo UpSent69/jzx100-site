@@ -1,0 +1,219 @@
+/* Иллюстрация в чёрной паузе и пространство, которое она открывает.
+   ------------------------------------------------------------------------- */
+
+/* Пауза с иллюстрацией: та занимает верхнюю половину, нижняя остаётся пустой —
+   там место под текст, которого ещё нет. */
+.gap--promo {
+  place-content: start center;
+  /* Отступ сверху меньше обычного для паузы: с ним полоса вставала серединой
+     экрана, а должна стоять в верхней половине. */
+  padding-top: clamp(2rem, 6svh, 5rem);
+}
+
+/* Кадр показывается целиком, как он снят: пропорции от файла, ничего
+   не обрезается. Ширину ведёт экран, высота следует за ней.
+
+   Третье слагаемое в min() — потолок по высоте: без него на невысоком окне
+   полоса, посчитанная от ширины, вылезала бы за пределы паузы. Считается оно
+   через те же пропорции, поэтому кадр и там остаётся целым — просто уже. */
+.promo {
+  position: relative;
+  width: min(72vw, 84rem, calc(78svh * 1672 / 941));
+  max-width: calc(100vw - var(--gutter) * 2);
+  aspect-ratio: 1672 / 941;
+  border-radius: clamp(0.75rem, 1.2vw, 1.25rem);
+  overflow: hidden;
+  background: var(--ink-raised);
+}
+
+.promo__art {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Кнопка лежит на самой иллюстрации. Подложка с размытием — чтобы она
+   читалась и на светлом небе, и на чёрном кузове: кадр под ней разный
+   в зависимости от того, как обрежется картинка на конкретном экране. */
+/* Кнопка стоит не по краям блока, а по месту в самой картинке: справа
+   от вершины горы, на уровне её середины. Поэтому и отступы в процентах —
+   блок держит пропорции файла, и точка остаётся на том же месте кадра
+   при любой ширине. */
+.promo__more {
+  position: absolute;
+  right: 12%;
+  top: 42%;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(8, 9, 11, 0.6);
+  backdrop-filter: blur(8px);
+  color: var(--text);
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  transition: border-color var(--dur-hover) var(--ease-out),
+    background-color var(--dur-hover) var(--ease-out);
+}
+
+.promo__more svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.promo__more:hover {
+  border-color: var(--accent);
+  background: rgba(8, 9, 11, 0.78);
+}
+
+.promo__more:hover svg {
+  transform: translateX(0.25rem);
+}
+
+@media (max-width: 860px) {
+  /* На вертикальном экране половина высоты — это узкая полоса, в которую
+     широкий кадр не помещается по ширине. Здесь ведёт ширина, а высота
+     получается сама и оказывается меньше половины.
+
+     Кадр от этого выходит мелким, и впечатанная в него надпись читается
+     с трудом: картинка нарисована под широкий экран. Под телефон нужен
+     свой, вертикальный вариант — пока стоит этот. */
+  .gap--promo {
+    place-content: start stretch;
+  }
+
+  .promo {
+    height: auto;
+    width: 100%;
+    max-width: none;
+    overflow: visible;
+    border-radius: 0;
+    background: none;
+  }
+
+  .promo__art {
+    border-radius: clamp(0.75rem, 1.2vw, 1.25rem);
+  }
+
+  /* Кнопка уходит из-под кадра вниз: на мелкой картинке она ложилась прямо
+     на надпись и закрывала половину того, ради чего эта картинка стоит. */
+  .promo__more {
+    position: static;
+    margin-top: var(--space-s);
+    padding: 0.625rem 1.125rem;
+  }
+}
+
+/* ПРОСТРАНСТВО --------------------------------------------------------------
+   Отдельный слой поверх страницы. Страница под ним остаётся на месте и на
+   своей прокрутке — это не переход на другую страницу, а раскрытие. */
+
+.space {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-space);
+  overflow: hidden;
+  opacity: 0;
+}
+
+.space[hidden] {
+  display: none;
+}
+
+.space__art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 50%;
+}
+
+/* Затемнение поверх кадра: под текстом он должен уйти в фон.
+   Слева оно глухое, без просвета, и это не про читаемость. В самой
+   иллюстрации впечатаны заголовок и подпись, и при малейшей прозрачности
+   впечатанная надпись проступает из-под живой. */
+.space__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to right,
+      var(--ink) 0%,
+      var(--ink) 34%,
+      rgba(6, 7, 9, 0.76) 58%,
+      rgba(6, 7, 9, 0.28) 100%
+    ),
+    linear-gradient(to top, rgba(6, 7, 9, 0.8), transparent 60%);
+}
+
+.space__inner {
+  position: relative;
+  height: 100%;
+  display: grid;
+  align-content: center;
+  gap: var(--space-s);
+  padding: clamp(3rem, 10vh, 8rem) var(--gutter);
+  max-width: min(46rem, 92vw);
+}
+
+.space__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.9rem, 4vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.space__lead {
+  margin: 0;
+  font-size: var(--step-lead);
+  line-height: 1.5;
+  color: var(--text-dim);
+  max-width: 38ch;
+}
+
+.space__close {
+  position: absolute;
+  top: var(--gutter);
+  right: var(--gutter);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text-dim);
+  background: rgba(8, 9, 11, 0.6);
+  backdrop-filter: blur(8px);
+  transition: color var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out);
+}
+
+.space__close svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.space__close:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}

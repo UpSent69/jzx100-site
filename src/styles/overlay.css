@@ -1,0 +1,73 @@
+/* Зерно и виньетка. Слабо, но постоянно, поверх всего.
+   Оба слоя не ловят курсор и не анимируются сами по себе — это фактура,
+   а не событие. */
+
+:root {
+  --grain-strength: 0.055;
+  --vignette-strength: 0.55;
+}
+
+/* Экран 5 — текстовый: зерно и виньетка съедают контраст, поэтому слабее */
+body.is-reading {
+  --grain-strength: 0.03;
+  --vignette-strength: 0.32;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  pointer-events: none;
+}
+
+.overlay::before,
+.overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transition: opacity var(--dur-scene) var(--ease-in-out);
+}
+
+/* зерно */
+.overlay::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: var(--grain-strength);
+  mix-blend-mode: overlay;
+}
+
+/* виньетка */
+.overlay::after {
+  background: radial-gradient(
+    130% 100% at 50% 45%,
+    transparent 40%,
+    rgba(0, 0, 0, var(--vignette-strength)) 100%
+  );
+}
+
+/* Раньше каждый следующий слайд заходил на предыдущий, а его верхняя кромка
+   растворялась — слайды шли сплошной лентой, без единого зазора.
+
+   Сейчас между ними стоит пустота (см. .gap): она нужна под текст, которого
+   ещё нет. Нахлёст убран — слайды идут встык с этой пустотой, а не друг
+   с другом. Кромку растворять больше не во что и не нужно: сцена появляется
+   из черноты и в неё же уходит, это делает fadeScene в src/js/motion.js.
+
+   Глубина осталась одна, на первом экране: ей задаётся ход кромки, которой
+   там открывается ролик. */
+:root {
+  --seam-overlap: 34svh;
+}
+
+/* Единственный светлый по ощущению блок выходит из-под зерна и затемнения —
+   он даёт передышку между тёмными сценами. Фон приподнят, но переход в него
+   и обратно растянут через градиент: границ между разделами быть не должно. */
+.screen--light {
+  z-index: var(--z-light);
+  background: linear-gradient(
+    to bottom,
+    var(--ink) 0%,
+    var(--ink-raised) 22%,
+    var(--ink-raised) 78%,
+    var(--ink) 100%
+  );
+}

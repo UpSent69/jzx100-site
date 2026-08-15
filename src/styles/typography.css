@@ -1,0 +1,59 @@
+.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--step-hero);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--step-title);
+  line-height: var(--leading-title);
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.lead {
+  font-size: var(--step-lead);
+  line-height: 1.5;
+  max-width: var(--measure);
+  margin: 0;
+}
+
+.body {
+  max-width: var(--measure);
+  margin: 0;
+  color: var(--text-dim);
+}
+
+.label {
+  font-size: var(--step-small);
+  line-height: 1.4;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin: 0;
+}
+
+.kana {
+  font-family: var(--font-kana);
+  letter-spacing: 0.3em;
+  color: var(--text-faint);
+}
+
+/* Строка, поднимающаяся из-под невидимого края. Текст не влетает сбоку —
+   маска по overflow, движение только вверх. */
+.reveal-line {
+  display: block;
+  overflow: hidden;
+}
+
+.reveal-line > * {
+  display: block;
+  will-change: transform;
+}

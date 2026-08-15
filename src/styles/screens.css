@@ -1,0 +1,528 @@
+/* ПАУЗЫ МЕЖДУ СЛАЙДАМИ ------------------------------------------------------
+   Чёрный промежуток на всю ширину. Слайд уходит в него, следующий из него
+   выходит, и между ними остаётся место, где ничего не происходит.
+
+   Пока они пустые: текста от заказчика ещё нет. Пустыми они и должны читаться
+   — это пауза, а не «недоделанный блок». Как только текст появится, он кладётся
+   внутрь .gap__inner и встаёт по центру узкой колонкой; трогать при этом
+   ничего не надо. */
+
+.gap {
+  position: relative;
+  min-height: var(--gap-scene);
+  display: grid;
+  place-content: center;
+  padding: var(--space-xl) var(--gutter);
+  background: var(--ink);
+}
+
+/* Пауза рядом со светлым блоком — такая же чёрная, как остальные.
+   Здесь стояли градиенты, уходящие в приподнятый фон, и они как раз давали
+   ступеньку, от которой должны были спасать: светлый блок сам начинается
+   и заканчивается обычной чернотой (см. .screen--light), а пауза упиралась
+   в него приподнятым краем. Подниматься должен только блок и только внутри
+   себя, паузы с обеих сторон от него — простой фон. */
+
+.gap__inner {
+  max-width: var(--measure);
+  display: grid;
+  gap: var(--space-s);
+  text-align: center;
+}
+
+.gap__inner:empty {
+  display: none;
+}
+
+/* Почти во весь экран. Меньше — и пауза не успевает состояться: следующая
+   сцена начинает проступать снизу раньше, чем предыдущая ушла сверху, и вместо
+   пустоты получается затянутый стык. При этой высоте есть отрезок, где в окне
+   нет ничего, кроме черноты, — там и будет текст. */
+:root {
+  --gap-scene: 100svh;
+}
+
+/* ЭКРАН 2 — JZX100 ---------------------------------------------------------
+   Готовая картинка: заголовок и текст уже в кадре слева, машина справа. */
+
+.jzx {
+  height: 250vh;
+}
+
+.jzx__stage {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.jzx__frame {
+  width: 100%;
+  height: 100%;
+  will-change: transform, opacity;
+}
+
+.jzx__shot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Кадр с текстом лежит поверх чистого и проступает на отъезде камеры */
+.jzx__shot--text {
+  opacity: 0;
+  will-change: opacity;
+}
+
+/* ЭКРАН 3 — Движение -------------------------------------------------------
+   Оба материала квадратные. В 16:9 вписываются обрезкой верха: небо
+   и деревья там ничего не несут. Файлы не трогаем — кадрирует контейнер. */
+
+.motion {
+  /* Длину задаёт ролик: заказчик попросил, чтобы проезд шёл дольше.
+     На него приходится половина хода сцены, и чем длиннее секция, тем больше
+     прокрутки на те же две секунды записи. Было 240vh. */
+  height: 320vh;
+
+  /* Ролик теперь 16:9, как и фотография, — обрезать нечего */
+  --motion-crop: 50%;
+}
+
+.motion__stage {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+/* Обёртка держит оба слоя вместе, чтобы они двигались как один кадр.
+   Фильтра на ней больше нет — см. пояснение в index.html. */
+.motion__media {
+  position: absolute;
+  inset: 0;
+}
+
+.motion__layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform, opacity;
+}
+
+/* Фото и ролик сняты в одном проезде и оба 16:9 — кадр берётся как снят */
+.motion__photo {
+  object-position: 50% 50%;
+}
+
+.motion__video {
+  object-position: 50% var(--motion-crop);
+  opacity: 0;
+}
+
+/* Подпись поднята над нижней кромкой: снизу на сцену наезжает следующий блок,
+   и у самого низа подпись уходила из вида, едва появившись. */
+.motion__caption {
+  position: absolute;
+  left: var(--gutter);
+  bottom: clamp(6rem, 22vh, 12rem);
+  z-index: var(--z-content);
+  max-width: 28ch;
+}
+
+/* Подпись лежит на светлом от брызг асфальте. Затемнять кадр ради неё нельзя,
+   поэтому читаемость даёт мягкая тень, которую саму по себе не видно. */
+.motion__caption .title,
+.motion__caption .label {
+  text-shadow: 0 1px 18px rgba(0, 0, 0, 0.9);
+}
+
+/* Вторая строка шла приглушённым серым и на чёрном кузове почти пропадала */
+.motion__caption .label {
+  color: var(--text);
+}
+
+/* ЭКРАН 4 — Карточки -------------------------------------------------------
+   Две вертикальные карточки 9:16, между ними много воздуха.
+   Кнопок play нет: отклик даёт само видео. */
+
+/* Блок занимает экран целиком. Отступы здесь были в целый экран, и до
+   карточек и после них тянулась чёрная пустота. Воздух между самими
+   карточками остался — он и должен быть. */
+.cards {
+  min-height: 100svh;
+  padding: clamp(3rem, 9vh, 7rem) var(--gutter);
+  display: grid;
+  gap: clamp(2rem, 6vw, 7rem);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+}
+
+.card {
+  position: relative;
+  display: block;
+  width: min(100%, calc(82svh * 9 / 16));
+  aspect-ratio: 9 / 16;
+  border-radius: clamp(0.75rem, 1.2vw, 1.25rem);
+  overflow: hidden;
+  background: var(--ink-raised);
+  text-align: left;
+  will-change: transform, opacity;
+}
+
+.card__media {
+  position: absolute;
+  inset: 0;
+}
+
+.card__poster,
+.card__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Отклик — лёгкое осветление. Увеличения фото нет: отклик даёт само видео,
+   два движения перегружают карточку. */
+.card__media {
+  filter: brightness(0.88) saturate(0.94);
+  transition: filter var(--dur-reveal) var(--ease-out);
+}
+
+.card[data-playing="true"] .card__media {
+  filter: brightness(1.04) saturate(1);
+}
+
+/* Постер растворяется за долю секунды и открывает уже играющее видео */
+.card__poster {
+  z-index: 2;
+  transition: opacity var(--dur-hover) var(--ease-out);
+}
+
+.card[data-playing="true"] .card__poster {
+  opacity: 0;
+}
+
+/* Затемнение под подписью держится всегда и не мигает: оно нужно
+   для читаемости, а не для отклика. */
+.card__veil {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72), transparent 42%);
+}
+
+.card__caption {
+  position: absolute;
+  left: var(--space-xs);
+  right: var(--space-xs);
+  bottom: var(--space-xs);
+  z-index: 4;
+  transform: translateY(0.5rem);
+  transition: transform var(--dur-reveal) var(--ease-out);
+}
+
+.card[data-playing="true"] .card__caption {
+  transform: translateY(0);
+}
+
+/* Подсказка, что карточка живая: кнопок нет, иначе это неочевидно.
+   Тонкая линия по нижнему краю, ползущая в такт длительности ролика. */
+.card__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  opacity: 0;
+  transition: opacity var(--dur-hover) var(--ease-out);
+}
+
+.card[data-playing="true"] .card__progress {
+  opacity: 1;
+}
+
+/* Раскрытая карточка */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-preloader);
+  background: rgba(4, 5, 6, 0.94);
+  display: grid;
+  place-items: center;
+  padding: var(--gutter);
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox__slot video {
+  max-width: min(100%, calc(92svh * 9 / 16));
+  max-height: 92svh;
+  border-radius: clamp(0.75rem, 1.2vw, 1.25rem);
+}
+
+.lightbox__close {
+  position: absolute;
+  top: var(--gutter);
+  right: var(--gutter);
+  padding: var(--space-2xs) var(--space-xs);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text-dim);
+  transition: color var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out);
+}
+
+.lightbox__close:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+body[data-locked] {
+  overflow: hidden;
+}
+
+/* ЭКРАН 5 — JDM и Mark II --------------------------------------------------
+   Слева закреплённый кадр, справа прокручивается текст. */
+
+.reading {
+  padding: clamp(4rem, 12vh, 9rem) var(--gutter);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 8rem);
+  align-items: start;
+}
+
+.reading__shots {
+  position: sticky;
+  top: 12.5svh;
+  height: 75svh;
+  border-radius: clamp(0.75rem, 1.2vw, 1.25rem);
+  overflow: hidden;
+}
+
+.reading__shot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity var(--dur-scene) var(--ease-in-out);
+}
+
+.reading__text {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.reading__block {
+  display: grid;
+  gap: var(--space-s);
+}
+
+.reading__block h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--step-title);
+  line-height: var(--leading-title);
+  text-transform: uppercase;
+}
+
+.reading__block p {
+  margin: 0;
+  max-width: var(--measure);
+  color: var(--text-dim);
+}
+
+/* Первый абзац — вводка */
+.reading__block--intro p:first-of-type {
+  font-size: var(--step-lead);
+  line-height: 1.5;
+  color: var(--text);
+}
+
+/* Одна-две фразы на блок вынесены крупным акцентом. Цветом акцент здесь
+   не берётся — он на весь сайт один и тратится только на наведения и линии.
+   Роль выделения играют размер, светлота и тонкая черта слева. */
+.reading__pull {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  line-height: 1.2;
+  letter-spacing: var(--track-display);
+  color: var(--text);
+  border-left: 1px solid var(--accent-dim);
+  padding-left: var(--space-s);
+  margin-block: var(--space-s) !important;
+}
+
+/* Кадр внутри блока — только для мобильных, где колонка одна */
+.reading__inline {
+  display: none;
+}
+
+/* ЭКРАН 6 — Финал ---------------------------------------------------------- */
+
+/* Высота с запасом, и запас здесь не про воздух.
+   Ровно на 100svh последняя секция вставала так, что её верх дотягивался до
+   верха окна только в самой крайней точке прокрутки — а растворение верхней
+   кромки идёт со сглаживанием и до нуля не доходило никогда. Экран так
+   и оставался приглушённым, и докрутить его было некуда. Лишние 40svh дают
+   стыку закончиться задолго до конца страницы. */
+.final {
+  position: relative;
+  min-height: 140svh;
+  display: grid;
+  align-content: center;
+  gap: var(--space-m);
+  padding: clamp(4rem, 12vh, 9rem) var(--gutter);
+  overflow: hidden;
+}
+
+.final__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.62;
+}
+
+/* Кадр проступает из фона сверху: сверху на него наезжает предыдущий раздел,
+   и без растяжки там была бы резкая кромка. */
+.final::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 28svh;
+  background: linear-gradient(to bottom, var(--ink), transparent);
+  pointer-events: none;
+}
+
+/* Снизу затемнение только намечено. Раньше оно шло до сплошного фона на целых
+   28svh, и последнее, что видел человек, докрутив страницу, — это чернота. */
+.final::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 20svh;
+  background: linear-gradient(to top, rgba(8, 9, 11, 0.55), transparent);
+  pointer-events: none;
+}
+
+.final__inner {
+  position: relative;
+  z-index: var(--z-content);
+  display: grid;
+  gap: var(--space-s);
+}
+
+.final__contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.final__contacts a {
+  color: var(--text-dim);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  transition: color var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out);
+}
+
+.final__contacts a:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+/* Заглушка на то, чего ещё нет от заказчика. Держится тихо: это временный
+   текст, он не должен спорить с кадром за внимание. */
+.stub {
+  display: block;
+  border-left: 1px solid var(--line);
+  padding: 0.25rem 0 0.25rem var(--space-xs);
+  color: var(--text-faint);
+  font-size: var(--step-small);
+  opacity: 0.75;
+}
+
+/* МОБИЛЬНЫЕ ----------------------------------------------------------------
+   Не уменьшенная копия, а другая раскладка: двухколоночное разворачивается
+   в одну колонку, поочерёдные появления становятся одновременными. */
+
+@media (max-width: 860px) {
+  /* Экран вытянут, и та же доля высоты читается как более долгая пауза */
+  :root {
+    --gap-scene: 70svh;
+  }
+
+  .jzx {
+    height: 200vh;
+  }
+
+  .motion {
+    height: 280vh;
+  }
+
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-m);
+  }
+
+  .card {
+    width: min(100%, 30rem);
+  }
+
+  .reading {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-m);
+  }
+
+  /* Одна колонка: кадр, под ним текст блока, дальше следующий кадр.
+     Закреплённая колонка на мобильных не нужна — её место занимают
+     кадры внутри блоков. */
+  .reading__shots {
+    display: none;
+  }
+
+  .reading__text {
+    gap: var(--space-l);
+  }
+
+  .reading__inline {
+    display: block;
+    width: 100%;
+    height: 50svh;
+    object-fit: cover;
+    border-radius: clamp(0.75rem, 1.2vw, 1.25rem);
+    margin-bottom: var(--space-xs);
+  }
+
+  .reading__pull {
+    padding-left: var(--space-xs);
+  }
+}
