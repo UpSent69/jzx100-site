@@ -124,73 +124,35 @@
   z-index: var(--z-space);
   overflow: hidden;
   opacity: 0;
+  /* Своя подложка обязательна: между кадрами идут карточки на пустом фоне,
+     и без неё сквозь пространство просвечивала бы страница под ним. */
+  background: var(--ink);
 }
 
 .space[hidden] {
   display: none;
 }
 
-.space__art {
-  position: absolute;
-  inset: 0;
-  width: 100%;
+/* Лента едет вбок и непрерывно, той же сглаженной прокруткой, что и страница:
+   ею правит отдельный экземпляр Lenis из space.js. Прилипания нет — оно
+   разбивало ход на щелчки, а нужно ровное движение. */
+.space__scroll {
   height: 100%;
-  object-fit: cover;
-  object-position: 62% 50%;
+  overflow: hidden;
 }
 
-/* Затемнение поверх кадра: под текстом он должен уйти в фон.
-   Слева оно глухое, без просвета, и это не про читаемость. В самой
-   иллюстрации впечатаны заголовок и подпись, и при малейшей прозрачности
-   впечатанная надпись проступает из-под живой. */
-.space__veil {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      to right,
-      var(--ink) 0%,
-      var(--ink) 34%,
-      rgba(6, 7, 9, 0.76) 58%,
-      rgba(6, 7, 9, 0.28) 100%
-    ),
-    linear-gradient(to top, rgba(6, 7, 9, 0.8), transparent 60%);
-}
-
-.space__inner {
-  position: relative;
+.space__track {
+  display: flex;
+  align-items: stretch;
   height: 100%;
-  display: grid;
-  align-content: center;
-  gap: var(--space-s);
-  padding: clamp(3rem, 10vh, 8rem) var(--gutter);
-  max-width: min(46rem, 92vw);
-}
-
-.space__title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(1.9rem, 4vw, 3.5rem);
-  line-height: 1.05;
-  letter-spacing: var(--track-display);
-  text-transform: uppercase;
-  color: var(--text);
-}
-
-.space__lead {
-  margin: 0;
-  font-size: var(--step-lead);
-  line-height: 1.5;
-  color: var(--text-dim);
-  max-width: 38ch;
+  width: max-content;
 }
 
 .space__close {
   position: absolute;
   top: var(--gutter);
   right: var(--gutter);
-  z-index: 2;
+  z-index: 3;
   display: grid;
   place-items: center;
   width: 2.75rem;
@@ -216,4 +178,199 @@
 .space__close:hover {
   color: var(--text);
   border-color: var(--accent);
+}
+
+/* КАДР С ТЕКСТОМ ------------------------------------------------------------
+   Экран во всю ширину и высоту: фотография во весь кадр, текст поверх неё
+   справа. Слева фотография остаётся открытой — там смотрят на машину. */
+
+.chapter {
+  position: relative;
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100%;
+  display: grid;
+  align-content: center;
+  justify-content: end;
+  padding: clamp(3rem, 8vh, 6rem) var(--gutter);
+  overflow: hidden;
+}
+
+/* Порядок слоёв задан явно. Без него затемнение уходило под кадр:
+   псевдоэлемент в порядке отрисовки идёт перед первым ребёнком — то есть
+   перед картинкой, которая его и закрывала. */
+.chapter__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Затемнение тянется справа — оттуда, где стоит текст. Плотность подобрана
+   по худшему случаю: за текстом седьмого кадра стоит белый борт грузовика
+   под фонарями, и на меньшей строки по нему просто терялись. */
+.chapter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to left,
+    rgba(6, 7, 9, 0.97) 0%,
+    rgba(6, 7, 9, 0.9) 34%,
+    rgba(6, 7, 9, 0.55) 64%,
+    rgba(6, 7, 9, 0.12) 100%
+  );
+}
+
+/* Вступление не затемняется вовсе: впечатанная в картинку надпись стоит
+   слева, живой текст — справа, и мешать друг другу им нечем. */
+.chapter--intro::before {
+  content: none;
+}
+
+.chapter__text {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: var(--space-m);
+  width: min(34rem, 42vw);
+  text-align: right;
+  justify-items: end;
+}
+
+.chapter__title,
+.space__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.chapter__title {
+  font-size: clamp(1.75rem, 3.4vw, 3rem);
+}
+
+.space__title {
+  font-size: clamp(1.9rem, 3.6vw, 3.25rem);
+}
+
+/* Строки стоят просторнее обычного. Текст лежит прямо на фотографии,
+   без плашки под ним, и плотный набор на кадре читается тяжело: строки
+   слипаются с тем, что за ними. Воздух между строками эту разницу и делает. */
+.chapter__text p,
+.space__lead {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.05vw, 1.2rem);
+  line-height: 1.85;
+  color: var(--text-dim);
+}
+
+/* КАРТОЧКИ ------------------------------------------------------------------
+   Идут отдельным куском ленты, после кадра с текстом, на пустом фоне.
+   На самом кадре их нет: фотографии приходят дальше по ходу, а не лежат
+   поверх фона. */
+
+.gallery {
+  flex: 0 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 2.5rem);
+  padding: 0 clamp(2rem, 5vw, 6rem);
+}
+
+/* Размер ведёт высота окна, а не ширина: лента едет вбок, и по ширине
+   карточкам никто не мешает, а по высоте они обязаны помещаться в экран. */
+.frame {
+  position: relative;
+  margin: 0;
+  height: clamp(10rem, 46vh, 26rem);
+  width: auto;
+  aspect-ratio: 4 / 3;
+  border-radius: clamp(0.5rem, 0.9vw, 1rem);
+  overflow: hidden;
+  background: var(--ink-raised);
+  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.5);
+}
+
+.frame--tall {
+  aspect-ratio: 9 / 16;
+  height: clamp(12rem, 62vh, 34rem);
+}
+
+.frame img,
+.frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.frame figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1.25rem 0.75rem 0.5rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+/* Вторая реплика — она идёт вместе с карточками, а не с кадром */
+.gallery__note {
+  margin: 0;
+  align-self: center;
+  width: min(22rem, 32vw);
+  font-size: clamp(0.95rem, 1.05vw, 1.15rem);
+  line-height: 1.85;
+  color: var(--text-dim);
+}
+
+@media (max-width: 860px) {
+  /* На вертикальном экране половина ширины под текст — это две-три буквы
+     в строке. Текст занимает кадр целиком и прижимается к низу. */
+  .chapter {
+    align-content: end;
+    justify-content: stretch;
+    padding-bottom: clamp(3rem, 8vh, 6rem);
+  }
+
+  .chapter::before {
+    background: linear-gradient(
+      to top,
+      rgba(6, 7, 9, 0.95) 0%,
+      rgba(6, 7, 9, 0.72) 48%,
+      rgba(6, 7, 9, 0.2) 100%
+    );
+  }
+
+  .chapter__text {
+    width: 100%;
+  }
+
+  .frame {
+    height: clamp(9rem, 34vh, 18rem);
+  }
+
+  .frame--tall {
+    height: clamp(11rem, 46vh, 24rem);
+  }
+
+  .gallery {
+    padding: 0 var(--gutter);
+    gap: var(--space-xs);
+  }
+
+  .gallery__note {
+    width: 16rem;
+  }
 }
