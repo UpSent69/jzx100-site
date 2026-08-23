@@ -221,6 +221,127 @@ async function toCards(page) {
   );
   check("выбор звука переживает перезагрузку", restored === after.on);
 
+  // Проверки идут после перезагрузки, а она вернула прелоадер: пока в него
+  // не вошли, тело страницы заперто и по кнопке в паузе не кликнуть.
+  await enter(page);
+
+  // Проверка звука ниже идёт следом за проверкой переключателя, а та оставляла его
+  // выключенным — и наведение честно молчало. Возвращаем звук, иначе проверяли
+  // бы не наведение, а запрет.
+  if (await page.evaluate(() => document.querySelector("[data-sound-toggle]").dataset.on !== "true")) {
+    await page.click("[data-sound-toggle]");
+    await sleep(250);
+  }
+
+  // --- второе пространство, «Keep it street» ---
+  //
+  // Проверяем ровно то, чего не видно на снимке: что пять роликов не уходят
+  // в сеть, пока кнопку не нажали, что слой запирает страницу под собой
+  // и отпускает её на том же месте, и что звук по наведению ведёт себя
+  // как везде на сайте — приходит на половине громкости и уходит,
+  // не останавливая кадр.
+  await page.evaluate(() => {
+    const el = document.querySelector(".gap--promo-street");
+    const y = el.getBoundingClientRect().top + window.scrollY - 200;
+    window.__lenis ? window.__lenis.scrollTo(y, { immediate: true }) : window.scrollTo(0, y);
+  });
+  await sleep(1400);
+
+  const untouched = await page.evaluate(() =>
+    [...document.querySelectorAll("[data-street-video]")].filter((v) => v.getAttribute("src")).length
+  );
+  check("ролики второго пространства не грузятся заранее", untouched === 0,
+    `с адресом: ${untouched}`);
+
+  const wasAt = await page.evaluate(() => Math.round(window.scrollY));
+  await page.click("[data-street-open]");
+  await sleep(1400);
+
+  const inside = await page.evaluate(() => {
+    const r = document.querySelector("[data-street]");
+    return {
+      shown: !r.hidden && +getComputedStyle(r).opacity > 0.95,
+      locked: document.body.dataset.locked === "true",
+      loaded: [...document.querySelectorAll("[data-street-video]")].filter((v) => v.getAttribute("src")).length,
+      total: document.querySelectorAll("[data-street-video]").length,
+      focused: document.activeElement?.hasAttribute?.("data-street-close") === true,
+    };
+  });
+  check("второе пространство открывается", inside.shown);
+  check("за вторым пространством страница заперта", inside.locked);
+  check("ролики второго пространства подтянулись при открытии", inside.loaded === inside.total,
+    `${inside.loaded} из ${inside.total}`);
+  check("фокус уходит на кнопку закрытия пространства", inside.focused);
+
+  // Лента едет своей прокруткой: страница под слоем стоит, и обычный scrollTo
+  // тут ничего не сдвинул бы.
+  const ride = await page.evaluate(async () => {
+    const flow = document.querySelector("[data-street-flow]");
+    window.__streetRail.scrollTo(Math.round(flow.scrollHeight * 0.42), { immediate: true });
+    await new Promise((r) => setTimeout(r, 800));
+    return Math.round(window.__streetRail.scroll);
+  });
+  check("лента второго пространства едет", ride > 1000, `на ${ride}px`);
+
+  // Подводим к ролику первого разворота вместо того, чтобы искать хоть какой-то
+  // видимый на глазок: доля ленты — величина ненадёжная, стоит добавить в слой
+  // материал, и та же доля попадает уже в пустое место между разделами.
+  await page.evaluate(async () => {
+    const v = document.querySelectorAll("[data-street-video]")[1];
+    const box = v.closest(".act__media") || v;
+    window.__streetRail.scrollTo(box.offsetTop + box.offsetHeight / 2 - innerHeight / 2, { immediate: true });
+    await new Promise((r) => setTimeout(r, 700));
+  });
+  await sleep(500);
+
+  const sound = await page.evaluate(async () => {
+    const vis = [...document.querySelectorAll("[data-street-video]")].find((v) => {
+      const r = v.getBoundingClientRect();
+      return r.top < innerHeight * 0.8 && r.bottom > innerHeight * 0.2;
+    });
+    if (!vis) return null;
+    vis.dispatchEvent(new PointerEvent("pointerenter", { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 500));
+    const on = { muted: vis.muted, volume: +vis.volume.toFixed(2) };
+    vis.dispatchEvent(new PointerEvent("pointerleave", { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 600));
+    return { on, off: { paused: vis.paused, volume: +vis.volume.toFixed(2) } };
+  });
+  check("ролик в пространстве звучит под курсором",
+    !!sound && !sound.on.muted && sound.on.volume > 0.4,
+    sound ? `громкость ${sound.on.volume}` : "видимого ролика не нашлось");
+  check("уход курсора снимает звук, но не кадр",
+    !!sound && sound.off.paused === false && sound.off.volume < 0.05,
+    sound ? `пауза ${sound.off.paused}, громкость ${sound.off.volume}` : "");
+
+
+  await page.keyboard.press("Escape");
+  await sleep(900);
+  const back = await page.evaluate(() => ({
+    hidden: document.querySelector("[data-street]").hidden,
+    locked: document.body.dataset.locked === "true",
+    y: Math.round(window.scrollY),
+  }));
+  check("Escape закрывает второе пространство", back.hidden && !back.locked);
+  check("после закрытия страница на том же месте", Math.abs(back.y - wasAt) < 40,
+    `было ${wasAt}, стало ${back.y}`);
+
+  // Открывать должна вся иллюстрация, а не только кнопка на ней.
+  for (const [name, card, layer] of [
+    ["первое", ".gap--promo:not(.gap--promo-street) .promo__art", "[data-space]"],
+    ["второе", ".promo--street .promo__art", "[data-street]"],
+  ]) {
+    const opened = await page.evaluate(async (c, l) => {
+      document.querySelector(c).dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      await new Promise((r) => setTimeout(r, 1200));
+      const el = document.querySelector(l);
+      return !el.hidden && +getComputedStyle(el).opacity > 0.9;
+    }, card, layer);
+    check(`клик по иллюстрации открывает ${name} пространство`, opened);
+    await page.keyboard.press("Escape");
+    await sleep(700);
+  }
+
   // Подключённый браузер закрывать нельзя — он не наш: гасим только страницу.
   if (REMOTE) { await page.close(); await browser.disconnect(); }
   else await browser.close();

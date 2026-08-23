@@ -6,7 +6,7 @@
     <title>Toyota Mark II JZX100</title>
     <meta
       name="description"
-      content="Toyota Mark II JZX100 — седан бизнес-класса с мотором 1JZ и задним приводом, икона японского внутреннего рынка."
+      content="Toyota Mark II JZX100 - седан бизнес-класса с мотором 1JZ и задним приводом, икона японского внутреннего рынка."
     />
     <meta name="theme-color" content="#08090b" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -93,7 +93,7 @@
 
           <div class="hero__caption">
             <p class="kana label">マークツー</p>
-            <p class="label">Toyota Mark II JZX100 &nbsp; 1996 — 2002</p>
+            <p class="label">Toyota Mark II JZX100 &nbsp; 1996 - 2002</p>
           </div>
         </div>
       </section>
@@ -107,7 +107,11 @@
            обрезка по такой широкой полосе съела бы половину надписи и всё
            равно выглядела бы случайной. -->
       <section class="gap gap--promo">
-        <div class="promo" data-promo>
+        <!-- Кликается вся иллюстрация, а не только кнопка. Кнопка при этом
+             остаётся: она даёт клавиатуру и говорит, что кадр вообще куда-то
+             ведёт. Нажатие на неё всплывает сюда же и открывает пространство
+             второй раз — открытие от этого не портится, оно идемпотентно. -->
+        <div class="promo" data-promo data-space-open>
           <img
             class="promo__art"
             src="/promo-drift.webp"
@@ -117,7 +121,7 @@
             height="941"
             loading="lazy"
             decoding="async"
-            alt="Почему JZX100 — король японского дрифта: чёрный Toyota Mark II на мокрой парковке у придорожного магазина, за ним гора Фудзи"
+            alt="Почему JZX100 - король японского дрифта: чёрный Toyota Mark II на мокрой парковке у придорожного магазина, за ним гора Фудзи"
           />
 
           <button class="promo__more" data-space-open type="button">
@@ -134,42 +138,98 @@
            машина справа. Исходник 1280×720, поэтому приближение на входе
            не больше 1.25 — дальше начинается потеря резкости. -->
       <section class="screen jzx" id="jzx100" data-screen="jzx100">
-        <h2 class="visually-hidden">JZX100</h2>
         <div class="jzx__stage">
+          <!-- Кадр экрана: ночной паркинг, ролик идёт тихой петлёй.
+               Прокрутка отводит камеру, и тем же ходом на кадре проступает
+               текстовый блок слева. Раньше здесь лежали две фотографии —
+               чистая и с впечатанным текстом; текст стал настоящим,
+               иначе он не лёг бы поверх движущегося кадра. -->
           <div class="jzx__frame" data-jzx-frame>
-            <!-- Два состояния одного кадра. Сначала чистая фотография, затем
-                 по мере отъезда камеры на ней проступает текстовый блок.
-                 Слои совмещены пиксель в пиксель, поэтому переход читается
-                 как появление текста, а не как смена картинки. -->
-            <img
+            <video
               class="jzx__shot"
-              src="/jzx100-clean.webp"
-              srcset="/jzx100-clean-828.webp 828w, /jzx100-clean.webp 1280w"
-              sizes="100vw"
-              width="1280"
-              height="720"
-              loading="lazy"
-              decoding="async"
-              alt="Белый Toyota Mark II JZX100 стоит ночью на японской заправке"
-            />
-            <img
-              class="jzx__shot jzx__shot--text"
-              data-jzx-text
-              src="/jzx100-night.webp"
-              srcset="/jzx100-night-828.webp 828w, /jzx100-night.webp 1280w"
-              sizes="100vw"
-              width="1280"
-              height="720"
-              loading="lazy"
-              decoding="async"
-              alt="Тот же кадр с текстом слева: JZX100 — икона 90-х, мотор 1JZ-GTE, королева дрифта и ночных трасс"
-            />
+              data-jzx-video
+              poster="/jzx100-garage-poster.webp"
+              width="1920"
+              height="1080"
+              muted
+              loop
+              playsinline
+              preload="none"
+              aria-label="Чёрный Toyota Mark II JZX100 стоит ночью в подземном паркинге"
+            ></video>
+          </div>
+
+          <div class="jzx__copy" data-jzx-copy>
+            <p class="jzx__kana">ジェイゼットエックス</p>
+            <h2 class="jzx__title">JZX100</h2>
+            <div class="jzx__text">
+              <p>- икона 90-х, воплотившая дух японского тюнинга.</p>
+              <p>
+                С легендарным мотором 1JZ-GTE, который легко форсируется
+                за 400 сил, она стала королевой дрифта и ночных трасс.
+              </p>
+              <p>
+                Строгий четырёхглазый дизайн и безупречная надёжность
+                превратили её в «самурая в пиджаке».
+              </p>
+              <p>
+                Даже спустя десятилетия 100-й кузов остаётся символом
+                неубиваемой классики JDM.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- ПАУЗА -->
-      <section class="gap"><div class="gap__inner"></div></section>
+      <!-- ПАУЗА. Вторая карточка перехода — во второе пространство.
+           Устроена как первая, с одним отличием: на этом кадре ничего не
+           впечатано, поэтому название набрано живым текстом прямо на нём,
+           а кнопка стоит по центру. -->
+      <section class="gap gap--promo gap--promo-street">
+        <div class="promo promo--street" data-street-open>
+          <!-- Кадр и название лежат в своей коробке с пропорциями файла.
+               Без неё на вертикальном экране, где текст и кнопка уходят
+               из-под кадра вниз, название уезжало вместе с ними: оно
+               прижималось к низу всей карточки, а карточка стала выше кадра. -->
+          <div class="promo__frame">
+            <img
+              class="promo__art"
+              src="/street-promo.webp"
+              srcset="/street-promo-828.webp 828w, /street-promo-1280.webp 1280w, /street-promo.webp 1672w"
+              sizes="(max-width: 860px) 94vw, 72vw"
+              width="1672"
+              height="941"
+              loading="lazy"
+              decoding="async"
+              alt="Белый Toyota Mark II JZX100 с интеркулером ночью на городской набережной, рядом на корточках сидит владелец"
+            />
+
+            <p class="promo__mark" aria-hidden="true">
+              <span>Keep it</span><strong>Street</strong>
+            </p>
+          </div>
+
+          <!-- Текст и кнопка стоят в правой части кадра: там ночное небо
+               и пустая дорога, единственное место, где ничего не закрывается.
+               Отступы в процентах — блок держит пропорции файла, и оба
+               остаются на том же месте кадра при любой ширине. -->
+          <div class="promo__pitch">
+            <p class="promo__kicker">Как она живёт</p>
+            <p>
+              Из чего собран сотый кузов, как он звучит и как вообще доехал
+              сюда из Японии. И что смотреть под ним, если однажды решишь
+              брать такой же.
+            </p>
+          </div>
+
+          <button class="promo__more promo__more--street" data-street-open type="button">
+            <span>Подробнее</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M5 12h13M13 6l6 6-6 6" />
+            </svg>
+          </button>
+        </div>
+      </section>
 
       <!-- ЭКРАН 3 — Движение ----------------------------------------------
            Фото и ролик сняты в одном проезде и оба 16:9 — обрезать нечего,
@@ -251,7 +311,7 @@
           </span>
           <span class="card__veil"></span>
           <span class="card__caption">
-            <span class="label stub" data-todo>Подпись к карточке — ждём от заказчика</span>
+            <span class="label stub" data-todo>Подпись к карточке - ждём от заказчика</span>
           </span>
           <span class="card__progress" data-card-progress></span>
         </button>
@@ -280,7 +340,7 @@
           </span>
           <span class="card__veil"></span>
           <span class="card__caption">
-            <span class="label stub" data-todo>Подпись к карточке — ждём от заказчика</span>
+            <span class="label stub" data-todo>Подпись к карточке - ждём от заказчика</span>
           </span>
           <span class="card__progress" data-card-progress></span>
         </button>
@@ -318,12 +378,12 @@
                  alt="Белый Toyota Mark II JZX100 стоит на городской парковке в сумерках, горят жёлтые фары" />
             <h3>Что такое JDM</h3>
             <p>
-              JDM — это не стиль и не набор наклеек. Буквально это внутренний
+              JDM - это не стиль и не набор наклеек. Буквально это внутренний
               японский рынок: машины, которые собирали для себя и не
               рассчитывали, что их когда-нибудь увезут.
             </p>
             <p>
-              Экспортные версии всегда чем-то отличались — нормами, оснащением,
+              Экспортные версии всегда чем-то отличались - нормами, оснащением,
               настройками под чужие дороги. Дома оставалось другое: правый руль,
               кузова под местный налог на габариты, моторы и комплектации,
               которых не было ни в одном каталоге за пределами страны.
@@ -335,10 +395,10 @@
             <p>
               С конца восьмидесятых японские производители держались негласного
               уговора не заявлять больше 280 сил. В паспорте у всех стояла одна
-              и та же цифра, а что происходило на стенде — вопрос отдельный.
+              и та же цифра, а что происходило на стенде - вопрос отдельный.
             </p>
             <p>
-              Есть и вторая причина, по которой эти машины разъехались по миру, —
+              Есть и вторая причина, по которой эти машины разъехались по миру, -
               сякэн. Обязательный техосмотр дорожает с возрастом автомобиля, и
               вполне исправную машину оказывалось дешевле продать за границу,
               чем оставить дома.
@@ -350,13 +410,13 @@
                  alt="Mark II на пустой ночной трассе, горят задние фонари" />
             <h3>Ночь и трассы</h3>
             <p>
-              Туге — горные серпантины с глухими поворотами и обрывом вместо
+              Туге - горные серпантины с глухими поворотами и обрывом вместо
               обочины. Прямых, где решает мощность, там нет. Значение имеет
               другое: как машина встаёт в поворот и что делает, когда сцепления
               уже не осталось.
             </p>
             <p>
-              Отсюда вырос дрифт — сначала как способ проходить эти повороты
+              Отсюда вырос дрифт - сначала как способ проходить эти повороты
               быстро, потом как отдельная дисциплина со своими именами
               и правилами.
             </p>
@@ -367,7 +427,7 @@
             <p>
               Ниже, вдоль Токийского залива, лежала скоростная Ванган,
               а на придорожных стоянках вроде Дайкоку по ночам собирались те,
-              кому некуда было спешить. Ни соревнований, ни зрителей —
+              кому некуда было спешить. Ни соревнований, ни зрителей -
               фары, мотор на холостых и разговоры до утра.
             </p>
           </div>
@@ -378,13 +438,13 @@
             <h3>Почему Mark II</h3>
             <p>
               Mark II продавали как служебный седан бизнес-класса. Ровные линии,
-              велюр в салоне, ничего вызывающего снаружи — машина, на которой
+              велюр в салоне, ничего вызывающего снаружи - машина, на которой
               ездят на работу.
             </p>
             <p>
               Под капотом при этом стоял 1JZ-GTE: рядная «шестёрка» на два
               с половиной литра с турбиной, те самые паспортные 280 сил
-              и задний привод. В версии Tourer V — с механической коробкой.
+              и задний привод. В версии Tourer V - с механической коробкой.
             </p>
             <p class="reading__pull">Самурай в пиджаке.</p>
             <p>
@@ -404,7 +464,7 @@
             </p>
             <p>
               Целых экземпляров почти не осталось: через тюнинг прошёл почти
-              каждый, и обычно не по одному разу. Дальше добавилось время —
+              каждый, и обычно не по одному разу. Дальше добавилось время -
               коррозия, износ, разобранные на запчасти доноры.
             </p>
             <p class="reading__pull">
@@ -435,8 +495,8 @@
           <p class="kana label reveal-line"><span>マークツー</span></p>
           <p class="display reveal-line"><span>Mark II</span></p>
           <ul class="final__contacts">
-            <li><span class="stub" data-todo>Контакты — ждём от заказчика</span></li>
-            <li><span class="stub" data-todo>Соцсети — ждём от заказчика</span></li>
+            <li><span class="stub" data-todo>Контакты - ждём от заказчика</span></li>
+            <li><span class="stub" data-todo>Соцсети - ждём от заказчика</span></li>
           </ul>
         </div>
       </section>
@@ -453,7 +513,7 @@
 
          Оформления пока нет, стоит каркас: заголовок и подпись. -->
     <div class="space" data-space hidden aria-modal="true" role="dialog"
-         aria-label="Почему JZX100 — король японского дрифта">
+         aria-label="Почему JZX100 - король японского дрифта">
       <button class="space__close" data-space-close type="button" aria-label="Закрыть">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path d="M6 6l12 12M18 6L6 18" />
@@ -485,9 +545,9 @@
               aria-hidden="true"
             />
             <div class="chapter__text" data-space-inner>
-              <h2 class="space__title">Почему JZX100 — король японского дрифта? 👑</h2>
+              <h2 class="space__title">Почему JZX100 - король японского дрифта? 👑</h2>
               <p class="space__lead">
-                1JZ-GTE, задний привод и характер настоящего бойца — узнайте,
+                1JZ-GTE, задний привод и характер настоящего бойца - узнайте,
                 за что дрифтеры по всей Японии боготворят этот седан
               </p>
             </div>
@@ -501,7 +561,7 @@
             <div class="chapter__text">
               <h3 class="chapter__title">Легенда девяностых</h3>
               <p>
-                Toyota Mark II JZX100 — культовый седан 90-х и настоящая легенда
+                Toyota Mark II JZX100 - культовый седан 90-х и настоящая легенда
                 японской дрифт-сцены. Этот автомобиль может похвастаться
                 легендарным мотором 1JZ-GTE, задним приводом и идеальной
                 развесовкой. Он отлично подойдёт тем, кто хочет почувствовать
@@ -533,11 +593,11 @@
             <div class="chapter__text">
               <h3 class="chapter__title">Мотор 1JZ-GTE</h3>
               <p>
-                1JZ-GTE — легендарная рядная «шестёрка» Toyota объёмом 2,5 литра
+                1JZ-GTE - легендарная рядная «шестёрка» Toyota объёмом 2,5 литра
                 с турбонаддувом. Чугунный блок, кованые поршни и масляные
                 форсунки охлаждения делают его практически неубиваемым.
-                Заводские 280 л.с. — лишь отправная точка: мотор спокойно держит
-                400–500 сил на стоковой поршневой, а с глубоким тюнингом — и все
+                Заводские 280 л.с. - лишь отправная точка: мотор спокойно держит
+                400-500 сил на стоковой поршневой, а с глубоким тюнингом - и все
                 800. Именно за эту надёжность и огромный потенциал 1JZ-GTE стал
                 сердцем японской дрифт-культуры.
               </p>
@@ -570,7 +630,7 @@
               <p>
                 Настоящая икона японских street-рейсеров. Задний привод, дерзкий
                 характер и репутация машины, которая не прощает слабых. Ночные
-                заезды по скоростным магистралям — опасная стихия, где адреналин
+                заезды по скоростным магистралям - опасная стихия, где адреналин
                 зашкаливает, а цена ошибки слишком высока. Но именно этот риск
                 и манит молодёжь, для которой он стал символом свободы, скорости
                 и жизни на полную.
@@ -593,11 +653,11 @@
             <div class="chapter__text">
               <h3 class="chapter__title">Способ самовыражения</h3>
               <p>
-                Mark II JZX100 — это не просто автомобиль, это способ
-                самовыражения. Каждый элемент: от развала колёс до выхлопа —
+                Mark II JZX100 - это не просто автомобиль, это способ
+                самовыражения. Каждый элемент: от развала колёс до выхлопа -
                 говорит о характере владельца. Здесь нет двух одинаковых машин,
                 потому что каждый строит свою историю сам. Для одних это дань
-                уважения культуре 90-х, для других — чистый холст для
+                уважения культуре 90-х, для других - чистый холст для
                 творчества. Но для всех это способ заявить о себе без слов.
               </p>
             </div>
@@ -617,7 +677,7 @@
             <div class="chapter__text">
               <h3 class="chapter__title">Стили тюнинга</h3>
               <p>
-                Mark II JZX100 — это чистый холст для творчества. Каждый
+                Mark II JZX100 - это чистый холст для творчества. Каждый
                 владелец выбирает свой путь, и именно поэтому эти машины никогда
                 не выглядят одинаково. Разнообразие стилей позволяет раскрыть
                 любую задумку: боевая, stance, сток или стрит.
@@ -642,6 +702,284 @@
               <img src="/s7-street.webp" alt="Стрит: Mark II в повседневной уличной сборке" loading="lazy" decoding="async" />
               <figcaption>Стрит</figcaption>
             </figure>
+          </section>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ВТОРОЕ ПРОСТРАНСТВО — «Keep it street» --------------------------
+         Открывается кнопкой со второй карточки в паузе.
+
+         Устроено иначе, чем первое, и намеренно. Первое едет вбок одной
+         лентой; это идёт сверху вниз разворотами, как страница-образец:
+         экран делится пополам — на одной половине кадр во весь рост,
+         на другой ровный фон с крупной репликой, — а между разворотами
+         лежат мозаики из кадров и полосы во весь экран.
+
+         Тексты здесь про то, чего нет ни на странице, ни в первом
+         пространстве: устройство кузова, звук, дорога из Японии и осмотр
+         перед покупкой. -->
+    <div class="street" data-street hidden aria-modal="true" role="dialog"
+         aria-label="Keep it street">
+      <!-- Панель поверх всего. На странице-образце она висит на каждом экране
+           и держит название раздела: без неё через два разворота уже непонятно,
+           где ты и как отсюда выйти. -->
+      <header class="street__bar">
+        <p class="street__brand"><span>Keep it</span>Street</p>
+        <button class="street__close" data-street-close type="button" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      </header>
+
+      <div class="street__scroll" data-street-scroll data-lenis-prevent>
+        <div class="street__flow" data-street-flow>
+
+          <!-- ВСТУПЛЕНИЕ -->
+          <section class="act act--open">
+            <video
+              class="act__bg"
+              data-street-video
+              poster="/street-intro-poster.webp"
+              muted loop playsinline preload="none"
+              data-src="/street-intro.mp4"
+              aria-label="Белый Mark II ночью на мокрой парковке торгового центра"
+            ></video>
+            <div class="act__open" data-street-inner>
+              <p class="street__kana">ストリート</p>
+              <h2 class="street__title">Не музейная</h2>
+              <p class="street__lead">
+                Сотый кузов редко стоит под чехлом. Его моют ночью на
+                самообслуживании, чинят у знакомого в боксе и утром снова
+                выгоняют в город.
+              </p>
+              <p class="street__lead street__lead--dim">
+                Дальше - из чего он собран, как звучит, как сюда доехал
+                и что смотреть, если решил брать.
+              </p>
+            </div>
+
+            <!-- Стрелка вниз: слой открывается поверх страницы, и с ходу
+                 не очевидно, что внутри есть своя прокрутка. -->
+            <span class="street__hint" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M12 5v13M6 13l6 6 6-6" />
+              </svg>
+            </span>
+          </section>
+
+          <!-- 01 — КУЗОВ -->
+          <section class="act act--split">
+            <div class="act__media">
+              <video
+                data-street-video
+                poster="/street-clip-1-poster.webp"
+                muted loop playsinline preload="none"
+                data-src="/street-clip-1.mp4"
+                aria-label="Чёрный Mark II в подземном паркинге под цветным светом"
+              ></video>
+            </div>
+            <div class="act__side">
+              <p class="act__num">01</p>
+              <h3 class="act__head">Кузов</h3>
+              <blockquote class="act__quote">
+                «Дело не в моторе. Дело в том, как он стоит на дороге»
+              </blockquote>
+              <div class="act__text">
+                <p>
+                  Платформа X100 - длинная база и двухрычажная подвеска по
+                  кругу. Отсюда вся его повадка: он не срывается рывком, а
+                  уходит постепенно и так же постепенно возвращается. Ошибку
+                  видно заранее, и на неё есть время.
+                </p>
+                <p>
+                  Полторы тонны для заноса - много. Но эта же масса не даёт
+                  машине суетиться: на скорости она идёт тяжело и ровно,
+                  а не порхает по полосе.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="plates plates--raised">
+            <figure class="plate plate--tall plate--offset">
+              <img src="/street-shot-2.webp" srcset="/street-shot-2-828.webp 828w, /street-shot-2.webp 1080w"
+                   sizes="(max-width: 860px) 90vw, 34vw"
+                   alt="Переднее крыло и колесо Mark II крупным планом ночью"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <figure class="plate plate--tall">
+              <img src="/street-shot-1.webp" srcset="/street-shot-1-828.webp 828w, /street-shot-1.webp 1080w"
+                   sizes="(max-width: 860px) 90vw, 30vw"
+                   alt="Задняя четверть Mark II с горящим фонарём"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <p class="plate__note">
+              Развал, вылет и высота - три числа, по которым машину узнают
+              на парковке раньше, чем разглядят кузов.
+            </p>
+          </section>
+
+          <!-- 02 — ЗВУК -->
+          <section class="act act--split act--flip">
+            <div class="act__media">
+              <video
+                data-street-video
+                poster="/street-clip-4-poster.webp"
+                muted loop playsinline preload="none"
+                data-src="/street-clip-4.mp4"
+                aria-label="Mark II на заправке в синем свете, снято вертикально"
+              ></video>
+            </div>
+            <div class="act__side">
+              <p class="act__num">02</p>
+              <h3 class="act__head">Звук</h3>
+              <blockquote class="act__quote">
+                «Его слышно раньше, чем видно»
+              </blockquote>
+              <div class="act__text">
+                <p>
+                  Рядная шестёрка работает ровно - без биения, которым выдаёт
+                  себя любой V-образный мотор. Поверх ложится турбина: на
+                  сбросе слышно, как она стравливает, на разгоне - как
+                  набирает.
+                </p>
+                <p>
+                  Выпуск каждый делает под себя. Кто-то оставляет тихо, чтобы
+                  не собирать внимание, кто-то ровно наоборот. Это первое,
+                  что меняют, и последнее, с чем расстаются.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="plates">
+            <figure class="plate plate--tall">
+              <img src="/street-shot-3.webp" srcset="/street-shot-3-828.webp 828w, /street-shot-3.webp 1080w"
+                   sizes="(max-width: 860px) 90vw, 32vw"
+                   alt="Корма Mark II с фонарями и шильдиком"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <figure class="plate plate--tall plate--offset">
+              <img src="/street-shot-5.webp" srcset="/street-shot-5-828.webp 828w, /street-shot-5.webp 1080w"
+                   sizes="(max-width: 860px) 90vw, 32vw"
+                   alt="Передок Mark II: решётка, фары и номер"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <p class="plate__note">
+              Шильдик сзади и решётка спереди - по ним сотый узнают
+              и со спины, и в лоб.
+            </p>
+          </section>
+
+          <!-- ПОЛОСА — ДОРОГА СЮДА -->
+          <section class="band">
+            <video
+              class="band__bg"
+              data-street-video
+              poster="/street-clip-2-poster.webp"
+              muted loop playsinline preload="none"
+              data-src="/street-clip-2.mp4"
+              aria-label="Белый Mark II проезжает вдоль стены с граффити"
+            ></video>
+            <div class="band__text">
+              <p class="act__num">03</p>
+              <h3 class="act__head">Дорога сюда</h3>
+              <p>
+                Аукцион, лист с оценкой, паром до Владивостока - и дальше
+                своим ходом через всю страну. Правый руль, японский пробег
+                и чужие номера, которые меняют уже здесь.
+              </p>
+              <p>
+                К тому дню, когда машина впервые встаёт под окном, у неё за
+                спиной больше километров, чем иные проезжают за год.
+              </p>
+            </div>
+          </section>
+
+          <!-- Раскладка снята с образца: содержимое собрано в узкую полосу
+               по центру и разбито на две колонки с тонким зазором. Слева
+               сверху текст, под ним ролик; справа кадр, который уходит
+               за правый край экрана и стоит вровень с обоими.
+
+               Третий кадр отсюда убран по правке заказчика: колонки от него
+               расходились по высоте вдвое, и полоса переставала читаться
+               как разворот. -->
+          <section class="plates plates--raised plates--wide">
+            <p class="plate__note">
+              Между Владивостоком и первым осмотром у сервиса проходит
+              обычно недели три.
+            </p>
+
+            <figure class="plate plate--side">
+              <img src="/street-shot-6.webp" srcset="/street-shot-6-828.webp 828w, /street-shot-6.webp 1080w"
+                   sizes="(max-width: 860px) 90vw, 50vw"
+                   width="1080" height="956"
+                   alt="Белый Mark II в заносе под эстакадой, чёрно-белый кадр"
+                   loading="lazy" decoding="async" />
+            </figure>
+
+            <figure class="plate plate--under">
+              <video
+                data-street-video
+                width="768"
+                height="1024"
+                poster="/street-clip-5-poster.webp"
+                muted loop playsinline preload="none"
+                data-src="/street-clip-5.mp4"
+                aria-label="Чёрный Mark II подъезжает по паркингу, крупно корма с фонарями"
+              ></video>
+            </figure>
+          </section>
+
+          <!-- 04 — ЧТО СМОТРЕТЬ -->
+          <section class="act act--split">
+            <div class="act__media">
+              <video
+                data-street-video
+                poster="/street-clip-3-poster.webp"
+                muted loop playsinline preload="none"
+                data-src="/street-clip-3.mp4"
+                aria-label="Mark II на ночной городской площади, чёрно-белый кадр"
+              ></video>
+            </div>
+            <div class="act__side">
+              <p class="act__num">04</p>
+              <h3 class="act__head">Что смотреть</h3>
+              <blockquote class="act__quote">
+                «Кузов важнее мотора. Мотор можно привезти»
+              </blockquote>
+              <div class="act__text">
+                <p>
+                  Пороги, лонжероны, стаканы и низ дверей - там, где вода
+                  стоит дольше всего. Свежая антигравийка в арках чаще
+                  прячет, чем защищает.
+                </p>
+                <p>
+                  Дальше документы: аукционный лист, совпадение номеров,
+                  история пробега. Мотор в этом списке идёт последним -
+                  контрактный 1JZ найти всё ещё проще, чем целый кузов.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <!-- ФИНАЛ -->
+          <section class="act act--end">
+            <img class="act__bg" src="/street-promo.webp"
+                 srcset="/street-promo-828.webp 828w, /street-promo-1280.webp 1280w, /street-promo.webp 1672w"
+                 sizes="100vw" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+            <div class="act__open act__open--end">
+              <h3 class="street__title street__title--end">Ездить</h3>
+              <p class="street__lead">
+                Её берут не для того, чтобы поставить и смотреть. Берут,
+                чтобы ездить: на работу, за город, ночью по пустому городу
+                без всякого повода.
+              </p>
+              <p class="street__sign">Keep it street</p>
+            </div>
           </section>
 
         </div>

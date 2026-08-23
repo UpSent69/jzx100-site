@@ -9,6 +9,7 @@ import "./styles/overlay.css";
 import "./styles/screen-hero.css";
 import "./styles/screens.css";
 import "./styles/promo.css";
+import "./styles/street.css";
 import "./styles/chrome.css";
 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -22,6 +23,7 @@ import { initCards } from "./js/cards.js";
 import { initReading } from "./js/reading.js";
 import { initFinal } from "./js/final.js";
 import { initSpace } from "./js/space.js";
+import { initStreet } from "./js/street.js";
 
 initScroll();
 
@@ -58,6 +60,7 @@ scenes.forEach(([name, sel, opts]) => {
 });
 
 initSpace(document.querySelector("[data-space]"));
+initStreet(document.querySelector("[data-street]"));
 initSoundToggle(document.querySelector("[data-sound-toggle]"));
 initPreloader(document.querySelector("[data-preloader]"));
 

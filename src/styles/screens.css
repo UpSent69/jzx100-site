@@ -43,7 +43,7 @@
 }
 
 /* ЭКРАН 2 — JZX100 ---------------------------------------------------------
-   Готовая картинка: заголовок и текст уже в кадре слева, машина справа. */
+   Кадр — ролик из ночного паркинга, текст лежит поверх него слева. */
 
 .jzx {
   height: 250vh;
@@ -57,10 +57,11 @@
   place-items: center;
 }
 
+/* Кадр стоит один к одному и ничем не двигается: отъезд камеры убран,
+   а вместе с ним и повод держать под слой отдельную поверхность */
 .jzx__frame {
   width: 100%;
   height: 100%;
-  will-change: transform, opacity;
 }
 
 .jzx__shot {
@@ -71,10 +72,85 @@
   object-fit: cover;
 }
 
-/* Кадр с текстом лежит поверх чистого и проступает на отъезде камеры */
-.jzx__shot--text {
+/* ТЕКСТ ПОВЕРХ КАДРА.
+   Лежит не внутри .jzx__frame, а рядом с ним: кадр на отъезде масштабируется,
+   и текст вместе с ним поплыл бы по резкости. Здесь он стоит неподвижно
+   и только проступает.
+
+   Слева под ним — затемнение. Паркинг местами светлый, и без него светло-серый
+   текст на бетоне не читается. Градиент уходит в ноль к середине кадра,
+   поэтому машина справа остаётся нетронутой. */
+
+.jzx__copy {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: var(--z-content);
+  width: min(46rem, 52vw);
+  padding: var(--space-m) var(--space-s) var(--space-m) var(--gutter);
+  display: grid;
+  align-content: center;
+  gap: var(--space-xs);
   opacity: 0;
   will-change: opacity;
+}
+
+.jzx__copy::before {
+  content: "";
+  position: absolute;
+  inset: 0 -14% 0 0;
+  z-index: -1;
+  background: linear-gradient(
+    to right,
+    rgba(6, 7, 9, 0.94) 0%,
+    rgba(6, 7, 9, 0.88) 42%,
+    rgba(6, 7, 9, 0.55) 74%,
+    rgba(6, 7, 9, 0) 100%
+  );
+  pointer-events: none;
+}
+
+.jzx__kana {
+  margin: 0;
+  font-family: var(--font-kana);
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  color: var(--text-faint);
+}
+
+.jzx__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-title);
+  line-height: var(--leading-title);
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+/* Тонкая черта под заголовком — единственный акцентный элемент экрана */
+.jzx__title::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin-top: var(--space-xs);
+  background: linear-gradient(to right, var(--accent-dim), transparent 82%);
+}
+
+.jzx__text {
+  display: grid;
+  gap: var(--space-xs);
+  max-width: var(--measure);
+}
+
+.jzx__text p {
+  margin: 0;
+  color: var(--text-dim);
+}
+
+.jzx__text p:first-child {
+  font-size: var(--step-lead);
+  color: var(--text);
 }
 
 /* ЭКРАН 3 — Движение -------------------------------------------------------
@@ -482,6 +558,25 @@ body[data-locked] {
 
   .jzx {
     height: 200vh;
+  }
+
+  /* Вертикальный экран: колонка слева не помещается, текст занимает всю
+     ширину и садится к нижнему краю, затемнение разворачивается снизу вверх */
+  .jzx__copy {
+    inset: auto 0 0 0;
+    width: 100%;
+    padding: var(--space-m) var(--gutter) var(--space-l);
+    align-content: end;
+  }
+
+  .jzx__copy::before {
+    inset: -30% 0 0 0;
+    background: linear-gradient(
+      to top,
+      rgba(6, 7, 9, 0.95) 0%,
+      rgba(6, 7, 9, 0.85) 46%,
+      rgba(6, 7, 9, 0) 100%
+    );
   }
 
   .motion {

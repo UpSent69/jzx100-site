@@ -1,0 +1,762 @@
+/* ВТОРОЕ ПРОСТРАНСТВО — «Keep it street».
+   -------------------------------------------------------------------------
+   Первое пространство едет вбок одной лентой. Это идёт сверху вниз
+   разворотами, как страница-образец: экран делится пополам — кадр во весь
+   рост на одной половине, ровный фон с крупной репликой на другой, — а между
+   разворотами лежат мозаики из кадров и полосы во весь экран.
+
+   Приём образца держится на плоских цветных полях под разделами. Наш набор
+   цветов другой: фон почти чёрный и холодный, акцент один и редкий. Роль
+   цветных полей здесь играет разница по светлоте — два оттенка почти чёрного,
+   — а роль цветного текста реплик берёт тёплый почти-белый. Это не второй
+   акцент: акцент остаётся один и стоит на номерах разделов и линиях. */
+
+/* КАРТОЧКА ПЕРЕХОДА ---------------------------------------------------------
+   Устроена как первая, но на этом кадре ничего не впечатано: название набрано
+   живым текстом прямо на нём, а кнопка стоит по центру — как на карточке
+   в образце. */
+
+/* Коробка кадра. На широком экране она просто заполняет карточку, и всё,
+   что лежит на кадре, считает отступы от неё же. */
+.promo__frame {
+  position: relative;
+  height: 100%;
+}
+
+.promo--street .promo__art {
+  /* Кадр снят ночью и сам по себе тёмный; сверху ещё ляжет текст. Немного
+     поднимаем контраст, чтобы машина не сливалась с набережной. */
+  filter: contrast(1.06) saturate(0.94);
+}
+
+/* Название лежит в нижнем левом углу кадра — там пусто и ровно. */
+.promo__mark {
+  position: absolute;
+  left: clamp(1.25rem, 3.5%, 3rem);
+  bottom: clamp(1rem, 6%, 2.5rem);
+  margin: 0;
+  display: grid;
+  gap: 0.1em;
+  line-height: 0.94;
+  text-shadow: 0 0.15em 1.2em rgba(0, 0, 0, 0.8);
+}
+
+.promo__mark span {
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.promo__mark strong {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.75rem, 3.6vw, 3.25rem);
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+/* Текст и кнопка стоят в правой части кадра — там ночное небо и пустая
+   дорога, единственное место, где ничего не закрывается: ни машина,
+   ни человек рядом с ней, ни название в нижнем углу.
+
+   Отступы в процентах, а не в пикселях: блок держит пропорции файла,
+   и оба остаются на одном и том же месте кадра при любой ширине. */
+.promo__pitch {
+  position: absolute;
+  right: 5%;
+  top: 11%;
+  width: 30%;
+  display: grid;
+  gap: 0.75rem;
+  text-align: right;
+  text-shadow: 0 0.1em 1em rgba(0, 0, 0, 0.85);
+}
+
+.promo__pitch p {
+  margin: 0;
+  font-size: clamp(0.8rem, 1.02vw, 1rem);
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.promo__kicker {
+  font-family: var(--font-display);
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Кнопка под текстом, по его правому краю */
+.promo__more--street {
+  right: 5%;
+  top: 66%;
+}
+
+/* СЛОЙ ----------------------------------------------------------------- */
+
+.street {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-space);
+  overflow: hidden;
+  opacity: 0;
+  background: var(--ink);
+  --street-quote: #e9e3dc; /* тёплый почти-белый, только под реплики */
+}
+
+.street[hidden] {
+  display: none;
+}
+
+/* Прокрутка сглажена своим экземпляром Lenis (street.js). overflow: hidden
+   не мешает: полосу прокрутки он прячет, а двигать содержимое из скрипта
+   это не запрещает. */
+.street__scroll {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Панель висит поверх ленты и не прокручивается вместе с ней.
+   Подложки у неё нет — только слабое затемнение сверху: сплошная полоса
+   отрезала бы кадр по верхнему краю, а он должен доходить до самого верха. */
+.street__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding: clamp(1rem, 2.4vh, 1.75rem) var(--gutter);
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(6, 7, 9, 0.72) 0%,
+    rgba(6, 7, 9, 0.34) 52%,
+    rgba(6, 7, 9, 0) 100%
+  );
+}
+
+.street__brand {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.55em;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(0.9rem, 1.4vw, 1.15rem);
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.street__brand span {
+  font-weight: 400;
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  color: var(--text-faint);
+}
+
+/* Кликается только сама кнопка: панель поверх кадра сквозная,
+   иначе она перехватывала бы наведение на верхний край ролика. */
+.street__close {
+  pointer-events: auto;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text-dim);
+  background: rgba(8, 9, 11, 0.6);
+  backdrop-filter: blur(8px);
+  transition: color var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out);
+}
+
+.street__close svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.street__close:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+/* Стрелка вниз под вступлением. Дышит на месте — это единственное движение
+   во всём слое, которое идёт само, и оно нужно: без него не видно,
+   что внутри есть куда прокручивать. */
+.street__hint {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: clamp(1.25rem, 3.5svh, 2.5rem);
+  transform: translateX(-50%);
+  color: var(--text-faint);
+  animation: street-hint 2.8s var(--ease-in-out) infinite;
+}
+
+.street__hint svg {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@keyframes street-hint {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate(-50%, 0.4rem);
+    opacity: 0.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .street__hint {
+    animation: none;
+  }
+}
+
+/* РАЗВОРОТ ------------------------------------------------------------- */
+
+.act {
+  position: relative;
+  min-height: 100svh;
+  background: var(--ink);
+}
+
+/* Вступление и финал: кадр во весь экран, текст поверх него. */
+.act--open,
+.act--end {
+  display: grid;
+  align-content: end;
+  padding: var(--gutter);
+  padding-bottom: clamp(3rem, 12svh, 8rem);
+  overflow: hidden;
+}
+
+.act__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Затемнение снизу вверх: текст стоит внизу, и держать нужно только его
+   половину кадра. Выше кадр остаётся открытым. */
+.act--open::before,
+.act--end::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgba(6, 7, 9, 0.94) 0%,
+    rgba(6, 7, 9, 0.78) 34%,
+    rgba(6, 7, 9, 0.18) 68%,
+    rgba(6, 7, 9, 0) 100%
+  );
+  pointer-events: none;
+}
+
+.act__open {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: var(--space-xs);
+  max-width: 46rem;
+}
+
+.street__kana {
+  margin: 0;
+  font-family: var(--font-kana);
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  color: var(--text-faint);
+}
+
+.street__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--step-title);
+  line-height: var(--leading-title);
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.street__lead {
+  margin: 0;
+  max-width: var(--measure);
+  font-size: var(--step-lead);
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.street__lead--dim {
+  font-size: var(--step-body);
+  line-height: 1.85;
+  color: var(--text-dim);
+}
+
+.street__sign {
+  margin: var(--space-xs) 0 0;
+  font-family: var(--font-display);
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Разворот пополам: кадр во весь рост на одной половине, текст на другой.
+   Половины ровно равные — на этом весь приём и держится. */
+.act--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+}
+
+/* Каждый второй разворот зеркалится: кадр уходит вправо, текст влево.
+   Иначе четыре одинаковых разворота подряд читаются как один длинный. */
+.act--flip .act__media {
+  order: 2;
+}
+
+/* Ролик лежит в коробке отдельным слоем, а не потоком.
+   Иначе высоту разворота задаёт он: вертикальный кадр 864×1536 в колонке
+   шириной 800 пикселей разворачивается на полторы тысячи в высоту, строка
+   грида тянется за ним, и разворот вырастает в полтора экрана — текст
+   на второй половине уезжает за верхний край раньше, чем его дочитают.
+   Снятый из потока кадр занимает ровно ту коробку, которую ему дали. */
+.act__media {
+  position: relative;
+  overflow: hidden;
+  min-height: 100svh;
+  background: var(--ink-raised);
+}
+
+.act__media video,
+.act__media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.act__side {
+  display: grid;
+  align-content: center;
+  gap: var(--space-xs);
+  padding: clamp(3rem, 9vh, 7rem) clamp(1.5rem, 5vw, 5rem);
+  background: var(--ink);
+}
+
+.act--flip .act__side {
+  background: var(--ink-raised);
+}
+
+.act__num {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  color: var(--accent);
+}
+
+.act__head {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* Крупная реплика — то, ради чего разворот и делится пополам.
+   Заглавные, узкий гротеск, плотный интерлиньяж. */
+.act__quote {
+  margin: var(--space-2xs) 0 var(--space-2xs);
+  max-width: 18ch;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.75rem, 3vw, 3.25rem);
+  line-height: 1.06;
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--street-quote);
+}
+
+/* Черта под репликой — единственная линия на развороте */
+.act__quote::after {
+  content: "";
+  display: block;
+  width: 4.5rem;
+  height: 1px;
+  margin-top: var(--space-xs);
+  background: var(--accent-dim);
+}
+
+.act__text {
+  display: grid;
+  gap: var(--space-xs);
+  max-width: var(--measure);
+}
+
+.act__text p {
+  margin: 0;
+  line-height: 1.85;
+  color: var(--text-dim);
+}
+
+/* МОЗАИКА -------------------------------------------------------------- */
+
+/* Кадры приходят не сразу за разворотом и не встык: между ними ровное поле,
+   на котором они стоят вразнобой. Пустоты здесь больше, чем самих кадров, —
+   на образце ровно так же. */
+.plates {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  align-items: start;
+  gap: clamp(1.5rem, 3vw, 3.5rem);
+  padding: clamp(5rem, 16svh, 12rem) var(--gutter);
+  background: var(--ink);
+}
+
+.plates--raised {
+  background: var(--ink-raised);
+}
+
+.plate {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--ink);
+  grid-column: span 4;
+}
+
+/* Сдвиг по вертикали — то, что превращает ряд кадров в мозаику.
+   Без него три карточки встают в линейку и весь разворот выглядит таблицей. */
+.plate--offset {
+  margin-top: clamp(2rem, 9svh, 7rem);
+}
+
+.plate--tall {
+  aspect-ratio: 3 / 4;
+}
+
+/* Раскладка третьей мозаики снята с образца.
+   -------------------------------------------------------------------------
+   Там содержимое собрано в узкую полосу по центру — примерно от пятой части
+   ширины до четырёх пятых, — разбито на две равные колонки с тонким зазором,
+   и одна карточка из правой колонки выходит за правый край экрана.
+
+   Отсюда всё остальное: зазор здесь заметно уже, чем в остальных мозаиках,
+   пустое место вынесено по краям полосы, а не между карточками, и колонки
+   стоят строго друг под другом. Разноса по вертикали нет — его роль играет
+   текст, который занимает верх левой колонки. */
+.plates--wide {
+  gap: clamp(0.5rem, 0.9vw, 0.9rem);
+  align-items: start;
+}
+
+.plates--wide .plate__note {
+  grid-column: 2 / span 4;
+  grid-row: 1;
+  align-self: start;
+  max-width: none;
+  padding-bottom: var(--space-s);
+}
+
+/* Правый кадр. Занимает обе строки: слева на них приходятся текст и ролик,
+   и он должен стоять вровень со всей левой колонкой, а не с одной её
+   половиной.
+
+   За край экрана больше не выходит — заказчик попросил уменьшить: раньше
+   тут было отрицательное поле на отступ секции, и кадр доходил до самого
+   края окна, как в образце. Теперь он кончается на общем отступе. */
+.plates--wide .plate--side {
+  grid-column: 7 / -1;
+  grid-row: 1 / span 2;
+}
+
+/* Текст и ролик сдвинуты на колонку влево — по правке заказчика: между
+   роликом и правым кадром оставался зазор в полтора десятка пикселей,
+   и две карточки читались как одна разрезанная. Сдвигаются вместе:
+   ролик стоит ровно под текстом, и разъехавшийся левый край выглядел бы
+   не приёмом, а промахом. */
+.plates--wide .plate--under {
+  grid-column: 2 / span 4;
+  grid-row: 2;
+}
+
+.plate img,
+.plate video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Кадры этой мозаики показываются целиком, без обрезки: высоту каждого ведёт
+   сам файл. Правило стоит после общего намеренно — у одинаковых по весу
+   селекторов побеждает тот, что ниже по файлу, и без этого высота карточки
+   схлопывалась в ноль. */
+.plates--wide .plate {
+  aspect-ratio: auto;
+}
+
+.plates--wide .plate img,
+.plates--wide .plate video {
+  height: auto;
+}
+
+/* Реплика рядом с кадрами. Стоит не под ними, а сбоку и ниже верхнего края —
+   так же, как на образце подписи стоят в стороне от карточек. */
+.plate__note {
+  grid-column: span 4;
+  align-self: end;
+  margin: 0;
+  max-width: 30ch;
+  line-height: 1.85;
+  color: var(--text-dim);
+}
+
+/* ПОЛОСА ВО ВЕСЬ ЭКРАН -------------------------------------------------- */
+
+.band {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-content: end;
+  justify-content: end;
+  padding: var(--gutter);
+  padding-bottom: clamp(3rem, 12svh, 8rem);
+  overflow: hidden;
+  background: var(--ink);
+}
+
+.band__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Затемнение под текстом. Два слоя, и оба нужны: этот ролик снят днём и
+   местами очень светлый — на белом борту и хромированном диске одного бокового
+   градиента не хватало, серый текст по нему плыл. Второй, снизу вверх,
+   добирает как раз тот угол, где текст и стоит. */
+.band::before,
+.band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.band::before {
+  background: linear-gradient(
+    to left,
+    rgba(6, 7, 9, 0.97) 0%,
+    rgba(6, 7, 9, 0.92) 34%,
+    rgba(6, 7, 9, 0.5) 64%,
+    rgba(6, 7, 9, 0) 100%
+  );
+}
+
+.band::after {
+  background: linear-gradient(
+    to top,
+    rgba(6, 7, 9, 0.72) 0%,
+    rgba(6, 7, 9, 0.3) 38%,
+    rgba(6, 7, 9, 0) 70%
+  );
+}
+
+.band__text {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: var(--space-xs);
+  width: min(34rem, 46vw);
+}
+
+.band__text p:not(.act__num) {
+  margin: 0;
+  line-height: 1.85;
+  color: var(--text-dim);
+}
+
+/* Здесь заголовок крупный, и разрядку надо сбрасывать: у .act__head она
+   рассчитана на мелкую строку в пол-сантиметра, а на крупном кегле те же
+   0.22em растаскивают слово через пол-экрана. */
+.band__text .act__head {
+  font-size: var(--step-title);
+  line-height: var(--leading-title);
+  letter-spacing: var(--track-display);
+  color: var(--text);
+  text-transform: uppercase;
+}
+
+/* МОБИЛЬНЫЕ ------------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  /* Колонка паузы задаётся явно. Без этого она автоматическая и меряется
+     по самому широкому содержимому: длинный абзац растягивал её вдвое шире
+     экрана, и вместе с ней уезжал за край кадр, а страница получала
+     горизонтальную прокрутку. minmax(0, 1fr) не даёт колонке вырасти
+     за отведённое место, и абзац переносится, как и должен. */
+  .gap--promo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* На вертикальном экране кадр выходит мелким, и правая четверть, в которую
+     на широком укладывается текст, здесь не больше пары сантиметров. Текст
+     и кнопка уходят из-под кадра вниз — как у первой карточки. Кадр при этом
+     остаётся в своей коробке с пропорциями файла, и название на нём — тоже. */
+  .promo--street {
+    aspect-ratio: auto;
+    display: grid;
+    justify-items: start;
+  }
+
+  .promo__frame {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1672 / 941;
+    overflow: hidden;
+    border-radius: clamp(0.75rem, 1.2vw, 1.25rem);
+  }
+
+  .promo__pitch {
+    position: static;
+    width: 100%;
+    margin-top: var(--space-s);
+    text-align: left;
+    text-shadow: none;
+  }
+
+  .promo__more--street {
+    right: auto;
+    top: auto;
+  }
+
+  .promo__mark {
+    left: 1rem;
+    bottom: 1rem;
+  }
+
+  /* Название с панели убирается. На широком экране оно стоит в стороне
+     от текста, а на узком лента проходит прямо под ним: крупная реплика
+     на ходу наезжала на «Keep it street», и обе строки становились
+     нечитаемыми. Кнопка выхода — единственное, что здесь обязано остаться. */
+  .street__brand {
+    display: none;
+  }
+
+  .street__bar {
+    justify-content: flex-end;
+    padding-bottom: 2.5rem;
+    background: linear-gradient(
+      to bottom,
+      rgba(6, 7, 9, 0.82) 0%,
+      rgba(6, 7, 9, 0.45) 46%,
+      rgba(6, 7, 9, 0) 100%
+    );
+  }
+
+  /* Разворот разворачивается в одну колонку: кадр сверху, текст под ним.
+     Пополам на вертикальном экране делить нечего — обе половины выйдут
+     слишком узкими, и ни кадр, ни текст читаться не будут. */
+  .act--split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .act--flip .act__media {
+    order: 0;
+  }
+
+  /* min-height сбрасывается явно: без этого он перебивает высоту, и кадр
+     занимает целый экран вместо двух третей — читать после него приходится
+     с чистого листа, а должно быть видно, что текст уже начался. */
+  .act__media {
+    min-height: 0;
+    height: 62svh;
+  }
+
+  .act__side {
+    padding: var(--space-m) var(--gutter);
+  }
+
+  .plates {
+    grid-template-columns: repeat(6, 1fr);
+    padding: var(--space-l) var(--gutter);
+  }
+
+  /* Явные колонки и строки с широкого экрана здесь только мешают: в одну
+     колонку всё должно идти друг за другом, в порядке разметки. */
+  .plate,
+  .plate__note,
+  .plates--wide .plate__note,
+  .plates--wide .plate--side,
+  .plates--wide .plate--under {
+    grid-column: span 6;
+    grid-row: auto;
+  }
+
+  .plates--wide {
+    gap: var(--space-s);
+  }
+
+  .plates--wide .plate__note {
+    padding-bottom: 0;
+  }
+
+  .plate--offset {
+    margin-top: 0;
+  }
+
+  .band {
+    justify-content: stretch;
+  }
+
+  .band__text {
+    width: 100%;
+  }
+
+  .band::before {
+    background: linear-gradient(
+      to top,
+      rgba(6, 7, 9, 0.95) 0%,
+      rgba(6, 7, 9, 0.82) 40%,
+      rgba(6, 7, 9, 0) 100%
+    );
+  }
+}
