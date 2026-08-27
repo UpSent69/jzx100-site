@@ -1,7 +1,7 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ease, isMobile, reducedMotion, lenisInstance } from "./motion.js";
-import { fadeVolume, onSoundChange, soundAllowed, unlockSound } from "./audio.js";
+import { fadeVolume, onSoundChange, soundAllowed, soundVolume, unlockSound } from "./audio.js";
 
 const HOVER_DELAY = 120;   // мс: без задержки при быстром проходе курсора обе карточки дёргаются
 const FADE_IN = 120;       // мс: звук вводится почти мгновенно
@@ -220,7 +220,9 @@ function initLightbox(root) {
     clone.loop = true;
     clone.controls = false;
     clone.muted = !soundAllowed();
-    clone.volume = soundAllowed() ? FULL_VOLUME : 0;
+    // Единственное место, где громкость ставится мимо fadeVolume, —
+    // значит и общий уровень надо применить руками.
+    clone.volume = soundAllowed() ? FULL_VOLUME * soundVolume() : 0;
     slot.replaceChildren(clone);
     clone.play().catch(() => {});
 

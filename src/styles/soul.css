@@ -1,0 +1,516 @@
+/* ЧЕТВЁРТОЕ ПРОСТРАНСТВО — «Душа машины».
+   -------------------------------------------------------------------------
+   Едет вбок одной лентой, как первое и третье: приём тот же, раскладка своя.
+
+   Лента идёт волной: текстовые панели прижаты к нижнему краю экрана, кадры —
+   к верхнему. В первом пространстве разделы одинаковой ширины в экран,
+   в третьем узкие панели чередуются с развалами; здесь ни того ни другого,
+   и глаз всё время ходит вверх-вниз, а не по прямой.
+
+   У каждого кадра снизу подпись мелким кеглем, как этикетка в музее. Ни
+   в первом, ни в третьем пространстве подписей у кадров нет вовсе.
+
+   Тон тише, чем в третьем: заголовки строчными, акцента почти нет — только
+   волосяная черта над текстом и иероглиф в финале. Тема требует спокойствия,
+   а не дерзости, и цвет здесь работает против неё. */
+
+/* КАРТОЧКА ПЕРЕХОДА -------------------------------------------------------
+   Раскладка как у самой первой: кадр целиком в верхней половине паузы, на нём
+   одна кнопка и больше ничего. Кнопка стоит справа, где на этом снимке пустая
+   мокрая дорога, — единственное место, где она ничего не закрывает. */
+.promo__more--soul {
+  right: 9%;
+  top: 62%;
+}
+
+/* СЛОЙ ------------------------------------------------------------------ */
+
+.soul {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-space);
+  overflow: hidden;
+  opacity: 0;
+  background: var(--ink);
+  /* Тёплый почти-белый: холодный светло-серый на этом кадре выглядит
+     техническим, а разговор здесь не технический. */
+  --soul-text: #e8e6e2;
+  --soul-dim: #a9a7a3;
+  --soul-line: var(--line);
+}
+
+.soul[hidden] {
+  display: none;
+}
+
+.soul__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.04);
+}
+
+/* Завеса плоская, без градиента: ролик здесь сам по себе спокойный
+   и равномерно тёмный, лучом высветлять нечего. Фильтров нет по той же
+   причине, что и в третьем пространстве, — они пересчитываются каждый кадр. */
+.soul__veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-color: rgba(6, 7, 9, 0.7);
+}
+
+.soul__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding: clamp(1rem, 2.4vh, 1.75rem) var(--gutter);
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(6, 7, 9, 0.72) 0%,
+    rgba(6, 7, 9, 0.32) 52%,
+    rgba(6, 7, 9, 0) 100%
+  );
+}
+
+.soul__brand {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(0.9rem, 1.4vw, 1.15rem);
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--soul-text);
+}
+
+.soul__brand span {
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.soul__close {
+  pointer-events: auto;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text-dim);
+  background: rgba(8, 9, 11, 0.6);
+  backdrop-filter: blur(8px);
+  transition: color var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out),
+    background-color var(--dur-hover) var(--ease-out);
+}
+
+.soul__close svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.soul__close:hover {
+  color: var(--soul-text);
+  border-color: var(--accent);
+}
+
+/* ЛЕНТА ----------------------------------------------------------------- */
+
+.soul__scroll {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  overflow: hidden;
+}
+
+.soul__track {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  width: max-content;
+  gap: clamp(3rem, 6vw, 7rem);
+  padding-inline: clamp(3rem, 9vw, 12rem);
+}
+
+/* ВСТУПЛЕНИЕ И ФИНАЛ ----------------------------------------------------- */
+
+.soul__open,
+.soul__end {
+  position: relative;
+  flex: 0 0 auto;
+  width: min(46rem, 84vw);
+  display: grid;
+  align-content: center;
+  gap: var(--space-xs);
+}
+
+.soul__kana {
+  margin: 0;
+  font-family: var(--font-kana);
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  color: var(--accent);
+}
+
+/* Крупные заглавные тёмным по бумаге — как на образце. Плотный интерлиньяж:
+   заголовок там набран в три-четыре короткие строки и работает картинкой,
+   а не строкой текста. */
+.soul__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.5rem, 5.4vw, 4.75rem);
+  line-height: 0.96;
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--soul-text);
+}
+
+.soul__title--end {
+  font-size: clamp(1.75rem, 3.8vw, 3rem);
+  line-height: 1.06;
+}
+
+.soul__lead {
+  margin: 0;
+  max-width: 34rem;
+  font-size: clamp(1.1rem, 1.5vw, 1.5rem);
+  line-height: 1.6;
+  color: var(--soul-text);
+}
+
+.soul__lead--dim {
+  font-size: clamp(0.98rem, 1.15vw, 1.15rem);
+  line-height: 1.75;
+  color: var(--soul-dim);
+}
+
+.soul__sign {
+  margin: var(--space-xs) 0 0;
+  font-family: var(--font-kana);
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  color: var(--accent);
+}
+
+/* Кнопка-пилюля под текстом вступления и финала — деталь с образца:
+   там такая же стоит под каждым текстовым блоком. */
+.soul__hint {
+  justify-self: start;
+}
+
+.soul__hint {
+  margin-top: var(--space-s);
+  color: var(--accent);
+  animation: soul-hint 2.8s var(--ease-in-out) infinite;
+}
+
+.soul__hint svg {
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@keyframes soul-hint {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateX(0.5rem);
+    opacity: 0.85;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .soul__hint {
+    animation: none;
+  }
+}
+
+/* ТЕКСТОВАЯ ПАНЕЛЬ ------------------------------------------------------
+   Прижата к нижнему краю экрана. Волосяная черта сверху — единственная
+   разметка, которая тут нужна: она отделяет текст от кадров, стоящих выше. */
+
+.verse {
+  position: relative;
+  flex: 0 0 auto;
+  align-self: end;
+  width: min(32rem, 78vw);
+  margin-bottom: clamp(3rem, 12svh, 8rem);
+  padding-top: var(--space-s);
+  border-top: 1px solid var(--soul-line);
+  display: grid;
+  gap: 0.7rem;
+}
+
+/* Кикер акцентом заглавными — на образце он стоит над каждым заголовком */
+.verse__num {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.verse__head {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 3.6vw, 3.25rem);
+  line-height: 0.98;
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--soul-text);
+}
+
+.verse__text {
+  display: grid;
+  gap: var(--space-xs);
+  margin-top: var(--space-2xs);
+}
+
+.verse__text p {
+  margin: 0;
+  font-size: clamp(0.98rem, 1.12vw, 1.12rem);
+  line-height: 1.75;
+  color: var(--soul-dim);
+}
+
+/* КАДРЫ ------------------------------------------------------------------
+   Прижаты к верхнему краю — против текстовых панелей, стоящих внизу.
+   Высоту задаём мы, ширину считает сам файл: ни один кадр не обрезается
+   и не растягивается. */
+
+.pieces {
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(1.25rem, 2.5vw, 3rem);
+  height: 100%;
+}
+
+.piece {
+  position: relative;
+  margin: 0;
+  align-self: flex-start;
+  margin-top: clamp(3rem, 10svh, 7rem);
+  display: grid;
+  gap: 0.75rem;
+}
+
+/* Часть кадров опущена ниже соседних: ряд из одинаково поднятых карточек
+   читался бы полкой, а не россыпью. */
+.piece--low,
+.piece--high {
+  margin-top: clamp(7rem, 26svh, 16rem);
+}
+
+/* Скруглённые карточки — как на образце. Тень мягкая и глубокая: карточки
+   лежат внахлёст, и без неё непонятно, какая поверх какой. */
+.piece > img,
+.piece > video {
+  display: block;
+  width: auto;
+  max-width: none;
+  border-radius: clamp(0.75rem, 1.1vw, 1.25rem);
+  background: var(--ink-raised);
+  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.55);
+}
+
+.piece--tall > img,
+.piece--tall > video {
+  height: 52vh;
+}
+
+.piece--portrait > img,
+.piece--portrait > video {
+  height: 46vh;
+}
+
+.piece--square > img,
+.piece--square > video {
+  height: 38vh;
+}
+
+.piece--wide > img,
+.piece--wide > video {
+  height: 34vh;
+}
+
+.piece--film > img,
+.piece--film > video {
+  height: 30vh;
+}
+
+/* Этикетка под кадром. Мелко и приглушённо: она подписывает, а не спорит. */
+.piece figcaption {
+  max-width: 22rem;
+  font-size: var(--step-small);
+  line-height: 1.6;
+  color: var(--soul-dim);
+}
+
+/* Финальная панель: заставка сверху, под ней прощание */
+.soul__end {
+  align-content: center;
+}
+
+.soul__end .piece {
+  margin-top: 0;
+  margin-bottom: var(--space-xs);
+}
+
+/* МОБИЛЬНЫЕ --------------------------------------------------------------- */
+
+@media (max-width: 860px) {
+  .promo__more--soul {
+    right: auto;
+    top: auto;
+  }
+
+  .soul__track {
+    gap: var(--space-m);
+    padding-inline: var(--gutter);
+  }
+
+  .soul__open,
+  .soul__end {
+    width: 84vw;
+  }
+
+  .verse {
+    width: 82vw;
+    margin-bottom: clamp(2rem, 8svh, 5rem);
+  }
+
+  .pieces {
+    gap: var(--space-s);
+  }
+
+  .piece {
+    margin-top: clamp(2rem, 8svh, 5rem);
+  }
+
+  .piece--low,
+  .piece--high {
+    margin-top: clamp(4rem, 16svh, 9rem);
+  }
+
+  .piece--tall > img,
+  .piece--tall > video {
+    height: 40vh;
+  }
+
+  .piece--portrait > img,
+  .piece--portrait > video {
+    height: 36vh;
+  }
+
+  .piece--square > img,
+  .piece--square > video {
+    height: 28vh;
+  }
+
+  .piece--wide > img,
+  .piece--wide > video {
+    height: 24vh;
+  }
+
+  .piece--film > img,
+  .piece--film > video {
+    height: 22vh;
+  }
+
+  .piece figcaption {
+    max-width: 70vw;
+  }
+}
+
+/* ЗАГОЛОВОК И ПОДПИСЬ НА КАРТОЧКЕ ------------------------------------------
+   Лежат в правой части кадра, по левому краю. Правее — пустая мокрая дорога,
+   и это единственное место снимка, где текст ничего не закрывает: слева
+   стоят обе машины, снизу отражения, сверху здание.
+
+   Кнопка идёт последней в том же блоке, а не отдельно на кадре: текст здесь
+   в четыре строки, и разложенные порознь они наезжали бы друг на друга
+   на узком окне. */
+.promo__pitch--soul {
+  position: absolute;
+  right: 4%;
+  top: 13%;
+  bottom: auto;
+  width: 34%;
+  display: grid;
+  justify-items: start;
+  gap: 0.55rem;
+  text-align: left;
+  text-shadow: 0 0.1em 1em rgba(0, 0, 0, 0.9);
+}
+
+.promo__pitch--soul p {
+  margin: 0;
+  font-size: clamp(0.9rem, 1.15vw, 1.15rem);
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.promo__kicker--soul {
+  font-family: var(--font-display);
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Кнопка в потоке блока, а не приклеена к кадру */
+.promo__more--soul {
+  position: static;
+  right: auto;
+  top: auto;
+  /* Кнопка отбита от текста заметно сильнее обычного: заказчик просил
+     опустить её ниже, а блок стоит на кадре, где под текстом пусто. */
+  margin-top: var(--space-s);
+  justify-self: start;
+  padding: 0.6rem 1.25rem;
+}
+
+@media (max-width: 860px) {
+  .promo__pitch--soul {
+    position: static;
+    width: 100%;
+    margin-top: var(--space-s);
+    text-shadow: none;
+  }
+
+  .promo__more--soul {
+    margin-top: var(--space-xs);
+  }
+}

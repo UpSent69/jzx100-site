@@ -1,15 +1,14 @@
 import gsap from "gsap";
 import Lenis from "lenis";
 import { ease, lenisInstance, reducedMotion } from "./motion.js";
-import { fadeVolume, onSoundChange, soundAllowed } from "./audio.js";
 
 /**
  * Второе пространство — «Keep it street». Открывается кнопкой с карточки
  * во второй чёрной паузе.
  *
  * Живёт рядом с первым, а не внутри него, и это осознанно. Общего у них
- * только оболочка: слой поверх страницы, своя прокрутка, ролики со звуком
- * по наведению. Всё остальное разное — там лента едет вбок, здесь развороты
+ * только оболочка: слой поверх страницы, своя прокрутка, ролики, которые
+ * идут сами. Всё остальное разное — там лента едет вбок, здесь развороты
  * идут сверху вниз, — и попытка свести оба в один настраиваемый модуль
  * означала бы переписать работающее первое пространство ради второго.
  * Дешевле держать их порознь.
@@ -215,61 +214,15 @@ export function initStreet(root) {
     clips.forEach((v) => io.observe(v));
   }
 
-  /* Звук по наведению — как в первом пространстве и на карточках страницы:
-     половина исходной громкости, ввод почти мгновенный, уход мягкий.
-     Кадр при уходе курсора продолжает идти — уходит только звук. */
-  const HOVER_DELAY = 120; // мс: без задержки при быстром проходе курсора ролики дёргаются
-  const FADE_IN = 120;
-  const FADE_OUT = 300;
-  const HOVER_VOLUME = 0.5;
-
-  let sounding = null;
-
-  const applySound = (v) => {
-    if (sounding !== v) return;
-    if (soundAllowed()) {
-      v.muted = false;
-      fadeVolume(v, HOVER_VOLUME, FADE_IN);
-    } else {
-      fadeVolume(v, 0, 0);
-      v.muted = true;
-    }
-  };
-
-  const hush = (v) => {
-    fadeVolume(v, 0, FADE_OUT);
-    // Заглушаем только после того, как громкость сошла: снять muted раньше —
-    // значит оборвать звук щелчком вместо того, чтобы дать ему угаснуть.
-    setTimeout(() => {
-      if (sounding !== v) v.muted = true;
-    }, FADE_OUT + 20);
-    if (sounding === v) sounding = null;
-  };
-
+  /* Здесь ролики немые. Наведение звук не включает и общий переключатель
+     на них не действует: развороты идут сплошной лентой, соседние кадры
+     стоят близко, и звук, включающийся под курсором, тут только мешает.
+     Глушим и в разметке, и здесь — чтобы браузер не начал воспроизведение
+     со звуком до того, как отработает скрипт. */
   clips.forEach((v) => {
     v.muted = true;
     v.volume = 0;
-    let timer = 0;
-
-    v.addEventListener("pointerenter", () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        // Звучать может только один ролик. Соседний глушим раньше,
-        // чем зазвучит этот.
-        if (sounding && sounding !== v) hush(sounding);
-        sounding = v;
-        applySound(v);
-      }, HOVER_DELAY);
-    });
-
-    v.addEventListener("pointerleave", () => {
-      clearTimeout(timer);
-      hush(v);
-    });
   });
-
-  // Звук переключили на лету — ролик под курсором должен отозваться сразу
-  onSoundChange(() => sounding && applySound(sounding));
 
   openers.forEach((b) => b.addEventListener("click", show));
   close?.addEventListener("click", hide);

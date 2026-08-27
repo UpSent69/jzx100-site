@@ -105,11 +105,70 @@ async function toCards(page) {
     !(await page.evaluate(() => document.body.hasAttribute("data-locked")))
   );
 
-  // Ролики ведёт прокрутка: положение в ролике должно повторять положение
-  // на странице и отматываться назад вместе с ней.
+  // Плеер и фоновая музыка. Проверяем здесь, а не вместе с остальным звуком
+  // ниже: сюда мы приходим сразу после входа, курсор ещё ни на чём не стоит
+  // и ничто не держит музыку приглушённой.
+  await sleep(1200);
+  const music = await page.evaluate(() => {
+    const a = window.__music;
+    const pl = document.querySelector("[data-player]");
+    return {
+      есть: !!a,
+      играет: a ? !a.paused : false,
+      громкость: a ? +a.volume.toFixed(2) : 0,
+      трек: a ? (a.currentSrc || "").split("/").pop() : "",
+      название: pl.querySelector("[data-player-name]").textContent.trim(),
+      длина: pl.querySelector("[data-player-len]").textContent,
+      обложка: !!pl.querySelector("[data-player-cover]")?.complete,
+      угла_справа_нет: !document.querySelector(".dock"),
+    };
+  });
+  check("фоновая музыка идёт после входа", music.есть && music.играет,
+    `трек ${music.трек}, громкость ${music.громкость}`);
+  check("в плеере есть обложка, название и длительность",
+    music.обложка && music.название.length > 3 && /^[0-9]+:[0-9]{2}$/.test(music.длина),
+    `${music.название} - ${music.длина}`);
+  check("угол звука справа убран", music.угла_справа_нет);
+
+  // Через десять секунд без движения в зоне плеера он сжимается в кружок.
+  // Ждём двенадцать: переход занимает треть секунды, плюс запас.
+  const folded = await page.evaluate(async () => {
+    const el = document.querySelector("[data-player]");
+    await new Promise((r) => setTimeout(r, 12000));
+    const st = getComputedStyle(el);
+    const r = el.getBoundingClientRect();
+    return {
+      сжат: el.dataset.idle === "true",
+      круглый: st.borderRadius.startsWith("999"),
+      квадрат: Math.abs(r.width - r.height) < 2 && r.width < 60,
+      прозрачный: +st.opacity < 0.6,
+      треугольник: +getComputedStyle(el.querySelector(".player__bubble")).opacity > 0.9,
+      музыка: !window.__music.paused,
+    };
+  });
+  check("через десять секунд плеер сжимается в кружок",
+    folded.сжат && folded.круглый && folded.квадрат && folded.треугольник);
+  check("свёрнутый кружок полупрозрачен", folded.прозрачный);
+  check("свёрнутый плеер музыку не останавливает", folded.музыка);
+
+  const unfolded = await page.evaluate(async () => {
+    const el = document.querySelector("[data-player]");
+    el.dispatchEvent(new PointerEvent("pointerenter", { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 900));
+    const r = el.getBoundingClientRect();
+    return { сжат: el.dataset.idle === "true", высота: Math.round(r.height), ширина: Math.round(r.width) };
+  });
+  check("наведение разворачивает плеер обратно",
+    !unfolded.сжат && unfolded.высота > 100 && unfolded.ширина > 200,
+    `${unfolded.ширина}x${unfolded.высота}`);
+
+  // Ролик первого экрана ведёт прокрутка: положение в ролике должно повторять
+  // положение на странице и отматываться назад вместе с ней.
+  //
+  // Третьего экрана в этом списке больше нет: там теперь петля, а не перемотка,
+  // и проверяется она ниже — по другому признаку.
   for (const [label, name, sel, from, to] of [
     ["первый экран", "hero", "[data-hero-video]", 0.55, 0.95],
-    ["третий экран", "motion", "[data-motion-video]", 0.35, 0.95],
   ]) {
     const seen = [];
     for (const r of [from, to, from]) {
@@ -125,6 +184,28 @@ async function toCards(page) {
     check(`ролик ${label} не проигрывается сам`,
       await page.evaluate((s) => document.querySelector(s).paused, sel));
   }
+
+  // Третий экран: ролик идёт петлёй, пока сцена в окне, и встаёт за её
+  // пределами. Прокрутка его не перематывает — по ней проверять нечего,
+  // проверяем ровно то, чем петля отличается от перемотки: он играет сам
+  // и время в нём растёт без участия скролла.
+  await scrollWithin(page, "motion", 0.4);
+  await sleep(1600);
+  const loop = await page.evaluate(async () => {
+    const v = document.querySelector("[data-motion-video]");
+    const was = v.currentTime;
+    await new Promise((r) => setTimeout(r, 1200));
+    return { играет: !v.paused, петля: v.loop, беззвучно: v.muted,
+             прирост: +(v.currentTime - was).toFixed(2) };
+  });
+  check("ролик третьего экрана идёт сам", loop.играет && loop.прирост > 0.5,
+    `за 1.2 с прошло ${loop.прирост} с`);
+  check("ролик третьего экрана зациклен и беззвучен", loop.петля && loop.беззвучно);
+
+  await scrollWithin(page, "hero", 0.2);
+  await sleep(1600);
+  check("за пределами экрана ролик встаёт",
+    await page.evaluate(() => document.querySelector("[data-motion-video]").paused));
 
   await toCards(page);
   await sleep(1600);
@@ -307,12 +388,22 @@ async function toCards(page) {
     await new Promise((r) => setTimeout(r, 600));
     return { on, off: { paused: vis.paused, volume: +vis.volume.toFixed(2) } };
   });
-  check("ролик в пространстве звучит под курсором",
-    !!sound && !sound.on.muted && sound.on.volume > 0.4,
-    sound ? `громкость ${sound.on.volume}` : "видимого ролика не нашлось");
-  check("уход курсора снимает звук, но не кадр",
-    !!sound && sound.off.paused === false && sound.off.volume < 0.05,
-    sound ? `пауза ${sound.off.paused}, громкость ${sound.off.volume}` : "");
+  // Здесь ролики немые по решению заказчика: наведение звук не включает.
+  check("ролик в пространстве остаётся немым под курсором",
+    !!sound && sound.on.muted === true && sound.on.volume === 0,
+    sound ? `muted ${sound.on.muted}, громкость ${sound.on.volume}` : "видимого ролика не нашлось");
+  check("уход курсора кадр не останавливает",
+    !!sound && sound.off.paused === false,
+    sound ? `пауза ${sound.off.paused}` : "");
+
+  const playerHere = await page.evaluate(() => {
+    const pl = document.querySelector("[data-player]");
+    pl.dispatchEvent(new PointerEvent("pointerenter", { bubbles: true }));
+    const r = document.querySelector(".player__btn--play").getBoundingClientRect();
+    const el = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+    return !!el && !!el.closest(".player");
+  });
+  check("плеер доступен и в этом пространстве", playerHere);
 
 
   await page.keyboard.press("Escape");
@@ -325,6 +416,328 @@ async function toCards(page) {
   check("Escape закрывает второе пространство", back.hidden && !back.locked);
   check("после закрытия страница на том же месте", Math.abs(back.y - wasAt) < 40,
     `было ${wasAt}, стало ${back.y}`);
+
+
+
+  // --- микшер громкости ---
+  //
+  // Проверяем главное: общий уровень множится на то, что просит вызывающая
+  // сторона, а не заменяет его. Карточка под курсором просит половину
+  // громкости; при уровне 40% должно получиться 0.2, а не 0.4 — иначе
+  // соотношение между наведением и раскрытой карточкой поехало бы.
+  await page.evaluate(() => {
+    const r = document.querySelector("[data-sound-volume]");
+    r.value = "40";
+    r.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+  await sleep(300);
+  check("уровень громкости запоминается",
+    (await page.evaluate(() => localStorage.getItem("markii:volume"))) === "0.4");
+
+  await toCards(page);
+  await sleep(1600);
+  const mixed = await page.evaluate(async () => {
+    const v = document.querySelector(".card video");
+    v.closest(".card").dispatchEvent(new PointerEvent("pointerenter", { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 700));
+    return { muted: v.muted, volume: +v.volume.toFixed(3) };
+  });
+  check("общий уровень множится, а не заменяет", !mixed.muted && Math.abs(mixed.volume - 0.2) < 0.02,
+    `громкость ${mixed.volume} при половине от 40%`);
+
+  const zero = await page.evaluate(async () => {
+    const r = document.querySelector("[data-sound-volume]");
+    r.value = "0";
+    r.dispatchEvent(new Event("input", { bubbles: true }));
+    await new Promise((x) => setTimeout(x, 300));
+    return document.querySelector("[data-sound-toggle]").dataset.on;
+  });
+  check("ноль на ползунке выключает звук", zero === "false");
+
+  const backUp = await page.evaluate(async () => {
+    const r = document.querySelector("[data-sound-volume]");
+    r.value = "100";
+    r.dispatchEvent(new Event("input", { bubbles: true }));
+    await new Promise((x) => setTimeout(x, 300));
+    return document.querySelector("[data-sound-toggle]").dataset.on;
+  });
+  check("шаг вверх с нуля возвращает звук", backUp === "true");
+
+  // --- третье пространство, «Культ JDM» ---
+  //
+  // Проверяем то, чего не видно на снимке: что фон и ролики не уходят в сеть,
+  // пока кнопку не нажали; что фон идёт, пока слой открыт, и встаёт вместе
+  // с ним — иначе он крутился бы за закрытым пространством всю остальную
+  // страницу; что лента едет вбок и что звук по наведению ведёт себя
+  // как везде.
+  await page.evaluate(() => {
+    const el = document.querySelector(".promo--cult");
+    const r = el.getBoundingClientRect();
+    const y = r.top + window.scrollY - (window.innerHeight - r.height) / 2;
+    window.__lenis ? window.__lenis.scrollTo(y, { immediate: true }) : window.scrollTo(0, y);
+  });
+  await sleep(1400);
+
+  const cultCold = await page.evaluate(() =>
+    [...document.querySelectorAll("[data-cult-bg], [data-cult-video]")]
+      .filter((v) => v.getAttribute("src")).length
+  );
+  check("материалы третьего пространства не грузятся заранее", cultCold === 0,
+    `с адресом: ${cultCold}`);
+
+  await page.click("button[data-cult-open]");
+  await sleep(1800);
+
+  const cult = await page.evaluate(() => {
+    const r = document.querySelector("[data-cult]");
+    const bg = document.querySelector("[data-cult-bg]");
+    return {
+      shown: !r.hidden && +getComputedStyle(r).opacity > 0.95,
+      locked: document.body.dataset.locked === "true",
+      loaded: [...document.querySelectorAll("[data-cult-bg], [data-cult-video]")]
+        .filter((v) => v.getAttribute("src")).length,
+      total: document.querySelectorAll("[data-cult-bg], [data-cult-video]").length,
+      bgPlays: !bg.paused,
+      focused: document.activeElement?.hasAttribute?.("data-cult-close") === true,
+    };
+  });
+  check("третье пространство открывается", cult.shown);
+  check("за третьим пространством страница заперта", cult.locked);
+  check("материалы третьего пространства подтянулись при открытии",
+    cult.loaded === cult.total, `${cult.loaded} из ${cult.total}`);
+  check("фон третьего пространства идёт", cult.bgPlays);
+  check("фокус уходит на кнопку закрытия третьего пространства", cult.focused);
+
+  const cultRide = await page.evaluate(async () => {
+    const t = document.querySelector("[data-cult-track]");
+    window.__cultRail.scrollTo(Math.round(t.scrollWidth * 0.45), { immediate: true });
+    await new Promise((r) => setTimeout(r, 900));
+    return Math.round(window.__cultRail.scroll);
+  });
+  check("лента третьего пространства едет вбок", cultRide > 1000, `на ${cultRide}px`);
+
+  // Подводим к первому ролику, а не ищем хоть какой-то видимый на глазок:
+  // доля ленты — величина ненадёжная, ролики лежат в развалах между
+  // текстовыми панелями, и середина ленты приходится ровно на текст.
+  await page.evaluate(async () => {
+    const v = document.querySelector("[data-cult-video]");
+    const box = v.closest(".slab") || v;
+    // offsetLeft здесь врёт: у карточки свой позиционированный предок,
+    // и отсчёт идёт от него, а не от начала ленты. Меряем от ленты напрямую.
+    const t = document.querySelector("[data-cult-track]");
+    const r = box.getBoundingClientRect();
+    const at = r.left - t.getBoundingClientRect().left + r.width / 2 - innerWidth / 2;
+    window.__cultRail.scrollTo(at, { immediate: true });
+    await new Promise((r) => setTimeout(r, 700));
+  });
+  await sleep(600);
+
+  const cultSound = await page.evaluate(async () => {
+    const vis = [...document.querySelectorAll("[data-cult-video]")].find((v) => {
+      const r = v.getBoundingClientRect();
+      return r.right > 0 && r.left < innerWidth;
+    });
+    if (!vis) return null;
+    vis.dispatchEvent(new PointerEvent("pointerenter", { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 500));
+    const on = { muted: vis.muted, volume: +vis.volume.toFixed(2) };
+    vis.dispatchEvent(new PointerEvent("pointerleave", { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 600));
+    return { on, off: { paused: vis.paused, volume: +vis.volume.toFixed(2) } };
+  });
+  check("ролик третьего пространства звучит под курсором",
+    !!cultSound && !cultSound.on.muted && cultSound.on.volume > 0.4,
+    cultSound ? `громкость ${cultSound.on.volume}` : "видимого ролика не нашлось");
+  check("уход курсора снимает звук, но не кадр",
+    !!cultSound && cultSound.off.paused === false && cultSound.off.volume < 0.05);
+
+  await page.keyboard.press("Escape");
+  await sleep(900);
+  const cultShut = await page.evaluate(() => ({
+    hidden: document.querySelector("[data-cult]").hidden,
+    locked: document.body.dataset.locked === "true",
+    bgPaused: document.querySelector("[data-cult-bg]").paused,
+  }));
+  check("Escape закрывает третье пространство", cultShut.hidden && !cultShut.locked);
+  check("фон встаёт вместе с закрытым пространством", cultShut.bgPaused);
+
+  // --- пятое пространство, «Самурай в цветах сакуры» ---
+
+  const sakuCold = await page.evaluate(
+    () =>
+      [...document.querySelectorAll("[data-saku-video]")].filter((v) => v.getAttribute("src"))
+        .length
+  );
+  check("материалы пятого пространства не грузятся заранее", sakuCold === 0,
+    `подтянулось ${sakuCold}`);
+
+  await page.click("button[data-saku-open]");
+  await sleep(1800);
+
+  const saku = await page.evaluate(() => {
+    const r = document.querySelector("[data-saku]");
+    const clips = [...document.querySelectorAll("[data-saku-video]")];
+    return {
+      shown: !r.hidden && +getComputedStyle(r).opacity > 0.9,
+      locked: document.body.dataset.locked === "true",
+      loaded: clips.filter((v) => v.getAttribute("src")).length,
+      total: clips.length,
+      focused: document.activeElement?.hasAttribute?.("data-saku-close") === true,
+      start: Math.round(window.__sakuRail.scroll),
+    };
+  });
+  check("пятое пространство открывается", saku.shown);
+  check("за пятым пространством страница заперта", saku.locked);
+  check("ролики пятого пространства подтянулись при открытии",
+    saku.loaded === saku.total, `${saku.loaded} из ${saku.total}`);
+  check("фокус уходит на кнопку закрытия пятого пространства", saku.focused);
+  check("пятое пространство открывается с начала", saku.start === 0);
+
+  const sakuRide = await page.evaluate(async () => {
+    const flow = document.querySelector("[data-saku-flow]");
+    window.__sakuRail.scrollTo(Math.round(flow.scrollHeight * 0.4), { immediate: true });
+    await new Promise((r) => setTimeout(r, 900));
+    return Math.round(window.__sakuRail.scroll);
+  });
+  check("лента пятого пространства едет вниз", sakuRide > 1000, `на ${sakuRide}px`);
+
+  // Разделов здесь семь видов, и каждый должен занимать своё место, а не
+  // схлопываться в ноль: проверка ловит как раз это - например, когда класс
+  // раздела совпал с чужим и его забрали себе чужие правила.
+  const sakuBoxes = await page.evaluate(() =>
+    [".gate", ".column", ".fan", ".crest", ".pair", ".strip", ".saku__end"].map(
+      (sel) => ({ sel, h: document.querySelector(sel)?.offsetHeight || 0 })
+    )
+  );
+  const flat = sakuBoxes.filter((b) => b.h < 300);
+  check("все разделы пятого пространства стоят в полный рост", flat.length === 0,
+    flat.map((b) => `${b.sel} ${b.h}px`).join(", "));
+
+  // Ни один кадр не обрезан и не растянут: у ленты и веера это делает
+  // контейнер, а вот у ролика и крупных кадров ширину считает сам файл.
+  const sakuFit = await page.evaluate(() => {
+    const v = document.querySelector(".gate__media--clip video");
+    const box = v.getBoundingClientRect();
+    return {
+      родное: +(v.videoWidth / v.videoHeight).toFixed(2),
+      показ: +(box.width / box.height).toFixed(2),
+    };
+  });
+  check("ролик пятого пространства идёт в своих пропорциях",
+    Math.abs(sakuFit.родное - sakuFit.показ) < 0.02,
+    `файл ${sakuFit.родное}, на экране ${sakuFit.показ}`);
+
+  const sakuSound = await page.evaluate(async () => {
+    // Оба ролика теперь стоят во вступлении, рядом. Звук по наведению есть
+    // только у второго - первый фоновый и молчит всегда.
+    const solo = document.querySelector(".gate__media--clip video");
+    window.__sakuRail.scrollTo(0, { immediate: true });
+    await new Promise((r) => setTimeout(r, 1400));
+    solo.dispatchEvent(new PointerEvent("pointerenter", { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 600));
+    const on = { muted: solo.muted, v: +solo.volume.toFixed(2) };
+    solo.dispatchEvent(new PointerEvent("pointerleave", { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 700));
+    const off = { v: +solo.volume.toFixed(2), playing: !solo.paused };
+    // Не просто .gate__media video: у ролика ленты тот же класс, и в разметке
+    // он стоит первым - выборка без уточнения возвращала бы как раз его.
+    const intro = document.querySelector(".gate__media:not(.gate__media--clip) video");
+    intro.dispatchEvent(new PointerEvent("pointerenter", { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 600));
+    const res = { on, off, introVolume: +intro.volume.toFixed(2), introMuted: intro.muted };
+    // Курсор обязательно уводим: брошенное наведение держит музыку
+    // приглушённой, и следующие проверки мерили бы уже последствия этой.
+    intro.dispatchEvent(new PointerEvent("pointerleave", { bubbles: true }));
+    await new Promise((r) => setTimeout(r, 500));
+    return res;
+  });
+  check("ролик пятого пространства звучит под курсором",
+    !sakuSound.on.muted && sakuSound.on.v > 0.4, `громкость ${sakuSound.on.v}`);
+  check("уход курсора снимает звук, но не кадр",
+    sakuSound.off.v < 0.05 && sakuSound.off.playing);
+  check("ролик вступления тоже звучит под курсором",
+    !sakuSound.introMuted && sakuSound.introVolume > 0.4,
+    `громкость ${sakuSound.introVolume}`);
+
+  await page.keyboard.press("Escape");
+  await sleep(900);
+  const sakuShut = await page.evaluate(() => ({
+    hidden: document.querySelector("[data-saku]").hidden,
+    locked: document.body.dataset.locked === "true",
+  }));
+  check("Escape закрывает пятое пространство", sakuShut.hidden && !sakuShut.locked);
+
+  // --- плеер и фоновая музыка ---
+
+  // Звук выше по ходу выключали и включали обратно; здесь только убеждаемся,
+  // что он включён, и снимаем браузерный запрет - после перезагрузки страницы,
+  // которая была выше, он снова стоит.
+  await page.evaluate(() => {
+    const b = document.querySelector("[data-sound-toggle]");
+    if (b.dataset.on === "true") b.click();
+    b.click();
+  });
+  await sleep(1500);
+
+  // Ролик под курсором глушит музыку, и после ухода она продолжается с того
+  // же места. «С того же» проверяем так: пауза случилась на секунде X,
+  // и через t секунд после возврата время должно быть около X + t.
+  await toCards(page);
+  await page.hover("[data-card]");
+  await sleep(900);
+  const ducked = await page.evaluate(() => ({
+    стоит: window.__music.paused,
+    громкость: +window.__music.volume.toFixed(2),
+    момент: window.__music.currentTime,
+  }));
+  check("под курсором ролика музыка отходит", ducked.стоит && ducked.громкость < 0.05,
+    `пауза ${ducked.стоит}, громкость ${ducked.громкость}`);
+
+  await page.mouse.move(10, 10);
+  await sleep(1400);
+  const resumed = await page.evaluate(() => ({
+    играет: !window.__music.paused,
+    громкость: +window.__music.volume.toFixed(2),
+    момент: window.__music.currentTime,
+  }));
+  const drift = Math.abs(resumed.момент - ducked.момент - 1.4);
+  check("после ухода курсора музыка продолжается с того же места",
+    resumed.играет && resumed.громкость > 0.2 && drift < 0.7,
+    `${ducked.момент.toFixed(2)} → ${resumed.момент.toFixed(2)} c`);
+
+  const buttons = await page.evaluate(async () => {
+    const now = () => (window.__music.currentSrc || "").split("/").pop();
+    document.querySelector("[data-player-next]").click();
+    await new Promise((r) => setTimeout(r, 1200));
+    const next = now();
+    document.querySelector("[data-player-prev]").click();
+    await new Promise((r) => setTimeout(r, 1200));
+    const back = now();
+    document.querySelector("[data-player-play]").click();
+    await new Promise((r) => setTimeout(r, 800));
+    const stopped = window.__music.paused;
+    document.querySelector("[data-player-play]").click();
+    await new Promise((r) => setTimeout(r, 900));
+    return { next, back, stopped, снова: !window.__music.paused };
+  });
+  check("кнопки вперёд и назад переключают трек",
+    buttons.next !== buttons.back, `${buttons.back} → ${buttons.next}`);
+  check("кнопка стоп останавливает и запускает музыку",
+    buttons.stopped && buttons.снова);
+
+  const musicMix = await page.evaluate(async () => {
+    const r = document.querySelector("[data-sound-volume]");
+    r.value = "40";
+    r.dispatchEvent(new Event("input", { bubbles: true }));
+    await new Promise((x) => setTimeout(x, 700));
+    const v = +window.__music.volume.toFixed(2);
+    r.value = "100";
+    r.dispatchEvent(new Event("input", { bubbles: true }));
+    await new Promise((x) => setTimeout(x, 700));
+    return { на40: v, на100: +window.__music.volume.toFixed(2) };
+  });
+  check("ползунок ведёт и музыку", musicMix.на40 < musicMix.на100 && musicMix.на40 > 0,
+    `40% → ${musicMix.на40}, 100% → ${musicMix.на100}`);
 
   // Открывать должна вся иллюстрация, а не только кнопка на ней.
   for (const [name, card, layer] of [
@@ -341,6 +754,33 @@ async function toCards(page) {
     await page.keyboard.press("Escape");
     await sleep(700);
   }
+
+  // Звук должен быть доступен внутри каждого пространства: там звучат ролики,
+  // и там же играет фоновая музыка. Копий плеера в слоях нет — он один
+  // и всплывает над открытым слоем, поэтому проверяем не наличие в разметке,
+  // а то, что нажатие в его точке достаётся именно ему, а не слою сверху.
+  for (const [label, opener, layer] of [
+    ["первом", "[data-space-open]", "[data-space]"],
+    ["втором", "button[data-street-open]", "[data-street]"],
+    ["третьем", "button[data-cult-open]", "[data-cult]"],
+    ["пятом", "button[data-saku-open]", "[data-saku]"],
+  ]) {
+    await page.evaluate((sel) => document.querySelector(sel).click(), opener);
+    await sleep(1500);
+    const reach = await page.evaluate((l) => {
+      // Плеер к этому времени мог свернуться в кружок - тогда кнопки в нём
+      // не нажать. Будим его, как это сделал бы курсор.
+      const pl = document.querySelector("[data-player]");
+      pl.dispatchEvent(new PointerEvent("pointerenter", { bubbles: true }));
+      const r = document.querySelector(".sound").getBoundingClientRect();
+      const el = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+      return { open: !document.querySelector(l).hidden, hit: !!el && !!el.closest(".player") };
+    }, layer);
+    check(`плеер доступен в ${label} пространстве`, reach.open && reach.hit);
+    await page.keyboard.press("Escape");
+    await sleep(800);
+  }
+
 
   // Подключённый браузер закрывать нельзя — он не наш: гасим только страницу.
   if (REMOTE) { await page.close(); await browser.disconnect(); }

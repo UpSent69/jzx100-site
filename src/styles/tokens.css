@@ -25,7 +25,9 @@
   --step-title: clamp(2.25rem, 6vw, 5rem);
   --step-lead: clamp(1.25rem, 2.1vw, 1.75rem);
   --step-body: clamp(1rem, 1.15vw, 1.125rem);
-  --step-small: 0.8125rem;
+  /* Подписи, катакана, номера и метки. Было 0.8125rem - на большом экране
+     это читалось с трудом, особенно светло-серым по тёмному. */
+  --step-small: 0.9375rem;
 
   --leading-tight: 0.92;
   --leading-title: 1.05;

@@ -252,9 +252,19 @@ export function initSpace(root) {
     if (sounding === v) sounding = null;
   };
 
+  /* Фоновый ролик вступления в этот список не попадает: у него в разметке
+     стоит data-chapter-quiet. Он лежит во весь экран за текстом, курсор над
+     ним почти всё время, и наведение включало бы «звук» там, где звуковой
+     дорожки нет вовсе. Слышно от этого ничего не становилось, а фоновая
+     музыка честно отходила и не возвращалась, пока курсор не уйдёт с экрана. */
+  const voiced = clips.filter((v) => !v.hasAttribute("data-chapter-quiet"));
+
   clips.forEach((v) => {
     v.muted = true;
     v.volume = 0;
+  });
+
+  voiced.forEach((v) => {
     let timer = 0;
 
     v.addEventListener("pointerenter", () => {

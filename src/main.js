@@ -10,11 +10,15 @@ import "./styles/screen-hero.css";
 import "./styles/screens.css";
 import "./styles/promo.css";
 import "./styles/street.css";
+import "./styles/cult.css";
+import "./styles/soul.css";
+import "./styles/sakura.css";
+import "./styles/player.css";
 import "./styles/chrome.css";
 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { initScroll, fadeScene } from "./js/motion.js";
-import { initSoundToggle, unlockSound } from "./js/audio.js";
+import { initSoundMixer, initSoundToggle, unlockSound } from "./js/audio.js";
 import { initPreloader } from "./js/preloader.js";
 import { initHero } from "./js/hero.js";
 import { initJzx100 } from "./js/jzx100.js";
@@ -24,6 +28,10 @@ import { initReading } from "./js/reading.js";
 import { initFinal } from "./js/final.js";
 import { initSpace } from "./js/space.js";
 import { initStreet } from "./js/street.js";
+import { initCult } from "./js/cult.js";
+import { initSoul } from "./js/soul.js";
+import { initMusic } from "./js/music.js";
+import { initSaku } from "./js/sakura.js";
 
 initScroll();
 
@@ -61,7 +69,12 @@ scenes.forEach(([name, sel, opts]) => {
 
 initSpace(document.querySelector("[data-space]"));
 initStreet(document.querySelector("[data-street]"));
+initCult(document.querySelector("[data-cult]"));
+initSoul(document.querySelector("[data-soul]"));
+initSaku(document.querySelector("[data-saku]"));
+initMusic(document.querySelector("[data-player]"));
 initSoundToggle(document.querySelector("[data-sound-toggle]"));
+initSoundMixer(document.querySelector("[data-sound-volume]"));
 initPreloader(document.querySelector("[data-preloader]"));
 
 // Разрешение на звук снимает кнопка входа на прелоадере. Но прелоадер можно

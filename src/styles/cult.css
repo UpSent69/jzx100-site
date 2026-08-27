@@ -1,0 +1,537 @@
+/* ТРЕТЬЕ ПРОСТРАНСТВО — «Культ JDM».
+   -------------------------------------------------------------------------
+   Едет вбок одной лентой, как первое: приём тот же. Всё остальное другое.
+
+   Фон один на всю ленту и живой — ролик под всем содержимым. Он притушен
+   двумя слоями завесы, а не фильтром: filter: blur на видео во весь экран
+   пересчитывается каждый кадр и стоит сцене половины частоты. Плоская завеса
+   складывается композитором один раз и не стоит ничего.
+
+   Раскладка держится на разной ширине панелей и на разбросе кадров по высоте.
+   В первом пространстве все разделы ровно в экран, а кадры лежат галереями
+   по два-три в ряд; здесь узкие текстовые панели чередуются с широкими
+   развалами, и в каждом развале кадры стоят на разной высоте.
+
+   Дерзость темы держат три вещи: заглавные в узком гротеске, акцент,
+   которого здесь заметно больше, чем на остальном сайте, и жёсткие края —
+   ни одного скругления. */
+
+/* ПАУЗА С ДВУМЯ КАРТОЧКАМИ -------------------------------------------------
+   На одном чёрном слайде теперь две карточки перехода, одна под другой,
+   как на присланном образце. Пауза от этого выше экрана — на образце так же.
+   Каждая карточка немного уже прежней: две подряд во весь размер
+   не помещались бы даже на широком мониторе. */
+.gap--promo-street {
+  gap: clamp(1.5rem, 4svh, 3.5rem);
+}
+
+/* Шире и ниже, чем пропорции файла: на образце карточки вытянуты
+   по горизонтали, и заказчик просил так же. Кадр от этого обрезается
+   сверху и снизу — на обеих иллюстрациях там пустое небо и асфальт,
+   ничего важного. */
+.gap--promo-street .promo {
+  width: min(76vw, 92rem, calc(40svh * 22 / 10));
+  aspect-ratio: 22 / 10;
+}
+
+.gap--promo-street .promo__frame,
+.gap--promo-street .promo__art {
+  height: 100%;
+}
+
+.gap--promo-street .promo__art {
+  object-fit: cover;
+  object-position: 50% 46%;
+}
+
+/* КАРТОЧКА ТРЕТЬЕГО ПРОСТРАНСТВА ------------------------------------------
+   Текст лежит на кадре, как у соседней, но в другом углу и по левому краю:
+   у соседней он справа и выключен вправо, и две одинаковые раскладки подряд
+   читались бы как одна повторённая. Правая треть этого кадра — пустая ночная
+   дорога, единственное место, где ничего не закрывается. */
+.promo__pitch--cult {
+  position: absolute;
+  right: 5%;
+  top: 15%;
+  bottom: auto;
+  width: 36%;
+  display: grid;
+  justify-items: start;
+  gap: 0.6rem;
+  text-align: left;
+  text-shadow: 0 0.1em 1em rgba(0, 0, 0, 0.9);
+}
+
+.promo__pitch--cult p {
+  margin: 0;
+  font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+  line-height: 1.65;
+  color: var(--text-dim);
+}
+
+/* Плашка вместо подписи: единственное залитое акцентом пятно на всей
+   странице — оно и задаёт тон третьему пространству ещё до входа в него. */
+.promo__chip {
+  padding: 0.3em 0.7em;
+  font-family: var(--font-display);
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  /* Была заливка во весь прямоугольник — самое громкое оранжевое пятно
+     на странице. Заказчик просил оранжевого меньше, но заголовки оставить:
+     остался цвет букв, ушла плашка под ними. */
+  color: var(--accent);
+}
+
+.promo__head {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.05rem, 1.6vw, 1.6rem) !important;
+  line-height: 1.1;
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--text) !important;
+}
+
+/* Кнопка идёт в потоке текстового блока, а не отдельно на кадре */
+.promo__more--cult {
+  position: static;
+  margin-top: 0.4rem;
+  justify-self: start;
+  padding: 0.6rem 1.25rem;
+}
+
+/* СЛОЙ --------------------------------------------------------------- */
+
+.cult {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-space);
+  overflow: hidden;
+  opacity: 0;
+  background: var(--ink);
+}
+
+.cult[hidden] {
+  display: none;
+}
+
+/* Фон ленты. Лежит под содержимым и не едет вместе с ним. Небольшое
+   увеличение — чтобы по краям не показалась кромка при разной пропорции
+   окна и файла. */
+.cult__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.04);
+}
+
+/* Две завесы вместо фильтра. Плоская гасит фон до уровня, на котором он
+   перестаёт спорить с текстом; вторая, лучом от центра, оставляет по краям
+   чуть больше темноты, чем в середине, — так лента не выглядит равномерно
+   засвеченной. */
+.cult__veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-color: rgba(6, 7, 9, 0.58);
+  background-image: radial-gradient(
+    120% 90% at 50% 50%,
+    rgba(6, 7, 9, 0) 0%,
+    rgba(6, 7, 9, 0.45) 100%
+  );
+}
+
+.cult__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding: clamp(1rem, 2.4vh, 1.75rem) var(--gutter);
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(6, 7, 9, 0.78) 0%,
+    rgba(6, 7, 9, 0.36) 52%,
+    rgba(6, 7, 9, 0) 100%
+  );
+}
+
+.cult__brand {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(0.9rem, 1.4vw, 1.15rem);
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.cult__brand span {
+  font-weight: 400;
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  color: var(--accent);
+}
+
+.cult__close {
+  pointer-events: auto;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--line);
+  color: var(--text-dim);
+  background: rgba(8, 9, 11, 0.6);
+  backdrop-filter: blur(8px);
+  transition: color var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out);
+}
+
+.cult__close svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.cult__close:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+/* ЛЕНТА -------------------------------------------------------------- */
+
+.cult__scroll {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Ширину задаёт содержимое: панели здесь разной ширины, и в этом половина
+   отличия от первого пространства, где все разделы ровно в экран. */
+.cult__track {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  width: max-content;
+  gap: clamp(3rem, 7vw, 9rem);
+  padding-inline: clamp(3rem, 9vw, 12rem);
+}
+
+/* ВСТУПЛЕНИЕ И ФИНАЛ -------------------------------------------------- */
+
+.cult__open,
+.cult__end {
+  position: relative;
+  flex: 0 0 auto;
+  width: min(48rem, 84vw);
+  display: grid;
+  align-content: center;
+  gap: var(--space-xs);
+}
+
+.cult__kana {
+  margin: 0;
+  font-family: var(--font-kana);
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  color: var(--accent);
+}
+
+.cult__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(3rem, 8vw, 7rem);
+  line-height: 0.94;
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.cult__title--end {
+  font-size: clamp(2rem, 4.6vw, 3.75rem);
+  line-height: 1.02;
+}
+
+/* Крупнее и светлее, чем в остальных пространствах: заказчик просил
+   сделать текст заметнее, а лежит он здесь не на чёрном фоне, а на живом
+   кадре — приглушённый серый на нём просто тонул. */
+.cult__lead {
+  margin: 0;
+  max-width: 36rem;
+  font-size: clamp(1.15rem, 1.6vw, 1.6rem);
+  line-height: 1.55;
+  color: var(--text);
+}
+
+.cult__lead--dim {
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  line-height: 1.7;
+  color: #b9bcc3;
+}
+
+.cult__sign {
+  margin: var(--space-xs) 0 0;
+  font-family: var(--font-kana);
+  font-size: clamp(1.25rem, 2.2vw, 2rem);
+  letter-spacing: 0.3em;
+  color: var(--accent);
+}
+
+/* Стрелка вбок: лента едет боком, и без подсказки это не очевидно */
+.cult__hint {
+  margin-top: var(--space-s);
+  color: var(--text-faint);
+  animation: cult-hint 2.6s var(--ease-in-out) infinite;
+}
+
+.cult__hint svg {
+  display: block;
+  width: 1.75rem;
+  height: 1.75rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@keyframes cult-hint {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translateX(0.5rem);
+    opacity: 0.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cult__hint {
+    animation: none;
+  }
+}
+
+/* ТЕКСТОВАЯ ПАНЕЛЬ ---------------------------------------------------- */
+
+.leaf {
+  position: relative;
+  flex: 0 0 auto;
+  align-self: center;
+  width: min(38rem, 78vw);
+  display: grid;
+  gap: 0.75rem;
+}
+
+.leaf__num {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  color: var(--accent);
+}
+
+.leaf__head {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.1rem, 4vw, 3.6rem);
+  line-height: 1.02;
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.leaf__quote {
+  margin: var(--space-2xs) 0 var(--space-xs);
+  max-width: 22ch;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.15rem, 1.75vw, 1.6rem);
+  line-height: 1.22;
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.leaf__text {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.leaf__text p {
+  margin: 0;
+  font-size: clamp(1rem, 1.15vw, 1.15rem);
+  line-height: 1.75;
+  color: #b9bcc3;
+}
+
+/* РАЗВАЛ С КАДРАМИ ---------------------------------------------------- */
+
+/* Кадры не выстроены в ряд, а разбросаны по высоте: один прижат к верху,
+   другой к низу, третий стоит по центру. */
+.rack {
+  position: relative;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 3.5vw, 4rem);
+  height: 100%;
+}
+
+.rack--tight {
+  gap: clamp(1rem, 2vw, 2.25rem);
+}
+
+.rack__note {
+  align-self: flex-end;
+  margin: 0 0 14vh;
+  width: min(22rem, 46vw);
+  font-size: clamp(1rem, 1.15vw, 1.15rem);
+  line-height: 1.75;
+  color: #b9bcc3;
+}
+
+/* Высоту задаём мы, ширину считает сам файл: так ни один кадр не обрезается
+   и не растягивается — заказчик просил показывать всё как снято. */
+.slab {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--ink-raised);
+}
+
+.slab img,
+.slab video {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: none;
+}
+
+.slab--tall {
+  height: 62vh;
+}
+
+.slab--wide {
+  height: 44vh;
+}
+
+.slab--square {
+  height: 50vh;
+}
+
+.slab--portrait {
+  height: 66vh;
+}
+
+.slab--clip {
+  height: 52vh;
+}
+
+.slab--clip.slab--portrait {
+  height: 66vh;
+}
+
+.slab--up {
+  align-self: flex-start;
+  margin-top: 12vh;
+}
+
+.slab--down {
+  align-self: flex-end;
+  margin-bottom: 12vh;
+}
+
+/* МОБИЛЬНЫЕ ------------------------------------------------------------ */
+
+@media (max-width: 860px) {
+  /* Карточки в паузе идут во всю ширину — как и на остальных паузах */
+  .gap--promo-street .promo {
+    width: 100%;
+  }
+
+  .promo__pitch--cult {
+    position: static;
+    width: 100%;
+    margin-top: var(--space-s);
+    text-shadow: none;
+  }
+
+  .promo__more--cult {
+    margin-top: var(--space-xs);
+  }
+
+  /* Лента остаётся боковой, но панели сужаются до ширины экрана,
+     а кадры мельчают: на вертикальном экране 62vh — это почти всё окно. */
+  .cult__track {
+    gap: var(--space-m);
+    padding-inline: var(--gutter);
+  }
+
+  .cult__open,
+  .cult__end {
+    width: 84vw;
+  }
+
+  .leaf {
+    width: 82vw;
+  }
+
+  .rack {
+    gap: var(--space-s);
+  }
+
+  .rack__note {
+    width: 70vw;
+    margin-bottom: 8vh;
+  }
+
+  .slab--tall {
+    height: 46vh;
+  }
+
+  .slab--wide {
+    height: 32vh;
+  }
+
+  .slab--square {
+    height: 36vh;
+  }
+
+  .slab--portrait,
+  .slab--clip.slab--portrait {
+    height: 48vh;
+  }
+
+  .slab--clip {
+    height: 38vh;
+  }
+
+  .slab--up {
+    margin-top: 8vh;
+  }
+
+  .slab--down {
+    margin-bottom: 8vh;
+  }
+}

@@ -1,0 +1,337 @@
+/* ПЛЕЕР ФОНОВОЙ МУЗЫКИ ---------------------------------------------------
+   Левый нижний угол - место с присланного образца. Раскладка тоже оттуда:
+   сверху обложка, рядом название и полоса перемотки, снизу ряд кнопок,
+   а в конце ряда переключатель звука и ползунок громкости.
+
+   Раньше переключатель с ползунком стояли отдельным углом справа. Теперь
+   весь звук собран в одном месте: два разных угла для звука на одном экране
+   читались как две несвязанные системы. */
+
+.player {
+  position: fixed;
+  left: var(--gutter);
+  bottom: var(--gutter);
+  z-index: var(--z-chrome);
+  width: min(21rem, calc(100vw - 2 * var(--gutter)));
+  /* Высоту в развёрнутом виде меряет скрипт и кладёт сюда: без числа
+     сжатие в кружок было бы прыжком - от auto анимировать нечего. */
+  height: var(--player-h, auto);
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.875rem;
+  background: rgba(8, 9, 11, 0.72);
+  backdrop-filter: blur(12px);
+  overflow: hidden;
+  transition: width var(--player-fold) var(--ease-out),
+    height var(--player-fold) var(--ease-out),
+    border-radius var(--player-fold) var(--ease-out),
+    padding var(--player-fold) var(--ease-out),
+    opacity var(--player-fold) var(--ease-out);
+  --player-fold: 0.34s; /* быстро, но не рывком */
+}
+
+/* СВЁРНУТЫЙ ВИД ----------------------------------------------------------
+   Через десять секунд без единого движения в зоне плеера он сжимается
+   в кружок с треугольником и уходит в полупрозрачность: музыка идёт дальше,
+   а угол перестаёт спорить с содержимым страницы. Любое касание, наведение
+   или фокус с клавиатуры возвращают его обратно. */
+.player[data-idle="true"] {
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border-radius: 999px;
+  opacity: 0.45;
+}
+
+.player[data-idle="true"]:hover {
+  opacity: 1;
+}
+
+/* Содержимое гаснет раньше, чем коробка успевает сжаться: иначе на середине
+   пути видно, как строки и кнопки наезжают друг на друга. Не visibility:
+   кнопки должны остаться в порядке обхода, чтобы плеер не пропал
+   для клавиатуры - на фокус он разворачивается сам. */
+.player__head,
+.player__controls {
+  transition: opacity 0.16s var(--ease-out);
+}
+
+.player[data-idle="true"] .player__head,
+.player[data-idle="true"] .player__controls {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.player__bubble {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s var(--ease-out);
+}
+
+.player__bubble svg {
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+  stroke: none;
+  color: var(--text-dim);
+  translate: 1px 0; /* треугольник кажется смещённым влево от центра круга */
+}
+
+.player[data-idle="true"] .player__bubble {
+  opacity: 1;
+  transition-delay: 0.12s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .player {
+    --player-fold: 0.01s;
+  }
+}
+
+/* Пока поверх страницы раскрыт слой - любое из пространств или раскрытая
+   карточка, - плеер поднимается над ним. Музыка играет и там, а ролики
+   со звуком там как раз и живут: оставить регулятор под слоем значит
+   не иметь его там, где он нужнее всего. Прелоадер это не задевает:
+   он лежит ещё выше и закрывает всё, включая плеер. */
+body[data-locked="true"] .player {
+  z-index: calc(var(--z-space) + 1);
+}
+
+.player__head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.player__cover {
+  flex: 0 0 auto;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 0.5rem;
+  object-fit: cover;
+  background: var(--ink-raised);
+}
+
+.player__meta {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+/* Названия у треков длинные, а места в углу мало: строка одна, хвост
+   срезается многоточием. Полностью название видно по наведению - оно же
+   лежит в title. */
+.player__name {
+  margin: 0;
+  font-size: var(--step-small);
+  line-height: 1.3;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player__seek {
+  display: block;
+}
+
+.player__time {
+  margin: 0;
+  display: flex;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+}
+
+/* Дорожка перемотки залита до бегунка - как у ползунка громкости.
+   Долю заливки ставит скрипт в --fill. */
+.player__range {
+  display: block;
+  width: 100%;
+  height: 1rem;
+  margin: 0;
+  padding: 0;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.player__range::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--accent) 0,
+    var(--accent) var(--fill, 0%),
+    var(--line) var(--fill, 0%),
+    var(--line) 100%
+  );
+}
+
+.player__range::-moz-range-track {
+  height: 3px;
+  border-radius: 999px;
+  background: var(--line);
+}
+
+.player__range::-moz-range-progress {
+  height: 3px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.player__range::-webkit-slider-thumb {
+  appearance: none;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-top: -0.28rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--text);
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+.player__range::-moz-range-thumb {
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--text);
+}
+
+.player__range:hover::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+
+.player__range:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 999px;
+}
+
+.player__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.player__btn {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-faint);
+  cursor: pointer;
+  transition: color var(--dur-hover) var(--ease-out),
+    background-color var(--dur-hover) var(--ease-out);
+}
+
+.player__btn svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+/* У кнопки «играть» треугольник залит: контурный на таком размере
+   читается как стрелка «вперёд», а не как воспроизведение. */
+.player__icon--play {
+  fill: currentColor;
+  stroke: none;
+}
+
+.player__btn:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.player__btn--play {
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--text-dim);
+  border: 1px solid var(--line);
+}
+
+.player__btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Одна кнопка, две иконки: показываем ту, что соответствует состоянию.
+   Состояние ставит скрипт в data-playing на самом плеере. */
+.player__icon--pause {
+  display: none;
+}
+
+.player[data-playing="true"] .player__icon--play {
+  display: none;
+}
+
+.player[data-playing="true"] .player__icon--pause {
+  display: block;
+}
+
+/* Переключатель звука и ползунок переехали в ряд кнопок. Подпись словами
+   у переключателя убрана в невидимую: в ряду с иконками она занимала
+   половину ширины плеера. Состояние по-прежнему видно - выключенный звук
+   перечёркнут, и то же слово читает экранный диктор. */
+.player__controls .sound {
+  margin-left: auto;
+  padding: 0.4rem 0.5rem;
+}
+
+.player__controls .mixer {
+  max-width: 0;
+}
+
+.player:hover .mixer,
+.player:focus-within .mixer {
+  max-width: 6.5rem;
+  opacity: 1;
+}
+
+.player__controls .mixer__range {
+  width: 6rem;
+  height: 2rem;
+}
+
+/* Там, где наведения нет, ползунку выезжать нечему - он стоит открытым,
+   а плеер прижимается к ширине экрана. */
+@media (hover: none) {
+  .player__controls .mixer {
+    max-width: 5rem;
+    opacity: 1;
+  }
+
+  .player__controls .mixer__range {
+    width: 4.5rem;
+  }
+}
+
+@media (max-width: 860px) {
+  .player {
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    width: auto;
+  }
+
+  .player__cover {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}

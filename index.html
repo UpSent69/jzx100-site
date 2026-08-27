@@ -181,10 +181,8 @@
         </div>
       </section>
 
-      <!-- ПАУЗА. Вторая карточка перехода — во второе пространство.
-           Устроена как первая, с одним отличием: на этом кадре ничего не
-           впечатано, поэтому название набрано живым текстом прямо на нём,
-           а кнопка стоит по центру. -->
+      <!-- ПАУЗА. Здесь две карточки перехода: во второе пространство
+           и в третье. Стоят друг под другом, как на присланном образце. -->
       <section class="gap gap--promo gap--promo-street">
         <div class="promo promo--street" data-street-open>
           <!-- Кадр и название лежат в своей коробке с пропорциями файла.
@@ -229,45 +227,83 @@
             </svg>
           </button>
         </div>
+
+        <!-- Вторая карточка той же паузы — в третье пространство. Стоят они
+             друг под другом, как на присланном образце: пауза от этого
+             становится выше экрана, и это нормально — на образце так же.
+
+             Текст здесь тоже лежит на кадре, но в другом углу и по левому
+             краю: у соседней карточки он справа и выключен вправо, и две
+             одинаковые раскладки подряд читались бы как одна повторённая. -->
+        <div class="promo promo--cult" data-cult-open>
+          <div class="promo__frame">
+            <img
+              class="promo__art"
+              src="/cult-promo.webp"
+              srcset="/cult-promo-828.webp 828w, /cult-promo-1280.webp 1280w, /cult-promo.webp 1672w"
+              sizes="(max-width: 860px) 94vw, 62vw"
+              width="1672"
+              height="941"
+              loading="lazy"
+              decoding="async"
+              alt="Человек в жёлтой куртке забирается на капот розового Toyota Mark II на мокрой ночной дороге"
+            />
+          </div>
+
+          <!-- Кнопка лежит внутри текстового блока, а не отдельно на кадре.
+               У соседней карточки она стоит сама по себе, и это работает,
+               пока текст над ней короткий; здесь он длиннее, и разложенные
+               порознь они наезжали друг на друга на узком окне. В потоке
+               блок сам расставляет их по порядку. -->
+          <div class="promo__pitch promo__pitch--cult">
+            <p class="promo__chip">Культ JDM</p>
+            <p class="promo__head">Своих узнают по мелочам</p>
+            <p>
+              Наклейки, флажки, посадка ниже разумного и выхлоп громче
+              нужного. Про сцену вокруг сотого кузова и про тех, кто её
+              держит.
+            </p>
+
+            <button class="promo__more promo__more--cult" data-cult-open type="button">
+              <span>Подробнее</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 12h13M13 6l6 6-6 6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
       </section>
 
       <!-- ЭКРАН 3 — Движение ----------------------------------------------
-           Фото и ролик сняты в одном проезде и оба 16:9 — обрезать нечего,
-           кадр берётся как снят. Первый кадр ролика совпадает с фотографией,
-           поэтому подмена на пике смаза не читается вовсе. -->
+           Ролик идёт петлёй сам, пока экран в окне, — так же, как на втором
+           экране. Прокрутка его не перематывает и не двигает кадр: движение
+           в сцене даёт сама запись, а прокрутке остаётся подпись.
+
+           До этой правки сцена была устроена наоборот: статичная фотография,
+           боковой разгон и перемотка ролика скроллом. Под перемотку каждый
+           кадр обязан быть ключевым, и четырнадцать секунд в 2560 стоили
+           двадцати шести мегабайт. Петля обходится восемью. -->
       <section class="screen motion" id="motion" data-screen="motion">
         <h2 class="visually-hidden">Движение</h2>
         <div class="motion__stage">
           <div class="motion__media" data-motion-media>
-          <!-- Это первый кадр лежащего рядом ролика, а не отдельная фотография.
-               Подмена одного на другой поэтому не видна вовсе: меняются
-               одинаковые кадры. -->
-          <img
-            class="motion__layer motion__photo"
-            data-motion-photo
-            src="/motion-open.webp"
-            srcset="/motion-open-828.webp 828w, /motion-open-1280.webp 1280w, /motion-open.webp 1600w"
-            sizes="100vw"
-            width="1600"
-            height="900"
-            loading="lazy"
-            decoding="async"
-            alt="Чёрный Toyota Mark II идёт по мокрому шоссе под мостом, фон смазан скоростью"
-          />
-          <!-- Адрес подставляется на подходе к экрану (motion-screen.js).
-               С обычным src ролик весом под три мегабайта скачивался вместе
-               с первым экраном и утраивал его вес — при том что до него ещё
-               два экрана прокрутки. -->
-          <video
-            class="motion__layer motion__video"
-            data-motion-video
-            data-src="/motion-bg.mp4"
-            muted
-            playsinline
-            preload="none"
-            poster="/motion-open-828.webp"
-            aria-hidden="true"
-          ></video>
+            <!-- Постер — первый кадр самой пережатой копии: пока ролик идёт
+                 по сети, на экране стоит ровно тот кадр, с которого он
+                 начнётся, и в цвете после кодека они совпадают. -->
+            <video
+              class="motion__layer motion__video"
+              data-motion-video
+              width="2560"
+              height="1386"
+              poster="/motion-open-1600.webp"
+              muted
+              loop
+              playsinline
+              preload="none"
+              data-src="/motion-bg.mp4"
+              aria-label="Белый Toyota Mark II JZX100 стоит на площадке, дальше уходит на шоссе и в ночную трассу"
+            ></video>
           </div>
 
           <div class="motion__caption" data-motion-caption>
@@ -278,7 +314,43 @@
       </section>
 
       <!-- ПАУЗА -->
-      <section class="gap"><div class="gap__inner"></div></section>
+      <!-- ПАУЗА. Карточка перехода в четвёртое пространство. Раскладка как
+           у первой: кадр целиком в верхней половине паузы, на нём одна кнопка
+           и больше ничего. -->
+      <section class="gap gap--promo gap--promo-soul">
+        <div class="promo promo--soul" data-soul-open>
+          <img
+            class="promo__art"
+            src="/soul-promo.webp"
+            srcset="/soul-promo-828.webp 828w, /soul-promo-1280.webp 1280w, /soul-promo.webp 1672w"
+            sizes="(max-width: 860px) 94vw, 72vw"
+            width="1672"
+            height="941"
+            loading="lazy"
+            decoding="async"
+            alt="Белый и чёрный Toyota Mark II стоят ночью на мокрой улице у освещённого здания с колоннами"
+          />
+
+          <!-- Заголовок и подпись лежат на кадре справа: там пустая мокрая
+               дорога, единственное место, где ничего не закрывается.
+               Кнопка идёт следом в потоке блока. -->
+          <div class="promo__pitch promo__pitch--soul">
+            <p class="promo__kicker promo__kicker--soul">Душа машины</p>
+            <p class="promo__head">Она, а не оно</p>
+            <p>
+              Первая своя, часы в гараже, четыре утра и следы, которые никто
+              не убирает. Про то, из чего складывается общая история.
+            </p>
+
+            <button class="promo__more promo__more--soul" data-soul-open type="button">
+              <span>Подробнее</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M5 12h13M13 6l6 6-6 6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
 
       <!-- ЭКРАН 4 — Карточки ----------------------------------------------
            Кнопок play нет: отклик даёт само видео. Единственный светлый
@@ -346,8 +418,44 @@
         </button>
       </section>
 
-      <!-- ПАУЗА -->
-      <section class="gap"><div class="gap__inner"></div></section>
+      <!-- ПАУЗА С КАРТОЧКОЙ — вход в пятое пространство -------------------
+           Текст и кнопка стоят в левом верхнем углу кадра: так на присланном
+           образце. Место выбрано не случайно и там - слева вверху у кадра
+           ветки и небо, а машина и вся графика справа внизу. -->
+      <section class="gap gap--promo gap--promo-saku">
+        <div class="promo promo--saku" data-saku-open>
+          <div class="promo__frame">
+            <img
+              class="promo__art"
+              src="/saku-promo.webp"
+              srcset="/saku-promo-828.webp 828w, /saku-promo-1280.webp 1280w, /saku-promo.webp 1672w"
+              sizes="(max-width: 860px) 94vw, 72vw"
+              width="1672"
+              height="941"
+              loading="lazy"
+              decoding="async"
+              alt="Белый Toyota Mark II JZX100 под цветущей сакурой, рядом рисованный портрет и обрывки газеты"
+            />
+          </div>
+
+          <div class="promo__pitch promo__pitch--saku">
+            <p class="promo__kicker promo__kicker--saku">Самурай в цветах сакуры</p>
+            <p class="promo__head promo__head--saku">Осанка и клинок</p>
+            <p>
+              Почему сотый держится в стороне от шума, чем его линии похожи
+              на доспех и зачем такой машине цветение, которое проходит
+              за неделю.
+            </p>
+
+            <button class="promo__more promo__more--saku" data-saku-open type="button">
+              <span>Подробнее</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 12h13M13 6l6 6-6 6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
 
       <!-- ЭКРАН 5 — JDM и Mark II ------------------------------------------
            Слева закреплённый кадр, справа прокручивается текст. Кадры под
@@ -481,9 +589,6 @@
         </div>
       </section>
 
-      <!-- ПАУЗА -->
-      <section class="gap"><div class="gap__inner"></div></section>
-
       <!-- ЭКРАН 6 — Финал --------------------------------------------------
            Финального кадра, контактов и соцсетей от заказчика пока нет.
            Стоит заглушка на имеющемся материале. -->
@@ -532,18 +637,21 @@
       <div class="space__scroll" data-space-scroll data-lenis-prevent>
         <div class="space__track" data-space-track>
 
-          <!-- Вступление. Здесь тот же кадр, что и на карточке в паузе, только
-               чистый — без впечатанных заголовка и подписи. Поэтому и затемнять
-               его не нужно: спорить живому тексту не с чем. -->
+          <!-- Вступление. Вместо кадра здесь ролик во весь экран, немой
+               и в петле: заказчик просил заменить именно первую картинку.
+               Дорожки в файле нет вовсе - глушить на всякий случай нечего. -->
           <section class="chapter chapter--intro">
-            <img
+            <video
               class="chapter__bg"
-              src="/s1-bg.webp"
-              srcset="/s1-bg-828.webp 828w, /s1-bg.webp 1672w"
-              sizes="100vw"
-              alt=""
+              data-chapter-video
+              data-chapter-quiet
+              width="1024"
+              height="576"
+              poster="/s1-video-poster.webp"
+              src="/s1-video.mp4"
+              muted loop playsinline preload="none"
               aria-hidden="true"
-            />
+            ></video>
             <div class="chapter__text" data-space-inner>
               <h2 class="space__title">Почему JZX100 - король японского дрифта? 👑</h2>
               <p class="space__lead">
@@ -986,17 +1094,908 @@
       </div>
     </div>
 
+    <!-- ТРЕТЬЕ ПРОСТРАНСТВО — «Культ JDM» ---------------------------------
+         Едет вбок одной лентой, как первое: приём тот же. Всё остальное
+         другое, и намеренно.
+
+         Фон. В первом пространстве фоном каждого раздела была своя фотография
+         во весь экран. Здесь фон один на всю ленту и живой — ролик, который
+         идёт под всем содержимым. Он притушен и размыт: по замыслу заказчика
+         он держит атмосферу, но не должен перетягивать взгляд с текста
+         и кадров.
+
+         Раскладка. В первом пространстве все разделы одинаковой ширины
+         в экран, а кадры лежат отдельными галереями по два-три в ряд. Здесь
+         панели разной ширины — узкие текстовые и широкие с кадрами, — а сами
+         кадры не выстроены в ряд, а разбросаны по высоте: один прижат к верху,
+         другой к низу, третий стоит по центру. Лента от этого идёт неровно,
+         и это ровно то, что нужно теме.
+
+         Тексты — про сцену вокруг машины, а не про машину: опознавательные
+         знаки, дерзость как язык, съёмка, зима. Ничего из этого нет ни
+         на странице, ни в двух других пространствах. -->
+    <div class="cult" data-cult hidden aria-modal="true" role="dialog"
+         aria-label="Культ JDM">
+      <!-- Фон ленты. Лежит под содержимым и не прокручивается вместе с ним:
+           лента едет, фон остаётся. -->
+      <video
+        class="cult__bg"
+        data-cult-bg
+        muted loop playsinline preload="none"
+        poster="/cult-bg-poster.webp"
+        data-src="/cult-bg.mp4"
+        aria-hidden="true"
+      ></video>
+      <div class="cult__veil" aria-hidden="true"></div>
+
+      <header class="cult__bar">
+        <p class="cult__brand"><span>Культ</span>JDM</p>
+        <button class="cult__close" data-cult-close type="button" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      </header>
+
+      <div class="cult__scroll" data-cult-scroll data-lenis-prevent>
+        <div class="cult__track" data-cult-track>
+
+          <!-- ВСТУПЛЕНИЕ -->
+          <section class="cult__open" data-cult-inner>
+            <p class="cult__kana">カルト</p>
+            <h2 class="cult__title">Культ</h2>
+            <p class="cult__lead">
+              Сотый кузов давно перестал быть просто машиной. Вокруг него
+              выросла своя сцена - со своими знаками, своими правилами
+              и своим представлением о том, что такое красиво.
+            </p>
+            <p class="cult__lead cult__lead--dim">
+              Дальше - не про технику. Про людей, которые её выбрали.
+            </p>
+            <span class="cult__hint" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M5 12h13M13 6l6 6-6 6" />
+              </svg>
+            </span>
+          </section>
+
+          <!-- 01 — СВОИ -->
+          <section class="leaf">
+            <p class="leaf__num">01</p>
+            <h3 class="leaf__head">Свои</h3>
+            <blockquote class="leaf__quote">«Машину узнают раньше владельца»</blockquote>
+            <div class="leaf__text">
+              <p>
+                Наклейка на стекле, флажок на антенне, рамка номера
+                с иероглифами, тканевая бирка на зеркале. По отдельности
+                мелочь, вместе - опознавательный знак.
+              </p>
+              <p>
+                Ничего из этого не прибавляет ни силы, ни скорости.
+                В этом и смысл: платят за принадлежность, а не за
+                характеристики.
+              </p>
+            </div>
+          </section>
+
+          <section class="rack">
+            <figure class="slab slab--square slab--up">
+              <img src="/cult-shot-7.webp" sizes="34vw" width="828" height="828"
+                   alt="Белый Mark II на ночной стоянке под фиолетовым светом, рядом человек"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <p class="rack__note">
+              На стоянке сначала читают детали и только потом смотрят
+              на машину целиком.
+            </p>
+            <figure class="slab slab--tall slab--down">
+              <img src="/cult-shot-1.webp" srcset="/cult-shot-1-828.webp 828w, /cult-shot-1.webp 1080w"
+                   sizes="26vw" width="1080" height="1439"
+                   alt="Белый Mark II стоит под путепроводом ночью"
+                   loading="lazy" decoding="async" />
+            </figure>
+          </section>
+
+          <!-- 02 — ДЕРЗОСТЬ -->
+          <section class="leaf">
+            <p class="leaf__num">02</p>
+            <h3 class="leaf__head">Дерзость</h3>
+            <blockquote class="leaf__quote">«Сделано, чтобы обернулись»</blockquote>
+            <div class="leaf__text">
+              <p>
+                Посадка ниже разумного, вылет за арку, развал, от которого
+                шина стирается внутренней кромкой, выхлоп громче, чем нужно
+                кому бы то ни было. Ни одно из этих решений - не про удобство.
+              </p>
+              <p>
+                Это язык. Он сообщает, что владелец готов терпеть неудобство
+                ради вида, и в этой готовности всё дело.
+              </p>
+            </div>
+          </section>
+
+          <section class="rack">
+            <figure class="slab slab--clip slab--wide">
+              <video data-cult-video width="1280" height="660"
+                     poster="/cult-clip-1-poster.webp"
+                     muted loop playsinline preload="none"
+                     data-src="/cult-clip-1.mp4"
+                     aria-label="Чёрно-белые крупные планы Mark II: фара, передок, борт"></video>
+            </figure>
+            <figure class="slab slab--wide slab--down">
+              <img src="/cult-shot-4.webp" srcset="/cult-shot-4-828.webp 828w, /cult-shot-4.webp 1080w"
+                   sizes="30vw" width="1080" height="720"
+                   alt="Передок Mark II в красной подсветке на ночной площадке"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <p class="rack__note">
+              Развал, вылет и высота - три числа, которые здесь спрашивают
+              раньше, чем про мотор.
+            </p>
+          </section>
+
+          <!-- 03 — КРАСНЫЙ СВЕТ -->
+          <section class="leaf">
+            <p class="leaf__num">03</p>
+            <h3 class="leaf__head">Красный свет</h3>
+            <blockquote class="leaf__quote">«Кадр важен не меньше машины»</blockquote>
+            <div class="leaf__text">
+              <p>
+                Сцена живёт съёмкой. Подсветка в арках, дым от прогретых шин,
+                фонари, отражения на мокром асфальте - всё это ставится
+                не для дороги, а для камеры.
+              </p>
+              <p>
+                Красный держится дольше остальных цветов: он читается
+                в темноте и не спорит с фарами. Отсюда и вся палитра
+                ночных кадров.
+              </p>
+            </div>
+          </section>
+
+          <section class="rack rack--tight">
+            <figure class="slab slab--wide slab--up">
+              <img src="/cult-shot-2.webp" srcset="/cult-shot-2-828.webp 828w, /cult-shot-2.webp 1080w"
+                   sizes="28vw" width="1080" height="720"
+                   alt="Корма Mark II в красном свете, виден номер"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <figure class="slab slab--tall">
+              <img src="/cult-shot-5.webp" srcset="/cult-shot-5-828.webp 828w, /cult-shot-5.webp 1080w"
+                   sizes="24vw" width="1080" height="1441"
+                   alt="Задние фонари Mark II крупным планом в красной дымке"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <figure class="slab slab--wide slab--down">
+              <img src="/cult-shot-3.webp" srcset="/cult-shot-3-828.webp 828w, /cult-shot-3.webp 1080w"
+                   sizes="28vw" width="1080" height="720"
+                   alt="Mark II в дыму от прогретых шин, красная подсветка"
+                   loading="lazy" decoding="async" />
+            </figure>
+          </section>
+
+          <!-- 04 — КРУГЛЫЙ ГОД -->
+          <section class="leaf">
+            <p class="leaf__num">04</p>
+            <h3 class="leaf__head">Круглый год</h3>
+            <blockquote class="leaf__quote">«Кто сдал машину на зиму, тот выпал»</blockquote>
+            <div class="leaf__text">
+              <p>
+                Снег, соль и реагенты стачивают пороги быстрее любого пробега.
+                Логика подсказывает поставить машину до весны.
+              </p>
+              <p>
+                Логике здесь не следуют. Зимой стоянки не пустеют: сцена
+                держится на тех, кто выезжает круглый год, а не появляется
+                на два тёплых месяца.
+              </p>
+            </div>
+          </section>
+
+          <section class="rack">
+            <figure class="slab slab--clip slab--portrait slab--up">
+              <video data-cult-video width="720" height="1280"
+                     poster="/cult-clip-2-poster.webp"
+                     muted loop playsinline preload="none"
+                     data-src="/cult-clip-2.mp4"
+                     aria-label="Mark II ночью на заснеженной площадке, горят задние фонари"></video>
+            </figure>
+            <figure class="slab slab--wide slab--down">
+              <img src="/cult-shot-6.webp" srcset="/cult-shot-6-828.webp 828w, /cult-shot-6.webp 1080w"
+                   sizes="30vw" width="1080" height="720"
+                   alt="След фар от проехавшей мимо машины на длинной выдержке"
+                   loading="lazy" decoding="async" />
+            </figure>
+          </section>
+
+          <!-- ФИНАЛ -->
+          <section class="cult__end">
+            <h3 class="cult__title cult__title--end">Это не про машину</h3>
+            <p class="cult__lead">
+              Кузов рано или поздно доедет своё. Останется привычка выезжать
+              ночью, узнавать своих по мелочам и делать неудобно, но по-своему.
+            </p>
+            <p class="cult__sign">走り屋</p>
+          </section>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ЧЕТВЁРТОЕ ПРОСТРАНСТВО — «Душа машины» ----------------------------
+         Едет вбок одной лентой, как первое и третье: приём тот же.
+         Раскладка своя.
+
+         Лента здесь идёт волной. Текстовые панели прижаты к нижнему краю
+         экрана, кадры — к верхнему, и глаз всё время ходит вверх-вниз, а не
+         по прямой. В первом пространстве разделы одинаковой ширины в экран,
+         в третьем узкие панели чередуются с развалами кадров; здесь ни того
+         ни другого — низ и верх.
+
+         Второе отличие: у каждого кадра снизу подпись мелким кеглем, как
+         этикетка в музее. Ни в первом, ни в третьем пространстве подписей
+         у кадров нет вовсе.
+
+         Тон тише, чем в третьем: заголовки строчными, а не заглавными,
+         акцента почти нет — только волосяная черта над текстом и иероглиф.
+         Тема требует спокойствия, а не дерзости. -->
+    <div class="soul" data-soul hidden aria-modal="true" role="dialog"
+         aria-label="Душа машины">
+      <video
+        class="soul__bg"
+        data-soul-bg
+        muted loop playsinline preload="none"
+        poster="/soul-bg-poster.webp"
+        data-src="/soul-bg.mp4"
+        aria-hidden="true"
+      ></video>
+      <div class="soul__veil" aria-hidden="true"></div>
+
+      <header class="soul__bar">
+        <p class="soul__brand"><span>Душа</span>машины</p>
+        <button class="soul__close" data-soul-close type="button" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      </header>
+
+      <div class="soul__scroll" data-soul-scroll data-lenis-prevent>
+        <div class="soul__track" data-soul-track>
+
+          <!-- ВСТУПЛЕНИЕ -->
+          <section class="soul__open" data-soul-inner>
+            <p class="soul__kana">たましい</p>
+            <h2 class="soul__title">Душа</h2>
+            <p class="soul__lead">
+              В какой-то момент перестаёшь говорить «машина» и начинаешь
+              говорить «она». Это не оговорка - просто к этому времени
+              у вас уже есть общая история.
+            </p>
+            <p class="soul__lead soul__lead--dim">
+              Дальше - про то, из чего эта история складывается.
+            </p>
+            <span class="soul__hint" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M5 12h13M13 6l6 6-6 6" />
+              </svg>
+            </span>
+          </section>
+
+          <!-- 01 -->
+          <section class="verse">
+            <p class="verse__num">01</p>
+            <h3 class="verse__head">Первая своя</h3>
+            <div class="verse__text">
+              <p>
+                Для многих сотый кузов - первая машина, в которую вложено
+                не только время. До неё были чужие, служебные, отцовские.
+                Эта - своя, со всеми последствиями: с ошибкой в выборе,
+                с деньгами, которых не хватило, с тем самым первым выездом.
+              </p>
+              <p>Именно поэтому её потом не меняют легко.</p>
+            </div>
+          </section>
+
+          <section class="pieces">
+            <figure class="piece piece--tall">
+              <video data-soul-video width="720" height="1280"
+                     poster="/soul-clip-6-poster.webp"
+                     muted loop playsinline preload="none"
+                     data-src="/soul-clip-6.mp4"
+                     aria-label="Mark II на закате у моря, дальше во дворе"></video>
+              <figcaption>Первый долгий выезд, за который потом отвечаешь сам</figcaption>
+            </figure>
+            <figure class="piece piece--wide piece--low">
+              <img src="/soul-shot-2.webp" sizes="30vw" width="736" height="552"
+                   alt="Белый Mark II стоит на улице в сумерках"
+                   loading="lazy" decoding="async" />
+              <figcaption>Двор, с которого всё начинается</figcaption>
+            </figure>
+          </section>
+
+          <!-- 02 -->
+          <section class="verse">
+            <p class="verse__num">02</p>
+            <h3 class="verse__head">Гараж</h3>
+            <div class="verse__text">
+              <p>
+                Бокс, лампа под потолком, ключи, разложенные по порядку.
+                Часы, за которые машина не проезжает ни метра, а становится
+                ближе.
+              </p>
+              <p>
+                Чинить самому - это не про экономию. Это единственный способ
+                узнать её так, как не узнаешь за рулём.
+              </p>
+            </div>
+          </section>
+
+          <section class="pieces">
+            <figure class="piece piece--tall">
+              <video data-soul-video width="576" height="1024"
+                     poster="/soul-clip-2-poster.webp"
+                     muted loop playsinline preload="none"
+                     data-src="/soul-clip-2.mp4"
+                     aria-label="Колесо и борт чёрного Mark II крупным планом"></video>
+              <figcaption>То, что видно только вблизи</figcaption>
+            </figure>
+            <figure class="piece piece--square piece--high">
+              <img src="/soul-shot-3.webp" srcset="/soul-shot-3-828.webp 828w, /soul-shot-3.webp 1080w"
+                   sizes="26vw" width="1080" height="1080"
+                   alt="Чёрный Mark II на стоянке"
+                   loading="lazy" decoding="async" />
+              <figcaption>Между работой и работой</figcaption>
+            </figure>
+          </section>
+
+          <!-- 03 -->
+          <section class="verse">
+            <p class="verse__num">03</p>
+            <h3 class="verse__head">Четыре утра</h3>
+            <div class="verse__text">
+              <p>
+                Пустой город, зелёный на всех перекрёстках, никого в зеркалах.
+                Едешь без цели - просто потому, что в это время дорога
+                принадлежит тебе.
+              </p>
+              <p>
+                Утром об этом никто не спросит, и объяснить это тому, кто так
+                не делает, невозможно.
+              </p>
+            </div>
+          </section>
+
+          <section class="pieces">
+            <figure class="piece piece--wide">
+              <img src="/soul-shot-6.webp" sizes="30vw" width="735" height="551"
+                   alt="Вид из машины ночью, впереди горят стоп-сигналы"
+                   loading="lazy" decoding="async" />
+              <figcaption>Из-за руля в это время видно немного и этого хватает</figcaption>
+            </figure>
+            <figure class="piece piece--tall piece--high">
+              <video data-soul-video width="720" height="1280"
+                     poster="/soul-clip-4-poster.webp"
+                     muted loop playsinline preload="none"
+                     data-src="/soul-clip-4.mp4"
+                     aria-label="Ночная дорога в дымке, дальше серпантин в сумерках"></video>
+              <figcaption>Дорога, по которой едут не куда-то, а просто едут</figcaption>
+            </figure>
+          </section>
+
+          <!-- 04 -->
+          <section class="verse">
+            <p class="verse__num">04</p>
+            <h3 class="verse__head">Она помнит</h3>
+            <div class="verse__text">
+              <p>
+                Скол на капоте с той поездки, потёртая кожа на руле там,
+                где держат, царапина на пороге от бордюра, который не заметил.
+                Всё это можно убрать - и почти никто не убирает.
+              </p>
+              <p>
+                Машина без следов выглядит новой. Машина со следами выглядит
+                своей.
+              </p>
+            </div>
+          </section>
+
+          <section class="pieces">
+            <figure class="piece piece--tall">
+              <img src="/soul-shot-1.webp" sizes="24vw" width="736" height="981"
+                   alt="Белый Mark II на заснеженной ночной дороге"
+                   loading="lazy" decoding="async" />
+              <figcaption>Зима, соль и всё, что она оставляет на порогах</figcaption>
+            </figure>
+            <figure class="piece piece--square piece--low">
+              <video data-soul-video width="684" height="576"
+                     poster="/soul-clip-7-poster.webp"
+                     muted loop playsinline preload="none"
+                     data-src="/soul-clip-7.mp4"
+                     aria-label="Mark II идёт по ночному мосту под фонарями"></video>
+              <figcaption>Каждый день, а не по случаю</figcaption>
+            </figure>
+          </section>
+
+          <!-- 05 -->
+          <section class="verse">
+            <p class="verse__num">05</p>
+            <h3 class="verse__head">Имя</h3>
+            <div class="verse__text">
+              <p>
+                Её называют не моделью, а как-то по-своему, и в разговоре
+                говорят «она». Со стороны это смешно ровно до того момента,
+                пока такая же не появится у тебя.
+              </p>
+              <p>
+                Имя приходит не сразу. Обычно после первой поломки, которую
+                пережили вместе.
+              </p>
+            </div>
+          </section>
+
+          <section class="pieces">
+            <figure class="piece piece--portrait">
+              <img src="/soul-shot-4.webp" srcset="/soul-shot-4-828.webp 828w, /soul-shot-4.webp 1080w"
+                   sizes="24vw" width="1080" height="1441"
+                   alt="Ночная стоянка, машины в розовом свете"
+                   loading="lazy" decoding="async" />
+              <figcaption>Свои узнаются раньше, чем начинается разговор</figcaption>
+            </figure>
+            <figure class="piece piece--tall piece--low">
+              <video data-soul-video width="720" height="1280"
+                     poster="/soul-clip-3-poster.webp"
+                     muted loop playsinline preload="none"
+                     data-src="/soul-clip-3.mp4"
+                     aria-label="Машины у старого здания в сумерках"></video>
+              <figcaption>Вечер, который никто не назначал</figcaption>
+            </figure>
+            <figure class="piece piece--portrait">
+              <img src="/soul-shot-5.webp" srcset="/soul-shot-5-828.webp 828w, /soul-shot-5.webp 960w"
+                   sizes="22vw" width="960" height="1200"
+                   alt="Белые Mark II ночью на площадке"
+                   loading="lazy" decoding="async" />
+              <figcaption>Их ставят рядом и стоят рядом сами</figcaption>
+            </figure>
+          </section>
+
+          <!-- ФИНАЛ -->
+          <section class="soul__end">
+            <figure class="piece piece--film">
+              <video data-soul-video width="1440" height="720"
+                     poster="/soul-clip-1-poster.webp"
+                     muted loop playsinline preload="none"
+                     data-src="/soul-clip-1.mp4"
+                     aria-label="Чёрно-белая заставка: Mark II и надпись 1JZ-GTE"></video>
+            </figure>
+            <h3 class="soul__title soul__title--end">Пока её заводят</h3>
+            <p class="soul__lead">
+              Кузов доедет своё, детали кончатся, кто-то разберёт её
+              на запчасти. Но пока по утрам её заводят и слушают, как она
+              прогревается, - она живая.
+            </p>
+            <p class="soul__sign">魂</p>
+          </section>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ПЯТОЕ ПРОСТРАНСТВО — «Самурай в цветах сакуры» ------------------
+         Собрано на той же механике, что и второе: слой поверх страницы,
+         своя вертикальная прокрутка, разделы идут сверху вниз. Раскладка
+         внутри другая, и намеренно - два одинаковых пространства подряд
+         читались бы как одно повторённое.
+
+         Во втором пространстве разворот устроен так: медиа на пол-экрана,
+         текст рядом второй половиной; кадры лежат мозаикой по два в ряд.
+         Здесь текст всегда идёт узкой колонкой по центру, с номером слева
+         и вертикальной катаканой справа, а кадры выходят из-под неё тремя
+         разными способами: веером в разбежку, лентой во всю ширину без полей
+         и парой внахлёст. Плюс полоса с одной фразой во весь экран, какой
+         во втором пространстве нет вовсе.
+
+         Тексты - про самурайскую натуру кузова и его внешность. Ни того,
+         ни другого нет ни на странице, ни в остальных пространствах. -->
+    <div class="saku" data-saku hidden aria-modal="true" role="dialog"
+         aria-label="Самурай в цветах сакуры">
+      <header class="saku__bar">
+        <p class="saku__brand"><span>Самурай</span>в цветах сакуры</p>
+        <button class="saku__close" data-saku-close type="button" aria-label="Закрыть">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        </button>
+      </header>
+
+      <div class="saku__scroll" data-saku-scroll data-lenis-prevent>
+        <div class="saku__flow" data-saku-flow>
+
+          <!-- ВСТУПЛЕНИЕ. Ролик стоит вертикальным кадром рядом с текстом,
+               а не растянут фоном во весь экран: он вертикальный, и в широком
+               экране от него осталась бы средняя полоса. -->
+          <section class="gate">
+            <div class="gate__text" data-saku-inner>
+              <p class="saku__kana">サムライ</p>
+              <h2 class="saku__title">Самурай<br />в цветах сакуры</h2>
+              <p class="saku__lead">
+                Сотый кузов легко принять за тихую машину. Он и есть тихий -
+                ровно до того момента, пока не понадобится обратное.
+              </p>
+              <p class="saku__lead saku__lead--dim">
+                Дальше - о том, как он стоит, из чего сделана его сдержанность
+                и почему ему идёт цветение, которое держится неделю.
+              </p>
+            </div>
+
+            <!-- Короткая подпись между заголовком и роликами: на скриншоте
+                 заказчика её место отмечено волнистыми линиями. -->
+            <p class="gate__note">
+              Апрель, аллея вдоль реки и десять минут, ради которых едут
+              за сто километров. Машину ставят так, чтобы в кадр попало
+              дерево, а не наоборот.
+            </p>
+
+            <figure class="gate__media gate__media--clip">
+              <video
+                data-saku-video
+                width="720"
+                height="1200"
+                poster="/saku-clip-1-poster.webp"
+                muted loop playsinline preload="none"
+                data-src="/saku-clip-1.mp4"
+                aria-label="Снимки белого Mark II под ночной сакурой сменяют друг друга"
+              ></video>
+            </figure>
+
+            <figure class="gate__media">
+              <video
+                data-saku-video
+                width="720"
+                height="1280"
+                poster="/saku-intro-poster.webp"
+                muted loop playsinline preload="none"
+                data-src="/saku-intro.mp4"
+                aria-label="Белый Mark II стоит на аллее цветущей сакуры, камера медленно обходит его"
+              ></video>
+            </figure>
+
+            <p class="gate__vertical" aria-hidden="true">花は桜木、人は武士</p>
+
+            <span class="saku__hint" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M12 5v13M6 13l6 6 6-6" />
+              </svg>
+            </span>
+          </section>
+
+          <!-- 01 — ОСАНКА -->
+          <section class="column">
+            <p class="column__num">01</p>
+            <div class="column__body">
+              <h3 class="column__head">Осанка</h3>
+              <p>
+                Мерка простая: сначала смотрят, как стоит. Длинный капот,
+                короткий задний свес, низкая узкая крыша и одна линия, которая
+                идёт от фары до фонаря и нигде не ломается. Кузов не пытается
+                казаться шире, чем он есть.
+              </p>
+              <p>
+                Отсюда и ощущение выправки. Сотый не приседает на задние
+                колёса и не задирает нос - он стоит ровно, как человек,
+                которого учили держать спину.
+              </p>
+            </div>
+            <p class="column__kana" aria-hidden="true">姿勢</p>
+          </section>
+
+          <!-- Веер: три кадра разной высоты, расставленные в разбежку. -->
+          <section class="fan">
+            <figure class="fan__frame fan__frame--near">
+              <img src="/saku-shot-5.webp" sizes="(max-width: 860px) 44vw, 22vw"
+                   width="736" height="920"
+                   alt="Передняя часть серебристого Mark II на фоне цветущих ветвей"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <figure class="fan__frame fan__frame--far">
+              <img src="/saku-shot-1.webp" sizes="(max-width: 860px) 46vw, 26vw"
+                   width="736" height="736"
+                   alt="Белый Mark II под сплошным пологом цветущей сакуры"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <figure class="fan__frame fan__frame--lead">
+              <img src="/saku-shot-3.webp" sizes="(max-width: 860px) 60vw, 30vw"
+                   width="736" height="1304"
+                   alt="Белый Mark II стоит под розовым деревом у обочины"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <p class="fan__note">
+              Три четверти, профиль и лоб - три положения, по которым кузов
+              читают целиком. Ни в одном из них нет ни одной случайной линии.
+            </p>
+          </section>
+
+          <!-- Полоса с одной фразой. Во втором пространстве такой нет:
+               там полоса всегда несёт абзац, здесь - строку. -->
+          <section class="crest">
+            <img class="crest__bg" src="/saku-shot-4.webp"
+                 srcset="/saku-shot-4-828.webp 828w, /saku-shot-4.webp 1200w"
+                 sizes="100vw" width="1200" height="800"
+                 alt="" aria-hidden="true" loading="lazy" decoding="async" />
+            <div class="crest__text">
+              <p class="crest__line">Сила, которая не повышает голоса</p>
+              <p class="crest__sub">武士は食わねど高楊枝</p>
+            </div>
+          </section>
+
+          <!-- 02 — КЛИНОК -->
+          <section class="column">
+            <p class="column__num">02</p>
+            <div class="column__body">
+              <h3 class="column__head">Клинок</h3>
+              <p>
+                Под капотом рядная шестёрка и задние колёса, которым отдают
+                всю тягу. Ни то, ни другое не выведено наружу: ни крыльев,
+                ни надписей, ни решёток, которых там быть не должно. Запас
+                есть, но его не показывают.
+              </p>
+              <p>
+                Клинок держат в ножнах не потому, что он тупой. Вынимают
+                редко, и именно поэтому вынутый он что-то значит.
+              </p>
+            </div>
+            <p class="column__kana" aria-hidden="true">刀</p>
+          </section>
+
+          <!-- Пара внахлёст: крупный кадр и деталь поверх его угла. -->
+          <section class="pair">
+            <figure class="pair__main">
+              <img src="/saku-shot-6.webp"
+                   srcset="/saku-shot-6-828.webp 828w, /saku-shot-6.webp 1080w"
+                   sizes="(max-width: 860px) 88vw, 46vw"
+                   width="1080" height="1440"
+                   alt="Бежевый Mark II на дороге у леса, вид спереди сбоку"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <figure class="pair__detail">
+              <img src="/saku-shot-11.webp" sizes="(max-width: 860px) 40vw, 18vw"
+                   width="736" height="736"
+                   alt="Задний фонарь и шильдик Mark II крупным планом"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <div class="pair__text">
+              <p class="pair__head">Доспех</p>
+              <p>
+                Хром по нижнему краю, фонарь во всю корму, тонкая рамка окна.
+                Всё это - отделка, а не украшение: она держит форму так же,
+                как пластины держат доспех.
+              </p>
+            </div>
+          </section>
+
+          <!-- Лента во всю ширину без полей. -->
+          <section class="strip">
+            <figure class="strip__frame">
+              <img src="/saku-shot-8.webp" sizes="30vw"
+                   width="750" height="562"
+                   alt="Два Mark II цвета шампанского ночью на заправке"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <figure class="strip__frame">
+              <img src="/saku-shot-9.webp"
+                   srcset="/saku-shot-9-828.webp 828w, /saku-shot-9.webp 960w"
+                   sizes="34vw" width="960" height="1200"
+                   alt="Вишнёвый Mark II у дома, вид спереди сбоку"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <figure class="strip__frame strip__frame--dark">
+              <img src="/saku-shot-12.webp" sizes="30vw"
+                   width="640" height="645"
+                   alt="Ночная улица в фиолетовом свете, машина с включённой аварийкой"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <p class="strip__note">
+              В ряду одинаковых седанов его выдают три вещи: высота, вылет
+              и то, как ровно он держит линию порога.
+            </p>
+          </section>
+
+          <!-- 03 — ЦЕРЕМОНИЯ -->
+          <section class="column">
+            <p class="column__num">03</p>
+            <div class="column__body">
+              <h3 class="column__head">Церемония</h3>
+              <p>
+                Тряпка в багажнике, вода перед выездом, порядок в салоне,
+                который держат не для гостей. Уход тут не работа по дому,
+                а форма вежливости: машину готовят к выезду так же, как
+                готовят себя.
+              </p>
+              <p>
+                Смысл ровно тот же, что у чайной церемонии. Действие простое,
+                повторяется каждый раз одинаково, и именно в повторении
+                оно перестаёт быть бытовым.
+              </p>
+            </div>
+            <p class="column__kana" aria-hidden="true">作法</p>
+          </section>
+
+          <!-- Веер второй раз, но зеркальный: крупный кадр слева. -->
+          <section class="fan fan--mirror">
+            <figure class="fan__frame fan__frame--lead">
+              <img src="/saku-shot-2.webp" sizes="(max-width: 860px) 60vw, 28vw"
+                   width="736" height="1308"
+                   alt="Белый Mark II на закате под осыпающейся сакурой, лепестки на капоте"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <figure class="fan__frame fan__frame--far">
+              <img src="/saku-shot-10.webp"
+                   srcset="/saku-shot-10-828.webp 828w, /saku-shot-10.webp 900w"
+                   sizes="(max-width: 860px) 46vw, 26vw"
+                   width="900" height="1200"
+                   alt="Mark II в боксе под розовой подсветкой"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <figure class="fan__frame fan__frame--near">
+              <img src="/saku-shot-7.webp"
+                   srcset="/saku-shot-7-828.webp 828w, /saku-shot-7.webp 1080w"
+                   sizes="(max-width: 860px) 44vw, 22vw"
+                   width="1080" height="810"
+                   alt="Задняя четверть белого Mark II на весенней парковке"
+                   loading="lazy" decoding="async" />
+            </figure>
+            <p class="fan__note fan__note--mirror">
+              Лепестки на капоте держатся до первого разгона. Это не повод
+              не выезжать.
+            </p>
+          </section>
+
+          <!-- 04 — ЦВЕТЕНИЕ -->
+          <section class="column">
+            <p class="column__num">04</p>
+            <div class="column__body">
+              <h3 class="column__head">Цветение</h3>
+              <p>
+                Сакура держится неделю. Из-за этого на неё и ходят смотреть:
+                будь цветение круглый год, никто не поднимал бы головы.
+              </p>
+              <p>
+                С кузовом получилось похоже. Его выпускали пять лет, тридцать
+                лет назад, и с каждым годом целых остаётся меньше. Красивым
+                его делает в том числе то, что он кончается.
+              </p>
+            </div>
+            <p class="column__kana" aria-hidden="true">花</p>
+          </section>
+
+          <!-- ФИНАЛ -->
+          <section class="saku__end">
+            <img class="saku__end-bg" src="/saku-shot-13.webp"
+                 srcset="/saku-shot-13-828.webp 828w, /saku-shot-13.webp 1080w"
+                 sizes="100vw" width="1080" height="1439"
+                 alt="" aria-hidden="true" loading="lazy" decoding="async" />
+            <div class="saku__end-text">
+              <h3 class="saku__title saku__title--end">Цветёт недолго</h3>
+              <p class="saku__lead">
+                Ни одна из этих машин не станет новее. Их будет меньше каждый
+                год, и однажды белый седан под деревом станет таким же редким
+                зрелищем, как само дерево в конце апреля.
+              </p>
+              <p class="saku__sign">桜</p>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+
     <!-- Раскрытая карточка -->
     <div class="lightbox" data-lightbox hidden>
       <button class="lightbox__close" data-lightbox-close type="button">Закрыть</button>
       <div class="lightbox__slot" data-lightbox-slot></div>
     </div>
 
-    <!-- Переключатель звука: постоянный, с запоминанием выбора -->
-    <button class="sound" data-sound-toggle type="button" aria-pressed="true">
-      <span class="sound__bars" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span data-sound-label>Звук вкл</span>
-    </button>
+    <!-- ПЛЕЕР ФОНОВОЙ МУЗЫКИ ---------------------------------------------
+         Стоит в левом нижнем углу - там, где заказчик нарисовал его
+         на присланном образце. Сюда же переехали переключатель звука
+         и ползунок громкости: раньше они висели справа отдельным углом,
+         и два разных места для звука на одном экране читались как две
+         разные системы.
+
+         Ползунок один на всё: он ведёт и музыку, и звук роликов. Общий
+         множитель живёт в audio.js, и музыка берёт его оттуда же,
+         что и остальной звук.
+
+         Обложка одна на весь плейлист: в присланных файлах нет ни тегов,
+         ни картинок - ни названия, ни исполнителя, ни обложки. Названия
+         взяты из имён файлов и лежат списком в music.js. -->
+    <div class="player" data-player>
+      <!-- Свёрнутый вид: кружок с треугольником. Лежит поверх содержимого
+           и проявляется, когда плеер сжимается. Отдельным элементом, а не
+           подменой иконки, потому что сжимается весь блок разом, а внутри
+           у него шесть разных вещей. -->
+      <span class="player__bubble" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false">
+          <path d="M9 6v12l9-6z" />
+        </svg>
+      </span>
+
+      <div class="player__head">
+        <img
+          class="player__cover"
+          data-player-cover
+          src="/music-cover.webp"
+          width="320"
+          height="320"
+          alt=""
+          aria-hidden="true"
+        />
+
+        <div class="player__meta">
+          <p class="player__name" data-player-name>Тишина</p>
+
+          <label class="player__seek">
+            <span class="visually-hidden">Перемотка трека</span>
+            <input
+              class="player__range"
+              data-player-seek
+              type="range"
+              min="0"
+              max="1000"
+              step="1"
+              value="0"
+            />
+          </label>
+
+          <p class="player__time">
+            <span data-player-now>0:00</span>
+            <span aria-hidden="true">/</span>
+            <span data-player-len>0:00</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="player__controls">
+        <button class="player__btn" data-player-prev type="button" aria-label="Предыдущий трек">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M18 5v14L8 12zM6 5v14" />
+          </svg>
+        </button>
+
+        <button class="player__btn player__btn--play" data-player-play type="button" aria-label="Играть">
+          <svg class="player__icon player__icon--play" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+          <svg class="player__icon player__icon--pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9 5v14M15 5v14" />
+          </svg>
+        </button>
+
+        <button class="player__btn" data-player-next type="button" aria-label="Следующий трек">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M6 5v14l10-7zM18 5v14" />
+          </svg>
+        </button>
+
+        <button class="sound" data-sound-toggle type="button" aria-pressed="true">
+          <span class="sound__bars" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="visually-hidden" data-sound-label>Звук вкл</span>
+        </button>
+
+        <label class="mixer">
+          <span class="visually-hidden">Громкость</span>
+          <input
+            class="mixer__range"
+            data-sound-volume
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="100"
+          />
+        </label>
+      </div>
+    </div>
 
     <!-- Прелоадер: счётчик от 0 до 100 в виде тахометра, затем кнопка входа.
          Она же и есть то действие пользователя, после которого браузер

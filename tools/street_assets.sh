@@ -30,10 +30,14 @@ FLAGS="lanczos+accurate_rnd+full_chroma_int"
 # $1 имя  $2 ширина  $3 высота  $4 crf
 clip () {
   echo "$1 -> $2x$3" >&2
-  ffmpeg -y -v error -i "$A/$1.mp4" -an \
+  # Звук сохраняется: на роликах в пространстве он нужен наведению.
+  # Здесь стоял -an, и наведение честно выводило громкость на половину —
+  # только выводить было нечего, дорожки в файле не было вовсе.
+  ffmpeg -y -v error -i "$A/$1.mp4" \
     -vf "$CLEAN,scale=$2:$3:flags=$FLAGS,cas=0.5,fps=30" \
     -c:v libx264 -preset veryslow -crf $4 -pix_fmt yuv420p -profile:v high \
-    -x264-params "$PARAMS" -movflags +faststart "$W/$1.mp4"
+    -x264-params "$PARAMS" \
+    -c:a aac -b:a 96k -ac 2 -movflags +faststart "$W/$1.mp4"
   ffmpeg -y -v error -i "$W/$1.mp4" -frames:v 1 -q:v 82 "$W/$1-poster.webp"
 }
 

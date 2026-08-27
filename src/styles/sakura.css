@@ -1,0 +1,906 @@
+/* ПЯТОЕ ПРОСТРАНСТВО — «Самурай в цветах сакуры» -----------------------
+   Механика прокрутки взята со второго пространства, раскладка своя.
+
+   Общий приём: содержимое идёт узкой колонкой по центру, а кадры выходят
+   из-под неё - веером, лентой во всю ширину и парой внахлёст. Во втором
+   пространстве наоборот: там половина экрана всегда занята медиа, а текст
+   стоит рядом второй половиной.
+
+   Цвет. Пространство остаётся тёмным, как весь сайт, но акцент здесь
+   не рыжий, а розовый: рыжий на розовых кадрах выглядит грязью. Свой
+   акцент живёт только внутри слоя и наружу не течёт. */
+
+/* КАРТОЧКА В ЧЁРНОЙ ПАУЗЕ ----------------------------------------------- */
+
+.promo--saku .promo__art {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Текст стоит слева сверху - так на присланном образце. Место выбрано
+   по самому кадру: слева вверху ветки и небо, машина и рисунок справа
+   внизу. Отступы в процентах, чтобы блок держался того же места кадра
+   при любой ширине экрана. */
+.promo__pitch--saku {
+  position: absolute;
+  top: 8%;
+  left: 5%;
+  width: 38%;
+  text-align: left;
+}
+
+/* Кадр светлый и пёстрый как раз в том углу, где по образцу стоит текст:
+   белые буквы с тенью на розовых лепестках всё равно читались с трудом.
+   Кладём мягкую растяжку из угла - она гасит лепестки под текстом
+   и сходит на нет к середине кадра, оставляя машину и рисунок нетронутыми. */
+.promo--saku .promo__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    118deg,
+    rgba(6, 7, 9, 0.86) 0%,
+    rgba(6, 7, 9, 0.66) 24%,
+    rgba(6, 7, 9, 0.22) 44%,
+    rgba(6, 7, 9, 0) 60%
+  );
+}
+
+.promo__kicker--saku {
+  color: #f0b7c8;
+}
+
+.promo__head--saku {
+  color: #fff;
+  text-shadow: 0 0.15rem 1.5rem rgba(0, 0, 0, 0.55);
+}
+
+/* Кадр светлый почти весь: текст на нём держится только за счёт тени
+   и белого цвета, иначе он тонет в лепестках. */
+.promo__pitch--saku p {
+  color: #f4f1ef;
+  text-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.6);
+}
+
+/* Кнопка идёт в потоке блока, под текстом, а не приклеена к кадру:
+   на образце она обведена ровно там. */
+.promo__more--saku {
+  position: static;
+  right: auto;
+  top: auto;
+  margin-top: var(--space-s);
+  justify-self: start;
+  padding: 0.6rem 1.25rem;
+}
+
+/* СЛОЙ ------------------------------------------------------------------ */
+
+.saku {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-space);
+  overflow: hidden;
+  opacity: 0;
+  background: var(--ink);
+  --saku-pink: #e8a3b8;
+  --saku-warm: #f2ece8; /* тёплый почти-белый под заголовки */
+  --saku-line: rgba(232, 163, 184, 0.28);
+}
+
+.saku[hidden] {
+  display: none;
+}
+
+/* Прокрутку сглаживает свой экземпляр Lenis (sakura.js). overflow: hidden
+   ему не мешает: полосу он прячет, двигать содержимое из скрипта это
+   не запрещает. */
+.saku__scroll {
+  height: 100%;
+  overflow: hidden;
+}
+
+.saku__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding: clamp(1rem, 2.4vh, 1.75rem) var(--gutter);
+  background: linear-gradient(
+    to bottom,
+    rgba(6, 7, 9, 0.8) 0%,
+    rgba(6, 7, 9, 0.3) 55%,
+    rgba(6, 7, 9, 0) 100%
+  );
+  pointer-events: none;
+}
+
+.saku__bar > * {
+  pointer-events: auto;
+}
+
+.saku__brand {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--saku-warm);
+}
+
+.saku__brand span {
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--saku-pink);
+}
+
+.saku__close {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text-dim);
+  background: rgba(8, 9, 11, 0.6);
+  backdrop-filter: blur(8px);
+  transition: color var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out);
+}
+
+.saku__close svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.saku__close:hover {
+  color: var(--saku-warm);
+  border-color: var(--saku-pink);
+}
+
+/* ОБЩАЯ ТИПОГРАФИКА СЛОЯ ------------------------------------------------ */
+
+.saku__kana {
+  margin: 0;
+  font-family: var(--font-kana);
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  color: var(--saku-pink);
+}
+
+.saku__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.5rem, 5.6vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--saku-warm);
+}
+
+.saku__lead {
+  margin: 0;
+  max-width: 34rem;
+  font-size: var(--step-lead);
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.saku__lead--dim {
+  font-size: var(--step-body);
+  line-height: var(--leading-body);
+  color: var(--text-dim);
+}
+
+.saku__sign {
+  margin: var(--space-xs) 0 0;
+  font-family: var(--font-kana);
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  color: var(--saku-pink);
+}
+
+/* Стрелка вниз: слой открывается поверх страницы, и с ходу не очевидно,
+   что внутри есть своя прокрутка. */
+.saku__hint {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.25rem, 4svh, 2.5rem);
+  z-index: 3;
+  translate: -50% 0;
+  color: var(--text-faint);
+  animation: saku-hint 2.6s var(--ease-in-out) infinite;
+}
+
+.saku__hint svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+@keyframes saku-hint {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(0.4rem);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .saku__hint {
+    animation: none;
+  }
+}
+
+/* ВСТУПЛЕНИЕ ------------------------------------------------------------
+   Три колонки: текст, вертикальный ролик, полоса с японской строкой.
+   Во втором пространстве вступление - кадр во весь экран с текстом внизу;
+   здесь ролик вертикальный, и растянутый на весь экран он превратился бы
+   в среднюю полосу с обрезанными кроной и дорогой. */
+
+.gate {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(9rem, 12vw, 13rem) auto auto auto;
+  align-items: center;
+  gap: clamp(1.25rem, 2.6vw, 3.25rem);
+  padding: clamp(5rem, 14svh, 9rem) var(--gutter) clamp(4rem, 12svh, 8rem);
+  background: var(--ink);
+}
+
+.gate__text {
+  display: grid;
+  gap: var(--space-xs);
+  max-width: 30rem;
+}
+
+/* Заголовок здесь мельче общего: рядом теперь стоят два ролика и подпись,
+   и на прежнем размере колонке текста оставалось меньше трети экрана. */
+.gate__text .saku__title {
+  font-size: clamp(2.25rem, 4.4vw, 4rem);
+}
+
+/* Подпись стоит отдельной колонкой и прижата к верху - как на скриншоте:
+   там она висит на уровне заголовка, а не по центру экрана. */
+.gate__note {
+  margin: 0;
+  align-self: start;
+  padding-top: clamp(1rem, 6svh, 4rem);
+  font-size: var(--step-small);
+  line-height: 1.75;
+  color: var(--text-dim);
+}
+
+.gate__text .saku__title {
+  margin-bottom: 0.5rem;
+}
+
+.gate__media {
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: clamp(0.75rem, 1vw, 1.25rem);
+  background: var(--ink-raised);
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.55);
+}
+
+/* Высоту задаём мы, ширину считает файл: ролик не обрезается
+   и не растягивается ни на одном экране. */
+.gate__media video {
+  display: block;
+  height: min(62svh, 38rem);
+  width: auto;
+  max-width: 100%;
+}
+
+/* Второй ролик чуть ниже первого: два одинаковых прямоугольника рядом
+   читались бы как одна разрезанная картинка. */
+.gate__media--clip video {
+  height: min(56svh, 34rem);
+}
+
+/* Строка идёт сверху вниз - это единственное место на сайте, где текст
+   стоит вертикально, и держится оно на самой японской строке. По-русски
+   так набирать нельзя, кириллица в вертикальной строке ложится боком. */
+.gate__vertical {
+  margin: 0;
+  writing-mode: vertical-rl;
+  font-family: var(--font-kana);
+  font-size: clamp(0.875rem, 1.1vw, 1.0625rem);
+  letter-spacing: 0.35em;
+  color: var(--text-faint);
+}
+
+/* На узком десктопе пять колонок не помещаются: подпись уходит под текст,
+   вертикальная строка убирается, ролики остаются рядом. */
+@media (max-width: 1280px) {
+  .gate {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+
+  .gate__note {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    padding-top: 0;
+    max-width: 30rem;
+  }
+
+  .gate__text {
+    grid-row: 1;
+  }
+
+  .gate__media {
+    grid-row: 1 / span 2;
+  }
+
+  .gate__vertical {
+    display: none;
+  }
+
+  .gate__media video {
+    height: min(56svh, 32rem);
+  }
+
+  .gate__media--clip video {
+    height: min(50svh, 28rem);
+  }
+}
+
+/* ТЕКСТОВАЯ КОЛОНКА -----------------------------------------------------
+   Номер слева, катакана справа, текст между ними узкой мерой. Разворот
+   такой во втором пространстве не встречается ни разу. */
+
+.column {
+  position: relative;
+  min-height: 78svh;
+  display: grid;
+  grid-template-columns: auto minmax(0, 34rem) auto;
+  justify-content: center;
+  align-content: center;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  padding: clamp(6rem, 18svh, 12rem) var(--gutter);
+  background: var(--ink);
+}
+
+.column__num {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-small);
+  letter-spacing: var(--track-label);
+  color: var(--saku-pink);
+  align-self: start;
+  padding-top: 0.6rem;
+}
+
+.column__body {
+  display: grid;
+  gap: var(--space-xs);
+  border-left: 1px solid var(--saku-line);
+  padding-left: clamp(1.25rem, 2.5vw, 2.5rem);
+}
+
+.column__head {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1;
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--saku-warm);
+}
+
+.column__body p {
+  margin: 0;
+  font-size: var(--step-body);
+  line-height: var(--leading-body);
+  color: var(--text-dim);
+}
+
+.column__body p:first-of-type {
+  color: var(--text);
+}
+
+.column__kana {
+  margin: 0;
+  writing-mode: vertical-rl;
+  align-self: start;
+  font-family: var(--font-kana);
+  font-size: clamp(1.5rem, 2.4vw, 2.25rem);
+  letter-spacing: 0.2em;
+  color: var(--saku-line);
+}
+
+/* ВЕЕР ------------------------------------------------------------------
+   Три кадра разной высоты, расставленные лесенкой: ведущий стоит ниже
+   и крупнее, дальние подняты и мельче. Ряд одинаковых карточек, как
+   во втором пространстве, здесь не годится - там мозаика из двух равных,
+   тут разбежка из трёх разных. */
+
+.fan {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(1rem, 2.5vw, 2.5rem);
+  padding: clamp(5rem, 16svh, 11rem) var(--gutter);
+  background: var(--ink-raised);
+}
+
+.fan__frame {
+  margin: 0;
+  overflow: hidden;
+  border-radius: clamp(0.5rem, 0.8vw, 1rem);
+  background: var(--ink);
+}
+
+.fan__frame img {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* Высоты разные, и это и есть весь приём. */
+.fan__frame--lead {
+  height: min(70svh, 38rem);
+  width: clamp(15rem, 28vw, 27rem);
+}
+
+.fan__frame--far {
+  height: min(46svh, 25rem);
+  width: clamp(12rem, 22vw, 21rem);
+  margin-bottom: clamp(3rem, 10svh, 7rem);
+}
+
+.fan__frame--near {
+  height: min(56svh, 30rem);
+  width: clamp(11rem, 19vw, 18rem);
+  margin-bottom: clamp(1rem, 4svh, 3rem);
+}
+
+/* Подпись стоит не под кадрами, а сбоку от них - иначе веер снова
+   превращается в ряд с подписью под ним. */
+.fan__note {
+  margin: 0;
+  align-self: flex-end;
+  max-width: 16rem;
+  padding-bottom: clamp(1rem, 4svh, 3rem);
+  font-size: var(--step-small);
+  line-height: 1.7;
+  color: var(--text-dim);
+}
+
+.fan--mirror {
+  flex-direction: row-reverse;
+}
+
+.fan__note--mirror {
+  text-align: right;
+}
+
+/* ПОЛОСА С ФРАЗОЙ -------------------------------------------------------
+   Кадр во весь экран и одна строка по центру. Во втором пространстве
+   полоса всегда несёт абзац и выключена вправо; здесь строка одна
+   и стоит по центру - два одинаковых приёма подряд читались бы как один. */
+
+.crest {
+  position: relative;
+  min-height: 92svh;
+  display: grid;
+  place-content: center;
+  padding: var(--gutter);
+  overflow: hidden;
+  background: var(--ink);
+}
+
+.crest__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.crest::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(6, 7, 9, 0.62);
+  pointer-events: none;
+}
+
+.crest__text {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: var(--space-xs);
+  justify-items: center;
+  text-align: center;
+  max-width: 42rem;
+}
+
+/* Тонкие линии сверху и снизу - вместо рамки. Рамка вокруг строки
+   выглядела бы табличкой. */
+.crest__line {
+  margin: 0;
+  padding: clamp(1rem, 3svh, 2rem) 0;
+  border-top: 1px solid var(--saku-line);
+  border-bottom: 1px solid var(--saku-line);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3.4vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: var(--track-display);
+  color: var(--saku-warm);
+}
+
+.crest__sub {
+  margin: 0;
+  font-family: var(--font-kana);
+  font-size: var(--step-small);
+  letter-spacing: 0.25em;
+  color: var(--saku-pink);
+}
+
+/* ПАРА ВНАХЛЁСТ ---------------------------------------------------------
+   Крупный кадр и деталь, которая заходит на его нижний угол. Во втором
+   пространстве кадры никогда не перекрываются - там мозаика со сдвигом
+   по вертикали, но с зазором. */
+
+.pair {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 6rem);
+  padding: clamp(5rem, 16svh, 11rem) var(--gutter);
+  background: var(--ink);
+}
+
+.pair__main {
+  margin: 0;
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  overflow: hidden;
+  border-radius: clamp(0.5rem, 0.8vw, 1rem);
+  background: var(--ink-raised);
+}
+
+.pair__main img {
+  display: block;
+  height: min(68svh, 38rem);
+  width: auto;
+  max-width: 100%;
+}
+
+/* Деталь лежит поверх нижнего левого угла крупного кадра. Чтобы нахлёст
+   читался как задуманный, а не как сбой раскладки, у неё есть подложка
+   и тень: край видно. */
+.pair__detail {
+  margin: 0;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: end;
+  justify-self: start;
+  width: clamp(8rem, 16vw, 14rem);
+  translate: -35% 22%;
+  overflow: hidden;
+  border-radius: clamp(0.5rem, 0.8vw, 1rem);
+  background: var(--ink-raised);
+  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.6);
+}
+
+.pair__detail img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.pair__text {
+  grid-column: 1;
+  grid-row: 1;
+  display: grid;
+  gap: var(--space-xs);
+  max-width: 26rem;
+  justify-self: end;
+}
+
+.pair__head {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 2.8vw, 2.5rem);
+  line-height: 1.05;
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--saku-warm);
+}
+
+.pair__text p:not(.pair__head) {
+  margin: 0;
+  font-size: var(--step-body);
+  line-height: var(--leading-body);
+  color: var(--text-dim);
+}
+
+/* ЛЕНТА ВО ВСЮ ШИРИНУ ---------------------------------------------------
+   Четыре кадра встык, без полей по краям экрана, разной ширины и одной
+   высоты. Такой раскладки во втором пространстве нет: там всё содержимое
+   всегда внутри полей. */
+
+.strip {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr 1fr;
+  gap: 2px;
+  padding: clamp(4rem, 12svh, 8rem) 0 clamp(2rem, 6svh, 4rem);
+  background: var(--ink);
+}
+
+.strip__frame {
+  margin: 0;
+  overflow: hidden;
+  height: clamp(14rem, 42svh, 26rem);
+  background: var(--ink-raised);
+}
+
+.strip__frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Ночной кадр снят почти в темноте: рядом с двумя дневными он на чёрном фоне
+   читался не кадром, а дырой в ленте. Поднимаем яркость на треть - ровно
+   настолько, чтобы стало видно, что там машина. */
+.strip__frame--dark img {
+  filter: brightness(1.35) saturate(1.05);
+}
+
+.strip__note {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: var(--space-s) var(--gutter) 0;
+  max-width: 34rem;
+  justify-self: end;
+  text-align: right;
+  font-size: var(--step-small);
+  line-height: 1.7;
+  color: var(--text-dim);
+}
+
+/* ФИНАЛ ------------------------------------------------------------------ */
+
+.saku__end {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-content: end;
+  padding: var(--gutter);
+  padding-bottom: clamp(3rem, 12svh, 8rem);
+  overflow: hidden;
+  background: var(--ink);
+}
+
+/* Кадр вертикальный, экран широкий: в окно попадает меньше половины
+   высоты файла. По умолчанию берётся середина - гора, а машина оставалась
+   за нижним краем, и кадр читался обрезанным. Сдвигаем окно вниз, к машине;
+   вершина при этом остаётся в кадре сверху. */
+.saku__end-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 82%;
+}
+
+.saku__end::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgba(6, 7, 9, 0.94) 0%,
+    rgba(6, 7, 9, 0.78) 34%,
+    rgba(6, 7, 9, 0.2) 70%,
+    rgba(6, 7, 9, 0) 100%
+  );
+  pointer-events: none;
+}
+
+.saku__end-text {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: var(--space-xs);
+  max-width: 46rem;
+}
+
+.saku__title--end {
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
+}
+
+/* МОБИЛЬНЫЕ --------------------------------------------------------------
+   Вертикальный экран: всё, что стояло рядом, встаёт друг под друга,
+   вертикальные подписи убираются - на узком экране они съедают ширину,
+   ради которой всё и перестраивается. */
+
+@media (max-width: 860px) {
+  .gate {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    gap: var(--space-s);
+  }
+
+  /* Расстановку по колонкам и строкам, заданную для узкого десктопа, здесь
+     нужно снять целиком: иначе ролики остаются растянутыми на две строки
+     и наезжают на текст. */
+  .gate__text,
+  .gate__note,
+  .gate__media {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .gate__note {
+    padding-top: 0;
+  }
+
+  /* Коробка ролика прижимается к его ширине и встаёт по центру: на всю
+     колонку она оставляла рядом с вертикальным кадром пустую подложку. */
+  .gate__media {
+    width: fit-content;
+    justify-self: center;
+  }
+
+  .gate__vertical {
+    display: none;
+  }
+
+  .gate__media video {
+    height: min(46svh, 24rem);
+  }
+
+  .gate__media--clip video {
+    height: min(40svh, 21rem);
+  }
+
+  .gate__note {
+    max-width: none;
+  }
+
+  .column {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-xs);
+    min-height: auto;
+    padding: clamp(4rem, 14svh, 8rem) var(--gutter);
+  }
+
+  .column__kana {
+    display: none;
+  }
+
+  .column__num {
+    padding-top: 0;
+  }
+
+  .fan,
+  .fan--mirror {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-s);
+  }
+
+  .fan__frame--lead,
+  .fan__frame--far,
+  .fan__frame--near {
+    width: 100%;
+    height: clamp(16rem, 46svh, 24rem);
+    margin-bottom: 0;
+  }
+
+  .fan__note,
+  .fan__note--mirror {
+    max-width: none;
+    padding-bottom: 0;
+    text-align: left;
+  }
+
+  /* Нахлёст на узком экране закрывает половину крупного кадра:
+     деталь встаёт под ним обычной карточкой. */
+  .pair {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-s);
+  }
+
+  .pair__main,
+  .pair__detail,
+  .pair__text {
+    grid-column: 1;
+    justify-self: stretch;
+  }
+
+  .pair__main {
+    grid-row: 2;
+  }
+
+  .pair__detail {
+    grid-row: 3;
+    width: 55%;
+    translate: 0 0;
+    align-self: auto;
+    justify-self: start;
+  }
+
+  .pair__text {
+    grid-row: 1;
+    max-width: none;
+  }
+
+  .pair__main img {
+    height: auto;
+    width: 100%;
+  }
+
+  .strip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .strip__frame {
+    height: clamp(9rem, 26svh, 14rem);
+  }
+
+  .strip__note {
+    text-align: left;
+    justify-self: start;
+  }
+
+
+  .promo__pitch--saku {
+    position: static;
+    width: 100%;
+    padding: var(--space-s) 0 0;
+  }
+
+  .promo__pitch--saku p,
+  .promo__head--saku {
+    text-shadow: none;
+  }
+
+  .promo__pitch--saku p {
+    color: var(--text-dim);
+  }
+
+  .promo__head--saku {
+    color: var(--text);
+  }
+}

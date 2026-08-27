@@ -247,7 +247,7 @@ export function scrubVideo(video, tl, at = 0, span = 1) {
   video.loop = false;
   video.pause();
 
-  const FRAME = 1 / 60;   // ролики пережаты в шестьдесят кадров
+  const FRAME = 1 / 60;   // порог перемотки: мельче половины кадра не видно
   const STUCK = 400;      // мс: столько ждём ответа, дальше считаем, что его не будет
 
   const head = { t: 0 };
