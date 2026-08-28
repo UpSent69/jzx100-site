@@ -1,0 +1,5 @@
+# Сайт открыт для всех поисковиков целиком: закрывать здесь нечего.
+User-agent: *
+Allow: /
+
+Sitemap: https://mark2.xyz/sitemap.xml
