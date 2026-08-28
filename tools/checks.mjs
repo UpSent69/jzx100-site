@@ -61,8 +61,18 @@ async function open(opts = {}) {
 
 async function enter(page) {
   await page.waitForSelector('[data-preloader][data-ready="true"]', { timeout: 20000 });
+  // Кнопок входа две - RU и ENG. Обычный проход идёт по русской: она первая.
   await page.click("[data-preloader-enter]");
   await sleep(1500);
+}
+
+/** Что написано на кнопках входа. Читается до входа, пока прелоадер на месте. */
+async function readEnterButtons(page) {
+  return page.evaluate(() =>
+    [...document.querySelectorAll("[data-preloader-enter]")].map((b) =>
+      b.textContent.replace(/\s+/g, " ").trim()
+    )
+  );
 }
 
 async function scrollWithin(page, name, ratio) {
@@ -94,6 +104,7 @@ async function toCards(page) {
 // --- основной проход -------------------------------------------------------
 {
   const { browser, page } = await open();
+  const enterButtons = await readEnterButtons(page);
   await enter(page);
 
   check(
@@ -104,6 +115,13 @@ async function toCards(page) {
     "прокрутка разблокирована",
     !(await page.evaluate(() => document.body.hasAttribute("data-locked")))
   );
+
+  // Локализация. Русский лежит в разметке, английский - рядом атрибутами;
+  // проверяем не отдельные строки, а то, что после входа по-английски
+  // на странице не осталось ни одного русского текста и ни одного русского
+  // alt или aria-label. Такую проверку не обмануть частичным переводом.
+  check("на входе две кнопки языка", enterButtons.length === 2,
+    enterButtons.join(" / "));
 
   // Плеер и фоновая музыка. Проверяем здесь, а не вместе с остальным звуком
   // ниже: сюда мы приходим сразу после входа, курсор ещё ни на чём не стоит
@@ -783,6 +801,51 @@ async function toCards(page) {
 
 
   // Подключённый браузер закрывать нельзя — он не наш: гасим только страницу.
+  if (REMOTE) { await page.close(); await browser.disconnect(); }
+  else await browser.close();
+}
+
+// --- проход на английском ---------------------------------------------------
+{
+  const { browser, page } = await open();
+  await page.waitForSelector('[data-preloader][data-ready="true"]', { timeout: 20000 });
+  await page.click('[data-lang-pick="en"]');
+  await sleep(2500);
+
+  const left = await page.evaluate(() => {
+    const texts = [];
+    document.querySelectorAll("body *").forEach((el) => {
+      if (el.closest("script,style")) return;
+      for (const n of el.childNodes) {
+        if (n.nodeType === 3 && /[А-Яа-яЁё]/.test(n.textContent) && n.textContent.trim()) {
+          texts.push((el.className || el.tagName) + ": " + n.textContent.trim().slice(0, 40));
+        }
+      }
+    });
+    const attrs = [];
+    document.querySelectorAll("[alt],[aria-label],[content]").forEach((el) => {
+      for (const a of ["alt", "aria-label", "content"]) {
+        const v = el.getAttribute(a);
+        if (v && /[А-Яа-яЁё]/.test(v)) attrs.push(`${a}: ${v.slice(0, 40)}`);
+      }
+    });
+    return { texts, attrs, lang: document.documentElement.lang };
+  });
+  check("на английском не осталось русского текста", left.texts.length === 0,
+    left.texts.slice(0, 3).join(" | "));
+  check("на английском переведены alt, aria-label и описание страницы",
+    left.attrs.length === 0, left.attrs.slice(0, 3).join(" | "));
+  check("на английском выставлен lang", left.lang === "en", left.lang);
+
+  await page.reload({ waitUntil: "networkidle2", timeout: 60000 });
+  await sleep(2500);
+  const kept = await page.evaluate(() => ({
+    lang: document.documentElement.lang,
+    ru: document.querySelector('[data-lang-pick="ru"]').textContent.includes("Войти"),
+  }));
+  check("выбранный язык переживает перезагрузку", kept.lang === "en");
+  check("кнопка RU остаётся русской и на английской версии", kept.ru);
+
   if (REMOTE) { await page.close(); await browser.disconnect(); }
   else await browser.close();
 }

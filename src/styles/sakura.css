@@ -137,7 +137,7 @@
   color: var(--saku-warm);
 }
 
-.saku__brand span {
+.saku__brand span:first-child {
   font-size: var(--step-small);
   letter-spacing: var(--track-label);
   text-transform: uppercase;

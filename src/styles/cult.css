@@ -52,12 +52,14 @@
 .promo__pitch--cult {
   position: absolute;
   right: 5%;
-  top: 15%;
+  top: 9%;
   bottom: auto;
   width: 36%;
   display: grid;
   justify-items: start;
-  gap: 0.6rem;
+  /* Начало блока подняли с 15% до 9%, а зазоры сжали: после того как общий
+     размер мелкого текста вырос, кнопка вылезала за нижний край кадра. */
+  gap: 0.5rem;
   text-align: left;
   text-shadow: 0 0.1em 1em rgba(0, 0, 0, 0.9);
 }

@@ -1,4 +1,5 @@
 import { onDuck, onSoundChange, soundAllowed, soundVolume } from "./audio.js";
+import { onLangChange, t } from "./i18n.js";
 
 /**
  * Фоновая музыка и плеер в левом нижнем углу.
@@ -40,11 +41,15 @@ const TRACKS = [
   { file: "/music/11.m4a", name: "xxtristanxo - FALLING IN LOVE" },
   { file: "/music/12.m4a", name: "влад пиво - Бей меня" },
   // Эти четыре пришли без имён - в папке они лежали набором случайных букв.
-  { file: "/music/13.m4a", name: "Без названия - 13" },
-  { file: "/music/14.m4a", name: "Без названия - 14" },
-  { file: "/music/15.m4a", name: "Без названия - 15" },
-  { file: "/music/16.m4a", name: "Без названия - 16" },
+  // Подпись им ставит словарь, поэтому она меняется вместе с языком.
+  { file: "/music/13.m4a", untitled: 13 },
+  { file: "/music/14.m4a", untitled: 14 },
+  { file: "/music/15.m4a", untitled: 15 },
+  { file: "/music/16.m4a", untitled: 16 },
 ];
+
+// У четырёх треков имени нет: подпись собирается на нужном языке
+const title = (track) => track.name || t("untitled", track.untitled);
 
 const clock = (sec) => {
   if (!Number.isFinite(sec) || sec < 0) return "0:00";
@@ -114,7 +119,7 @@ export function initMusic(root) {
   const paintPlay = () => {
     const on = wanted && !audio.paused;
     root.dataset.playing = String(on);
-    playBtn?.setAttribute("aria-label", on ? "Пауза" : "Играть");
+    playBtn?.setAttribute("aria-label", on ? t("pause") : t("play"));
   };
 
   const paintTime = () => {
@@ -134,7 +139,7 @@ export function initMusic(root) {
     const track = TRACKS[index];
     audio.src = track.file;
     audio.preload = "auto";
-    if (nameEl) nameEl.textContent = track.name;
+    if (nameEl) nameEl.textContent = title(track);
     if (lenEl) lenEl.textContent = "0:00";
     if (nowEl) nowEl.textContent = "0:00";
     if (seek) {
@@ -305,7 +310,14 @@ export function initMusic(root) {
     wake();
   });
 
-  if (nameEl) nameEl.textContent = TRACKS[index].name;
+  if (nameEl) nameEl.textContent = title(TRACKS[index]);
+
+  // Сменили язык - подпись трека и подписи кнопок должны догнать
+  onLangChange(() => {
+    if (nameEl) nameEl.textContent = title(TRACKS[index]);
+    paintPlay();
+  });
+
   paintPlay();
   paintTime();
   measure();

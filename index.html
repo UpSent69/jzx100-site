@@ -6,7 +6,7 @@
     <title>Toyota Mark II JZX100</title>
     <meta
       name="description"
-      content="Toyota Mark II JZX100 - седан бизнес-класса с мотором 1JZ и задним приводом, икона японского внутреннего рынка."
+      content="Toyota Mark II JZX100 - седан бизнес-класса с мотором 1JZ и задним приводом, икона японского внутреннего рынка." data-en-content="Toyota Mark II JZX100 - an executive saloon with the 1JZ engine and rear-wheel drive, an icon of the Japanese domestic market."
     />
     <meta name="theme-color" content="#08090b" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -66,7 +66,7 @@
               height="941"
               fetchpriority="high"
               decoding="async"
-              alt="Чёрный Toyota Mark II JZX100 стоит анфас на асфальтовой площадке"
+              alt="Чёрный Toyota Mark II JZX100 стоит анфас на асфальтовой площадке" data-en-alt="A black Toyota Mark II JZX100 seen head on at an asphalt lot"
             />
 
             <div class="hero__letters" data-hero-letters aria-hidden="true">
@@ -111,21 +111,36 @@
              остаётся: она даёт клавиатуру и говорит, что кадр вообще куда-то
              ведёт. Нажатие на неё всплывает сюда же и открывает пространство
              второй раз — открытие от этого не портится, оно идемпотентно. -->
-        <div class="promo" data-promo data-space-open>
-          <img
-            class="promo__art"
-            src="/promo-drift.webp"
-            srcset="/promo-drift-828.webp 828w, /promo-drift-1280.webp 1280w, /promo-drift.webp 1672w"
-            sizes="(max-width: 860px) 94vw, 72vw"
-            width="1672"
-            height="941"
-            loading="lazy"
-            decoding="async"
-            alt="Почему JZX100 - король японского дрифта: чёрный Toyota Mark II на мокрой парковке у придорожного магазина, за ним гора Фудзи"
-          />
+        <div class="promo promo--drift" data-promo data-space-open>
+          <!-- Кадр и текст на нём лежат в общей коробке с пропорциями файла:
+               на вертикальном экране текст уходит из-под кадра вниз, и без неё
+               он считал бы отступы от всей карточки, а не от снимка.
+
+               Раньше название и обе строки были впечатаны прямо в картинку.
+               Теперь они живой текст: впечатанные не переводятся, и на
+               английской версии карточка оставалась бы русской. -->
+          <div class="promo__frame">
+            <img
+              class="promo__art"
+              src="/promo-drift.webp"
+              srcset="/promo-drift-828.webp 828w, /promo-drift-1280.webp 1280w, /promo-drift.webp 1672w"
+              sizes="(max-width: 860px) 94vw, 72vw"
+              width="1672"
+              height="941"
+              loading="lazy"
+              decoding="async"
+              alt="Чёрный Toyota Mark II на мокрой парковке у придорожного магазина, за ним гора Фудзи" data-en-alt="A black Toyota Mark II on a wet car park by a roadside shop, Mount Fuji behind it"
+            />
+
+            <div class="promo__pitch promo__pitch--drift">
+              <p class="promo__wordmark" aria-hidden="true">MARK II</p>
+              <p class="promo__kicker promo__kicker--drift" data-en="Why is the JZX100 the king of Japanese drift? 👑">Почему JZX100 - король японского дрифта? 👑</p>
+              <p data-en="Find out why drifters will pay anything for this saloon">Узнайте, за что дрифтеры готовы отдать любые деньги за этот седан</p>
+            </div>
+          </div>
 
           <button class="promo__more" data-space-open type="button">
-            <span>Подробнее</span>
+            <span data-en="More">Подробнее</span>
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path d="M5 12h13M13 6l6 6-6 6" />
             </svg>
@@ -155,7 +170,7 @@
               loop
               playsinline
               preload="none"
-              aria-label="Чёрный Toyota Mark II JZX100 стоит ночью в подземном паркинге"
+              aria-label="Чёрный Toyota Mark II JZX100 стоит ночью в подземном паркинге" data-en-aria-label="A black Toyota Mark II JZX100 parked at night in an underground car park"
             ></video>
           </div>
 
@@ -163,16 +178,16 @@
             <p class="jzx__kana">ジェイゼットエックス</p>
             <h2 class="jzx__title">JZX100</h2>
             <div class="jzx__text">
-              <p>- икона 90-х, воплотившая дух японского тюнинга.</p>
-              <p>
+              <p data-en="- a 90s icon that carried the spirit of Japanese tuning.">- икона 90-х, воплотившая дух японского тюнинга.</p>
+              <p data-en="With the legendary 1JZ-GTE, an engine pushed past 400 hp without much trouble, it became the queen of drift and night highways.">
                 С легендарным мотором 1JZ-GTE, который легко форсируется
                 за 400 сил, она стала королевой дрифта и ночных трасс.
               </p>
-              <p>
+              <p data-en="A strict four-eyed face and faultless reliability turned it into «samurai in a suit».">
                 Строгий четырёхглазый дизайн и безупречная надёжность
                 превратили её в «самурая в пиджаке».
               </p>
-              <p>
+              <p data-en="Decades on, the 100 body is still a symbol of unkillable JDM classics.">
                 Даже спустя десятилетия 100-й кузов остаётся символом
                 неубиваемой классики JDM.
               </p>
@@ -199,7 +214,7 @@
               height="941"
               loading="lazy"
               decoding="async"
-              alt="Белый Toyota Mark II JZX100 с интеркулером ночью на городской набережной, рядом на корточках сидит владелец"
+              alt="Белый Toyota Mark II JZX100 с интеркулером ночью на городской набережной, рядом на корточках сидит владелец" data-en-alt="A white Toyota Mark II JZX100 with an intercooler on a city embankment at night, its owner crouching beside it"
             />
 
             <p class="promo__mark" aria-hidden="true">
@@ -209,23 +224,28 @@
 
           <!-- Текст и кнопка стоят в правой части кадра: там ночное небо
                и пустая дорога, единственное место, где ничего не закрывается.
-               Отступы в процентах — блок держит пропорции файла, и оба
-               остаются на том же месте кадра при любой ширине. -->
+               Отступ сверху в процентах — блок держит пропорции файла
+               и остаётся на том же месте кадра при любой ширине.
+
+               Кнопка лежит внутри блока, а не отдельно на кадре с процентом
+               сверху. Так было раньше, и держалось это на том, что высота
+               текста известна: стоило поднять размер шрифта - и кнопка
+               наехала на последнюю строку. В потоке блок расставляет их сам. -->
           <div class="promo__pitch">
-            <p class="promo__kicker">Как она живёт</p>
-            <p>
+            <p class="promo__kicker" data-en="How it lives">Как она живёт</p>
+            <p data-en="What the 100 body is built from, how it sounds and how it got here from Japan at all. And what to look under it if one day you decide to buy one.">
               Из чего собран сотый кузов, как он звучит и как вообще доехал
               сюда из Японии. И что смотреть под ним, если однажды решишь
               брать такой же.
             </p>
-          </div>
 
-          <button class="promo__more promo__more--street" data-street-open type="button">
-            <span>Подробнее</span>
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path d="M5 12h13M13 6l6 6-6 6" />
-            </svg>
-          </button>
+            <button class="promo__more promo__more--street" data-street-open type="button">
+              <span data-en="More">Подробнее</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 12h13M13 6l6 6-6 6" />
+              </svg>
+            </button>
+          </div>
         </div>
 
         <!-- Вторая карточка той же паузы — в третье пространство. Стоят они
@@ -246,7 +266,7 @@
               height="941"
               loading="lazy"
               decoding="async"
-              alt="Человек в жёлтой куртке забирается на капот розового Toyota Mark II на мокрой ночной дороге"
+              alt="Человек в жёлтой куртке забирается на капот розового Toyota Mark II на мокрой ночной дороге" data-en-alt="A person in a yellow jacket climbing onto the bonnet of a pink Toyota Mark II on a wet night road"
             />
           </div>
 
@@ -256,16 +276,16 @@
                порознь они наезжали друг на друга на узком окне. В потоке
                блок сам расставляет их по порядку. -->
           <div class="promo__pitch promo__pitch--cult">
-            <p class="promo__chip">Культ JDM</p>
-            <p class="promo__head">Своих узнают по мелочам</p>
-            <p>
+            <p class="promo__chip" data-en="JDM cult">Культ JDM</p>
+            <p class="promo__head" data-en="You know your own by the details">Своих узнают по мелочам</p>
+            <p data-en="Stickers, flags, ride height below reason and an exhaust louder than needed. About the scene around the 100 body and the people who keep it.">
               Наклейки, флажки, посадка ниже разумного и выхлоп громче
               нужного. Про сцену вокруг сотого кузова и про тех, кто её
               держит.
             </p>
 
             <button class="promo__more promo__more--cult" data-cult-open type="button">
-              <span>Подробнее</span>
+              <span data-en="More">Подробнее</span>
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                 <path d="M5 12h13M13 6l6 6-6 6" />
               </svg>
@@ -285,7 +305,7 @@
            кадр обязан быть ключевым, и четырнадцать секунд в 2560 стоили
            двадцати шести мегабайт. Петля обходится восемью. -->
       <section class="screen motion" id="motion" data-screen="motion">
-        <h2 class="visually-hidden">Движение</h2>
+        <h2 class="visually-hidden" data-en="Motion">Движение</h2>
         <div class="motion__stage">
           <div class="motion__media" data-motion-media>
             <!-- Постер — первый кадр самой пережатой копии: пока ролик идёт
@@ -302,13 +322,13 @@
               playsinline
               preload="none"
               data-src="/motion-bg.mp4"
-              aria-label="Белый Toyota Mark II JZX100 стоит на площадке, дальше уходит на шоссе и в ночную трассу"
+              aria-label="Белый Toyota Mark II JZX100 стоит на площадке, дальше уходит на шоссе и в ночную трассу" data-en-aria-label="A white Toyota Mark II JZX100 on a lot, then heading onto the motorway and into the night"
             ></video>
           </div>
 
           <div class="motion__caption" data-motion-caption>
-            <p class="title reveal-line"><span>Полный ход</span></p>
-            <p class="label reveal-line"><span>1JZ-GTE &nbsp; задний привод</span></p>
+            <p class="title reveal-line"><span data-en="Full speed">Полный ход</span></p>
+            <p class="label reveal-line"><span data-en="1JZ-GTE &nbsp; rear-wheel drive">1JZ-GTE &nbsp; задний привод</span></p>
           </div>
         </div>
       </section>
@@ -328,22 +348,22 @@
             height="941"
             loading="lazy"
             decoding="async"
-            alt="Белый и чёрный Toyota Mark II стоят ночью на мокрой улице у освещённого здания с колоннами"
+            alt="Белый и чёрный Toyota Mark II стоят ночью на мокрой улице у освещённого здания с колоннами" data-en-alt="A white and a black Toyota Mark II at night on a wet street by a lit building with columns"
           />
 
           <!-- Заголовок и подпись лежат на кадре справа: там пустая мокрая
                дорога, единственное место, где ничего не закрывается.
                Кнопка идёт следом в потоке блока. -->
           <div class="promo__pitch promo__pitch--soul">
-            <p class="promo__kicker promo__kicker--soul">Душа машины</p>
-            <p class="promo__head">Она, а не оно</p>
-            <p>
+            <p class="promo__kicker promo__kicker--soul" data-en="The soul of the car">Душа машины</p>
+            <p class="promo__head" data-en="She, not it">Она, а не оно</p>
+            <p data-en="Your first own car, hours in the garage, four in the morning and marks nobody wipes off. About what a shared history is made of.">
               Первая своя, часы в гараже, четыре утра и следы, которые никто
               не убирает. Про то, из чего складывается общая история.
             </p>
 
             <button class="promo__more promo__more--soul" data-soul-open type="button">
-              <span>Подробнее</span>
+              <span data-en="More">Подробнее</span>
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path d="M5 12h13M13 6l6 6-6 6" />
               </svg>
@@ -357,7 +377,7 @@
            по ощущению блок — выходит из-под зерна и затемнения.
            Сразу грузится только постер, видео подтягивается на подходе. -->
       <section class="screen screen--light cards" id="cards" data-screen="cards">
-        <h2 class="visually-hidden">Карточки</h2>
+        <h2 class="visually-hidden" data-en="Cards">Карточки</h2>
 
         <button class="card" data-card type="button" data-playing="false">
           <span class="card__media">
@@ -369,7 +389,7 @@
               height="1280"
               loading="lazy"
               decoding="async"
-              alt="Белый Toyota Mark II стоит на лесной дороге в сумерках"
+              alt="Белый Toyota Mark II стоит на лесной дороге в сумерках" data-en-alt="A white Toyota Mark II on a forest road at dusk"
             />
             <video
               class="card__video"
@@ -382,9 +402,6 @@
             </video>
           </span>
           <span class="card__veil"></span>
-          <span class="card__caption">
-            <span class="label stub" data-todo>Подпись к карточке - ждём от заказчика</span>
-          </span>
           <span class="card__progress" data-card-progress></span>
         </button>
 
@@ -398,7 +415,7 @@
               height="1280"
               loading="lazy"
               decoding="async"
-              alt="Белый Toyota Mark II на пустой трассе, горят задние фонари"
+              alt="Белый Toyota Mark II на пустой трассе, горят задние фонари" data-en-alt="A white Toyota Mark II on an empty road, tail lamps lit"
             />
             <video
               class="card__video"
@@ -411,9 +428,6 @@
             </video>
           </span>
           <span class="card__veil"></span>
-          <span class="card__caption">
-            <span class="label stub" data-todo>Подпись к карточке - ждём от заказчика</span>
-          </span>
           <span class="card__progress" data-card-progress></span>
         </button>
       </section>
@@ -434,21 +448,21 @@
               height="941"
               loading="lazy"
               decoding="async"
-              alt="Белый Toyota Mark II JZX100 под цветущей сакурой, рядом рисованный портрет и обрывки газеты"
+              alt="Белый Toyota Mark II JZX100 под цветущей сакурой, рядом рисованный портрет и обрывки газеты" data-en-alt="A white Toyota Mark II JZX100 under cherry blossom, with a drawn portrait and torn newsprint beside it"
             />
           </div>
 
           <div class="promo__pitch promo__pitch--saku">
-            <p class="promo__kicker promo__kicker--saku">Самурай в цветах сакуры</p>
-            <p class="promo__head promo__head--saku">Осанка и клинок</p>
-            <p>
+            <p class="promo__kicker promo__kicker--saku" data-en="A samurai in cherry blossom">Самурай в цветах сакуры</p>
+            <p class="promo__head promo__head--saku" data-en="Posture and blade">Осанка и клинок</p>
+            <p data-en="Why the 100 keeps away from noise, how its lines resemble armour and why a car like this suits a bloom that is over in a week.">
               Почему сотый держится в стороне от шума, чем его линии похожи
               на доспех и зачем такой машине цветение, которое проходит
               за неделю.
             </p>
 
             <button class="promo__more promo__more--saku" data-saku-open type="button">
-              <span>Подробнее</span>
+              <span data-en="More">Подробнее</span>
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                 <path d="M5 12h13M13 6l6 6-6 6" />
               </svg>
@@ -469,7 +483,7 @@
            Адреса те же, поэтому второй раз ничего не скачивается, а скрытое
            через display:none с ленивой загрузкой вообще не грузится. -->
       <section class="screen reading" id="reading" data-screen="reading">
-        <h2 class="visually-hidden">JDM и Mark II</h2>
+        <h2 class="visually-hidden" data-en="JDM and the Mark II">JDM и Mark II</h2>
 
         <div class="reading__shots" aria-hidden="true">
           <!-- Первый кадр вертикальный, и колонке это на руку: она узкая
@@ -483,29 +497,29 @@
         <div class="reading__text">
           <div class="reading__block reading__block--intro" data-reading-block>
             <img class="reading__inline" src="/reading-1.webp" loading="lazy" decoding="async"
-                 alt="Белый Toyota Mark II JZX100 стоит на городской парковке в сумерках, горят жёлтые фары" />
-            <h3>Что такое JDM</h3>
-            <p>
+                 alt="Белый Toyota Mark II JZX100 стоит на городской парковке в сумерках, горят жёлтые фары" data-en-alt="A white Toyota Mark II JZX100 in a city car park at dusk, yellow headlights on" />
+            <h3 data-en="What JDM is">Что такое JDM</h3>
+            <p data-en="JDM is not a style and not a set of stickers. Literally it is the Japanese domestic market: cars built for home, with nobody expecting they would ever leave.">
               JDM - это не стиль и не набор наклеек. Буквально это внутренний
               японский рынок: машины, которые собирали для себя и не
               рассчитывали, что их когда-нибудь увезут.
             </p>
-            <p>
+            <p data-en="Export versions always differed in something - regulations, equipment, settings for foreign roads. What stayed home was different: right-hand drive, bodies sized around the local tax, engines and trims that appeared in no catalogue outside the country.">
               Экспортные версии всегда чем-то отличались - нормами, оснащением,
               настройками под чужие дороги. Дома оставалось другое: правый руль,
               кузова под местный налог на габариты, моторы и комплектации,
               которых не было ни в одном каталоге за пределами страны.
             </p>
             <p class="reading__pull">
-              Домашний рынок никому ничего не доказывал.<br />
-              Он просто делал как надо.
+              <span data-en="The home market had nothing to prove to anyone.">Домашний рынок никому ничего не доказывал.</span><br />
+              <span data-en="It simply did things properly.">Он просто делал как надо.</span>
             </p>
-            <p>
+            <p data-en="From the late eighties Japanese makers held to an unwritten agreement not to declare more than 280 hp. Every spec sheet carried the same number; what happened on the dyno was another matter.">
               С конца восьмидесятых японские производители держались негласного
               уговора не заявлять больше 280 сил. В паспорте у всех стояла одна
               и та же цифра, а что происходило на стенде - вопрос отдельный.
             </p>
-            <p>
+            <p data-en="There is a second reason these cars scattered around the world - shaken. The compulsory inspection gets dearer as a car ages, and a perfectly healthy car was often cheaper to sell abroad than to keep at home.">
               Есть и вторая причина, по которой эти машины разъехались по миру, -
               сякэн. Обязательный техосмотр дорожает с возрастом автомобиля, и
               вполне исправную машину оказывалось дешевле продать за границу,
@@ -515,24 +529,24 @@
 
           <div class="reading__block" data-reading-block>
             <img class="reading__inline" src="/card-2-poster.webp" loading="lazy" decoding="async"
-                 alt="Mark II на пустой ночной трассе, горят задние фонари" />
-            <h3>Ночь и трассы</h3>
-            <p>
+                 alt="Mark II на пустой ночной трассе, горят задние фонари" data-en-alt="A Mark II on an empty road at night, tail lamps lit" />
+            <h3 data-en="Night and the roads">Ночь и трассы</h3>
+            <p data-en="Touge - mountain roads with blind corners and a drop instead of a shoulder. There are no straights there where power decides. Something else matters: how the car sets into a corner and what it does once the grip is gone.">
               Туге - горные серпантины с глухими поворотами и обрывом вместо
               обочины. Прямых, где решает мощность, там нет. Значение имеет
               другое: как машина встаёт в поворот и что делает, когда сцепления
               уже не осталось.
             </p>
-            <p>
+            <p data-en="Drift grew out of that - first as a way to take those corners quickly, then as a discipline of its own with its own names and rules.">
               Отсюда вырос дрифт - сначала как способ проходить эти повороты
               быстро, потом как отдельная дисциплина со своими именами
               и правилами.
             </p>
             <p class="reading__pull">
-              Ночь ничего не обещала.<br />
-              Просто в это время дорога принадлежала тебе.
+              <span data-en="The night promised nothing.">Ночь ничего не обещала.</span><br />
+              <span data-en="The road just belonged to you at that hour.">Просто в это время дорога принадлежала тебе.</span>
             </p>
-            <p>
+            <p data-en="Below, along Tokyo Bay, ran the Wangan, and at roadside parking areas like Daikoku those with nowhere to hurry gathered at night. No competitions, no spectators - headlights, an engine at idle and talk until morning.">
               Ниже, вдоль Токийского залива, лежала скоростная Ванган,
               а на придорожных стоянках вроде Дайкоку по ночам собирались те,
               кому некуда было спешить. Ни соревнований, ни зрителей -
@@ -542,20 +556,20 @@
 
           <div class="reading__block" data-reading-block>
             <img class="reading__inline" src="/hero-plate-828.webp" loading="lazy" decoding="async"
-                 alt="Чёрный Toyota Mark II анфас, ровные линии кузова без внешних отличий" />
-            <h3>Почему Mark II</h3>
-            <p>
+                 alt="Чёрный Toyota Mark II анфас, ровные линии кузова без внешних отличий" data-en-alt="A black Toyota Mark II head on, even body lines with nothing loud about them" />
+            <h3 data-en="Why the Mark II">Почему Mark II</h3>
+            <p data-en="The Mark II was sold as an executive saloon. Even lines, velour inside, nothing loud on the outside - a car you drive to work.">
               Mark II продавали как служебный седан бизнес-класса. Ровные линии,
               велюр в салоне, ничего вызывающего снаружи - машина, на которой
               ездят на работу.
             </p>
-            <p>
+            <p data-en="Under the bonnet, though, sat the 1JZ-GTE: a two and a half litre straight six with a turbo, those same 280 hp on paper and rear-wheel drive. In the Tourer V - with a manual gearbox.">
               Под капотом при этом стоял 1JZ-GTE: рядная «шестёрка» на два
               с половиной литра с турбиной, те самые паспортные 280 сил
               и задний привод. В версии Tourer V - с механической коробкой.
             </p>
-            <p class="reading__pull">Самурай в пиджаке.</p>
-            <p>
+            <p class="reading__pull" data-en="A samurai in a suit.">Самурай в пиджаке.</p>
+            <p data-en="Nothing in its looks gave away what it could do. That is what made the 100 body what it became: calm outside, mean underneath.">
               Ничего в его облике не выдавало, на что он способен. Это
               и сделало сотый кузов тем, чем он стал: спокойный снаружи, злой
               по устройству.
@@ -564,22 +578,22 @@
 
           <div class="reading__block" data-reading-block>
             <img class="reading__inline" src="/card-1-poster.webp" loading="lazy" decoding="async"
-                 alt="Белый Mark II стоит на пустой дороге в сумерках" />
-            <h3>Наследие</h3>
-            <p>
+                 alt="Белый Mark II стоит на пустой дороге в сумерках" data-en-alt="A white Mark II on an empty road at dusk" />
+            <h3 data-en="Legacy">Наследие</h3>
+            <p data-en="The 100 body left the line in 2000, replaced by the X110. There have been fewer of them every year since.">
               Сотый кузов сняли с конвейера в 2000 году, на смену пришёл X110.
               С тех пор этих машин становится только меньше.
             </p>
-            <p>
+            <p data-en="Untouched examples are almost gone: nearly every one went through tuning, usually more than once. Then time added its part - corrosion, wear, donors stripped for parts.">
               Целых экземпляров почти не осталось: через тюнинг прошёл почти
               каждый, и обычно не по одному разу. Дальше добавилось время -
               коррозия, износ, разобранные на запчасти доноры.
             </p>
             <p class="reading__pull">
-              Цены выросли не из-за моды.<br />
-              Просто выбирать стало не из чего.
+              <span data-en="Prices did not rise because of fashion.">Цены выросли не из-за моды.</span><br />
+              <span data-en="There is simply nothing left to choose from.">Просто выбирать стало не из чего.</span>
             </p>
-            <p>
+            <p data-en="Something else came together. The twenty-five year rule works in the US, and from the early twenties the JZX100 could be imported legally. And the generation that saw these cars in games and night videos had by then grown old enough to buy them.">
               Сложилось и другое. В США работает правило двадцати пяти лет,
               и с начала двадцатых JZX100 стало можно ввозить легально.
               А поколение, которое видело эти машины в играх и на ночных
@@ -590,18 +604,55 @@
       </section>
 
       <!-- ЭКРАН 6 — Финал --------------------------------------------------
-           Финального кадра, контактов и соцсетей от заказчика пока нет.
-           Стоит заглушка на имеющемся материале. -->
+           Финального кадра от заказчика пока нет, стоит кадр из имеющегося
+           материала. Контакты - две почты с подписями; раздела соцсетей нет
+           по решению заказчика. -->
       <section class="screen final" id="final" data-screen="final">
-        <h2 class="visually-hidden">Финал</h2>
+        <h2 class="visually-hidden" data-en="Finale">Финал</h2>
         <img class="final__bg" src="/motion-still-1.webp" alt="" loading="lazy" />
 
         <div class="final__inner">
           <p class="kana label reveal-line"><span>マークツー</span></p>
           <p class="display reveal-line"><span>Mark II</span></p>
           <ul class="final__contacts">
-            <li><span class="stub" data-todo>Контакты - ждём от заказчика</span></li>
-            <li><span class="stub" data-todo>Соцсети - ждём от заказчика</span></li>
+            <li>
+              <span class="final__role" data-en="author">автор</span>
+              <a class="final__mail" href="mailto:fallme38@gmail.com">fallme38@gmail.com</a>
+            </li>
+            <li>
+              <span class="final__role" data-en="assistant">помощник</span>
+              <a class="final__mail" href="mailto:Artemperunjak@gmail.com">Artemperunjak@gmail.com</a>
+            </li>
+          </ul>
+
+          <!-- Авторы роликов - на месте, где раньше стояли соцсети.
+               Сам адрес не показываем: три ссылки на TikTok заняли бы
+               половину экрана и читались бы мусором. Вместо адреса слово
+               «ссылка», а имя автора уходит в aria-label - иначе у диктора
+               три ссылки подряд назывались бы одинаково. -->
+          <ul class="final__credits">
+            <li class="final__credits-head" data-en="video by">видео</li>
+            <li>
+              <span class="final__author">𝙎𝙃𝙓𝘽𝙓𝙉𝙑</span>
+              <a href="https://www.tiktok.com/@shxbxnv" target="_blank" rel="noopener noreferrer"
+                 aria-label="𝙎𝙃𝙓𝘽𝙓𝙉𝙑 в TikTok" data-en-aria-label="𝙎𝙃𝙓𝘽𝙓𝙉𝙑 on TikTok"
+                 data-en="link">ссылка</a>
+            </li>
+            <li>
+              <!-- Имя переводится записью: два соседних автора подписаны латиницей,
+                   и одна кириллица среди них на английской версии читалась бы
+                   опечаткой. Ссылка ведёт на тот же аккаунт. -->
+              <span class="final__author" data-en="Vanka">Ванька</span>
+              <a href="https://www.tiktok.com/@frol_mq" target="_blank" rel="noopener noreferrer"
+                 aria-label="Ванька в TikTok" data-en-aria-label="Vanka on TikTok"
+                 data-en="link">ссылка</a>
+            </li>
+            <li>
+              <span class="final__author">𝑺𝑳𝑰𝑪𝑬.</span>
+              <a href="https://www.tiktok.com/@_slice_" target="_blank" rel="noopener noreferrer"
+                 aria-label="𝑺𝑳𝑰𝑪𝑬. в TikTok" data-en-aria-label="𝑺𝑳𝑰𝑪𝑬. on TikTok"
+                 data-en="link">ссылка</a>
+            </li>
           </ul>
         </div>
       </section>
@@ -618,8 +669,8 @@
 
          Оформления пока нет, стоит каркас: заголовок и подпись. -->
     <div class="space" data-space hidden aria-modal="true" role="dialog"
-         aria-label="Почему JZX100 - король японского дрифта">
-      <button class="space__close" data-space-close type="button" aria-label="Закрыть">
+         aria-label="Почему JZX100 - король японского дрифта" data-en-aria-label="Why the JZX100 is the king of Japanese drift">
+      <button class="space__close" data-space-close type="button" aria-label="Закрыть" data-en-aria-label="Close">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path d="M6 6l12 12M18 6L6 18" />
         </svg>
@@ -653,8 +704,8 @@
               aria-hidden="true"
             ></video>
             <div class="chapter__text" data-space-inner>
-              <h2 class="space__title">Почему JZX100 - король японского дрифта? 👑</h2>
-              <p class="space__lead">
+              <h2 class="space__title" data-en="Why is the JZX100 the king of Japanese drift? 👑">Почему JZX100 - король японского дрифта? 👑</h2>
+              <p class="space__lead" data-en="1JZ-GTE, rear-wheel drive and the character of a real fighter - find out why drifters across Japan worship this saloon">
                 1JZ-GTE, задний привод и характер настоящего бойца - узнайте,
                 за что дрифтеры по всей Японии боготворят этот седан
               </p>
@@ -664,11 +715,11 @@
           <!-- 2 -->
           <section class="chapter">
             <img class="chapter__bg" src="/s2-bg.webp" srcset="/s2-bg-828.webp 828w, /s2-bg.webp 1672w"
-                 sizes="100vw" alt="Белый Mark II в управляемом заносе на ночной городской площади"
+                 sizes="100vw" alt="Белый Mark II в управляемом заносе на ночной городской площади" data-en-alt="A white Mark II in a controlled slide on a city square at night"
                  loading="lazy" decoding="async" />
             <div class="chapter__text">
-              <h3 class="chapter__title">Легенда девяностых</h3>
-              <p>
+              <h3 class="chapter__title" data-en="A nineties legend">Легенда девяностых</h3>
+              <p data-en="The Toyota Mark II JZX100 is a cult saloon of the 90s and a true legend of the Japanese drift scene. It carries the legendary 1JZ-GTE engine, rear-wheel drive and near perfect weight balance. It suits anyone who wants to feel like the king of mountain roads and night car parks.">
                 Toyota Mark II JZX100 - культовый седан 90-х и настоящая легенда
                 японской дрифт-сцены. Этот автомобиль может похвастаться
                 легендарным мотором 1JZ-GTE, задним приводом и идеальной
@@ -683,24 +734,24 @@
             <figure class="frame frame--tall">
               <video src="/s3-video.mp4" poster="/s3-video-poster.webp"
                      muted playsinline loop preload="none" data-chapter-video
-                     aria-label="Проезд Mark II, снятый вертикально"></video>
+                     aria-label="Проезд Mark II, снятый вертикально" data-en-aria-label="A Mark II passing by, filmed vertically"></video>
             </figure>
             <figure class="frame">
-              <img src="/s3-photo-1.webp" alt="Mark II на ночной улице" loading="lazy" decoding="async" />
+              <img src="/s3-photo-1.webp" alt="Mark II на ночной улице" data-en-alt="A Mark II on a street at night" loading="lazy" decoding="async" />
             </figure>
             <figure class="frame frame--tall">
-              <img src="/s3-photo-2.webp" alt="Mark II крупным планом" loading="lazy" decoding="async" />
+              <img src="/s3-photo-2.webp" alt="Mark II крупным планом" data-en-alt="A Mark II close up" loading="lazy" decoding="async" />
             </figure>
           </section>
 
           <!-- 4 -->
           <section class="chapter">
             <img class="chapter__bg" src="/s4-bg.webp" srcset="/s4-bg-828.webp 828w, /s4-bg.webp 1672w"
-                 sizes="100vw" alt="Mark II в гараже с открытым капотом, виден мотор 1JZ"
+                 sizes="100vw" alt="Mark II в гараже с открытым капотом, виден мотор 1JZ" data-en-alt="A Mark II in a garage with the bonnet up, the 1JZ engine in view"
                  loading="lazy" decoding="async" />
             <div class="chapter__text">
-              <h3 class="chapter__title">Мотор 1JZ-GTE</h3>
-              <p>
+              <h3 class="chapter__title" data-en="The 1JZ-GTE engine">Мотор 1JZ-GTE</h3>
+              <p data-en="The 1JZ-GTE is Toyota's legendary 2.5 litre turbocharged straight six. A cast iron block, forged pistons and oil cooling jets make it practically unkillable. The factory 280 hp is only a starting point: the engine calmly holds 400-500 hp on stock internals, and a full 800 with deep tuning. That reliability and headroom is exactly why the 1JZ-GTE became the heart of Japanese drift culture.">
                 1JZ-GTE - легендарная рядная «шестёрка» Toyota объёмом 2,5 литра
                 с турбонаддувом. Чугунный блок, кованые поршни и масляные
                 форсунки охлаждения делают его практически неубиваемым.
@@ -714,14 +765,14 @@
 
           <section class="gallery">
             <figure class="frame frame--tall">
-              <img src="/s4-photo-1.webp" alt="Mark II, вид сбоку" loading="lazy" decoding="async" />
+              <img src="/s4-photo-1.webp" alt="Mark II, вид сбоку" data-en-alt="A Mark II from the side" loading="lazy" decoding="async" />
             </figure>
             <figure class="frame frame--tall">
               <video src="/s4-video.mp4" poster="/s4-video-poster.webp"
                      muted playsinline loop preload="none" data-chapter-video
-                     aria-label="Mark II на ночной парковке, снято вертикально"></video>
+                     aria-label="Mark II на ночной парковке, снято вертикально" data-en-aria-label="A Mark II in a car park at night, filmed vertically"></video>
             </figure>
-            <p class="gallery__note">
+            <p class="gallery__note" data-en="The engine takes any work well: turbo, intake, exhaust, fuel system and ECU. The cast iron block digests everything bolted into it.">
               Мотор отлично поддаётся любым доработкам: замена турбины, впуска,
               выпуска, топливной системы и мозгов. Чугунный блок переваривает
               всё, что в него вкручивают.
@@ -731,11 +782,11 @@
           <!-- 5 -->
           <section class="chapter">
             <img class="chapter__bg" src="/s5-bg.webp" srcset="/s5-bg-828.webp 828w, /s5-bg.webp 1672w"
-                 sizes="100vw" alt="Белый Mark II в заносе на ночном перекрёстке"
+                 sizes="100vw" alt="Белый Mark II в заносе на ночном перекрёстке" data-en-alt="A white Mark II sliding through a junction at night"
                  loading="lazy" decoding="async" />
             <div class="chapter__text">
-              <h3 class="chapter__title">Король ночных гонок</h3>
-              <p>
+              <h3 class="chapter__title" data-en="King of night racing">Король ночных гонок</h3>
+              <p data-en="A true icon of Japanese street racers. Rear-wheel drive, a bold character and the reputation of a car that does not forgive the weak. Night runs on the expressways are dangerous ground where adrenaline goes off the scale and the price of a mistake is too high. And that risk is exactly what draws the young, for whom it became a symbol of freedom, speed and living at full.">
                 Настоящая икона японских street-рейсеров. Задний привод, дерзкий
                 характер и репутация машины, которая не прощает слабых. Ночные
                 заезды по скоростным магистралям - опасная стихия, где адреналин
@@ -747,20 +798,20 @@
           </section>
 
           <section class="gallery">
-            <figure class="frame"><img src="/s5-photo-1.webp" alt="Mark II, кадр первый" loading="lazy" decoding="async" /></figure>
-            <figure class="frame frame--tall"><img src="/s5-photo-2.webp" alt="Mark II, кадр второй" loading="lazy" decoding="async" /></figure>
-            <figure class="frame"><img src="/s5-photo-3.webp" alt="Mark II, кадр третий" loading="lazy" decoding="async" /></figure>
-            <figure class="frame"><img src="/s5-photo-4.webp" alt="Mark II, кадр четвёртый" loading="lazy" decoding="async" /></figure>
+            <figure class="frame"><img src="/s5-photo-1.webp" alt="Mark II, кадр первый" data-en-alt="A Mark II, frame one" loading="lazy" decoding="async" /></figure>
+            <figure class="frame frame--tall"><img src="/s5-photo-2.webp" alt="Mark II, кадр второй" data-en-alt="A Mark II, frame two" loading="lazy" decoding="async" /></figure>
+            <figure class="frame"><img src="/s5-photo-3.webp" alt="Mark II, кадр третий" data-en-alt="A Mark II, frame three" loading="lazy" decoding="async" /></figure>
+            <figure class="frame"><img src="/s5-photo-4.webp" alt="Mark II, кадр четвёртый" data-en-alt="A Mark II, frame four" loading="lazy" decoding="async" /></figure>
           </section>
 
           <!-- 6 -->
           <section class="chapter">
             <img class="chapter__bg" src="/s6-bg.webp" srcset="/s6-bg-828.webp 828w, /s6-bg.webp 1672w"
-                 sizes="100vw" alt="Белый и чёрный Mark II рядом на мокрой ночной парковке"
+                 sizes="100vw" alt="Белый и чёрный Mark II рядом на мокрой ночной парковке" data-en-alt="A white and a black Mark II side by side in a wet car park at night"
                  loading="lazy" decoding="async" />
             <div class="chapter__text">
-              <h3 class="chapter__title">Способ самовыражения</h3>
-              <p>
+              <h3 class="chapter__title" data-en="A way to say who you are">Способ самовыражения</h3>
+              <p data-en="The Mark II JZX100 is not just a car, it is a way to say who you are. Every element, from camber to exhaust, speaks about its owner. No two of these cars are alike, because everyone builds their own story. For some it is a tribute to the culture of the 90s, for others a blank canvas. For all of them it is a way to speak up without words.">
                 Mark II JZX100 - это не просто автомобиль, это способ
                 самовыражения. Каждый элемент: от развала колёс до выхлопа -
                 говорит о характере владельца. Здесь нет двух одинаковых машин,
@@ -772,19 +823,19 @@
           </section>
 
           <section class="gallery">
-            <figure class="frame"><img src="/s6-photo-1.webp" alt="Mark II, кадр первый" loading="lazy" decoding="async" /></figure>
-            <figure class="frame"><img src="/s6-photo-2.webp" alt="Mark II, кадр второй" loading="lazy" decoding="async" /></figure>
-            <p class="gallery__note">Его выбирают сердцем, вкладывая душу в каждую деталь.</p>
+            <figure class="frame"><img src="/s6-photo-1.webp" alt="Mark II, кадр первый" data-en-alt="A Mark II, frame one" loading="lazy" decoding="async" /></figure>
+            <figure class="frame"><img src="/s6-photo-2.webp" alt="Mark II, кадр второй" data-en-alt="A Mark II, frame two" loading="lazy" decoding="async" /></figure>
+            <p class="gallery__note" data-en="It is chosen with the heart, with soul put into every detail.">Его выбирают сердцем, вкладывая душу в каждую деталь.</p>
           </section>
 
           <!-- 7 -->
           <section class="chapter">
             <img class="chapter__bg" src="/s7-bg.webp" srcset="/s7-bg-828.webp 828w, /s7-bg.webp 1672w"
-                 sizes="100vw" alt="Чёрный Mark II ночью на японской улице у грузовика"
+                 sizes="100vw" alt="Чёрный Mark II ночью на японской улице у грузовика" data-en-alt="A black Mark II at night on a Japanese street beside a truck"
                  loading="lazy" decoding="async" />
             <div class="chapter__text">
-              <h3 class="chapter__title">Стили тюнинга</h3>
-              <p>
+              <h3 class="chapter__title" data-en="Tuning styles">Стили тюнинга</h3>
+              <p data-en="The Mark II JZX100 is a blank canvas. Every owner picks their own path, and that is why these cars never look the same. The range of styles fits any idea: track, stance, stock or street.">
                 Mark II JZX100 - это чистый холст для творчества. Каждый
                 владелец выбирает свой путь, и именно поэтому эти машины никогда
                 не выглядят одинаково. Разнообразие стилей позволяет раскрыть
@@ -795,20 +846,20 @@
 
           <section class="gallery">
             <figure class="frame">
-              <img src="/s7-boevaya.webp" alt="Боевая: Mark II, подготовленный к дрифту" loading="lazy" decoding="async" />
-              <figcaption>Боевая</figcaption>
+              <img src="/s7-boevaya.webp" alt="Боевая: Mark II, подготовленный к дрифту" data-en-alt="Track: a Mark II built for drift" loading="lazy" decoding="async" />
+              <figcaption data-en="Track">Боевая</figcaption>
             </figure>
             <figure class="frame">
-              <img src="/s7-stance.webp" alt="Stance: Mark II с предельным развалом и посадкой" loading="lazy" decoding="async" />
+              <img src="/s7-stance.webp" alt="Stance: Mark II с предельным развалом и посадкой" data-en-alt="Stance: a Mark II at extreme camber and ride height" loading="lazy" decoding="async" />
               <figcaption>Stance</figcaption>
             </figure>
             <figure class="frame">
-              <img src="/s7-stock.webp" alt="Сток: Mark II в заводском виде" loading="lazy" decoding="async" />
-              <figcaption>Сток</figcaption>
+              <img src="/s7-stock.webp" alt="Сток: Mark II в заводском виде" data-en-alt="Stock: a Mark II as it left the factory" loading="lazy" decoding="async" />
+              <figcaption data-en="Stock">Сток</figcaption>
             </figure>
             <figure class="frame">
-              <img src="/s7-street.webp" alt="Стрит: Mark II в повседневной уличной сборке" loading="lazy" decoding="async" />
-              <figcaption>Стрит</figcaption>
+              <img src="/s7-street.webp" alt="Стрит: Mark II в повседневной уличной сборке" data-en-alt="Street: a Mark II in everyday street build" loading="lazy" decoding="async" />
+              <figcaption data-en="Street">Стрит</figcaption>
             </figure>
           </section>
 
@@ -835,7 +886,7 @@
            где ты и как отсюда выйти. -->
       <header class="street__bar">
         <p class="street__brand"><span>Keep it</span>Street</p>
-        <button class="street__close" data-street-close type="button" aria-label="Закрыть">
+        <button class="street__close" data-street-close type="button" aria-label="Закрыть" data-en-aria-label="Close">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M6 6l12 12M18 6L6 18" />
           </svg>
@@ -853,17 +904,17 @@
               poster="/street-intro-poster.webp"
               muted loop playsinline preload="none"
               data-src="/street-intro.mp4"
-              aria-label="Белый Mark II ночью на мокрой парковке торгового центра"
+              aria-label="Белый Mark II ночью на мокрой парковке торгового центра" data-en-aria-label="A white Mark II at night in a wet shopping centre car park"
             ></video>
             <div class="act__open" data-street-inner>
               <p class="street__kana">ストリート</p>
-              <h2 class="street__title">Не музейная</h2>
-              <p class="street__lead">
+              <h2 class="street__title" data-en="Not a museum piece">Не музейная</h2>
+              <p class="street__lead" data-en="The 100 body rarely sits under a cover. It gets washed at night at a self-service bay, fixed in a friend's garage and driven back into the city in the morning.">
                 Сотый кузов редко стоит под чехлом. Его моют ночью на
                 самообслуживании, чинят у знакомого в боксе и утром снова
                 выгоняют в город.
               </p>
-              <p class="street__lead street__lead--dim">
+              <p class="street__lead street__lead--dim" data-en="Ahead - what it is built from, how it sounds, how it got here and what to check if you have decided to buy.">
                 Дальше - из чего он собран, как звучит, как сюда доехал
                 и что смотреть, если решил брать.
               </p>
@@ -886,23 +937,23 @@
                 poster="/street-clip-1-poster.webp"
                 muted loop playsinline preload="none"
                 data-src="/street-clip-1.mp4"
-                aria-label="Чёрный Mark II в подземном паркинге под цветным светом"
+                aria-label="Чёрный Mark II в подземном паркинге под цветным светом" data-en-aria-label="A black Mark II in an underground car park under coloured light"
               ></video>
             </div>
             <div class="act__side">
               <p class="act__num">01</p>
-              <h3 class="act__head">Кузов</h3>
-              <blockquote class="act__quote">
+              <h3 class="act__head" data-en="The body">Кузов</h3>
+              <blockquote class="act__quote" data-en="«It is not about the engine. It is about how it sits on the road»">
                 «Дело не в моторе. Дело в том, как он стоит на дороге»
               </blockquote>
               <div class="act__text">
-                <p>
+                <p data-en="The X100 platform - a long wheelbase and double wishbones all round. That is where its manner comes from: it does not snap away, it goes gradually and comes back just as gradually. A mistake is visible early, and there is time for it.">
                   Платформа X100 - длинная база и двухрычажная подвеска по
                   кругу. Отсюда вся его повадка: он не срывается рывком, а
                   уходит постепенно и так же постепенно возвращается. Ошибку
                   видно заранее, и на неё есть время.
                 </p>
-                <p>
+                <p data-en="One and a half tonnes is a lot for a slide. But that same mass keeps the car from fussing: at speed it runs heavy and even instead of darting around the lane.">
                   Полторы тонны для заноса - много. Но эта же масса не даёт
                   машине суетиться: на скорости она идёт тяжело и ровно,
                   а не порхает по полосе.
@@ -915,16 +966,16 @@
             <figure class="plate plate--tall plate--offset">
               <img src="/street-shot-2.webp" srcset="/street-shot-2-828.webp 828w, /street-shot-2.webp 1080w"
                    sizes="(max-width: 860px) 90vw, 34vw"
-                   alt="Переднее крыло и колесо Mark II крупным планом ночью"
+                   alt="Переднее крыло и колесо Mark II крупным планом ночью" data-en-alt="The front wing and wheel of a Mark II close up at night"
                    loading="lazy" decoding="async" />
             </figure>
             <figure class="plate plate--tall">
               <img src="/street-shot-1.webp" srcset="/street-shot-1-828.webp 828w, /street-shot-1.webp 1080w"
                    sizes="(max-width: 860px) 90vw, 30vw"
-                   alt="Задняя четверть Mark II с горящим фонарём"
+                   alt="Задняя четверть Mark II с горящим фонарём" data-en-alt="The rear quarter of a Mark II with the lamp lit"
                    loading="lazy" decoding="async" />
             </figure>
-            <p class="plate__note">
+            <p class="plate__note" data-en="Camber, offset and ride height - three numbers by which the car is known in a car park before the body is made out.">
               Развал, вылет и высота - три числа, по которым машину узнают
               на парковке раньше, чем разглядят кузов.
             </p>
@@ -938,23 +989,23 @@
                 poster="/street-clip-4-poster.webp"
                 muted loop playsinline preload="none"
                 data-src="/street-clip-4.mp4"
-                aria-label="Mark II на заправке в синем свете, снято вертикально"
+                aria-label="Mark II на заправке в синем свете, снято вертикально" data-en-aria-label="A Mark II at a petrol station in blue light, filmed vertically"
               ></video>
             </div>
             <div class="act__side">
               <p class="act__num">02</p>
-              <h3 class="act__head">Звук</h3>
-              <blockquote class="act__quote">
+              <h3 class="act__head" data-en="The sound">Звук</h3>
+              <blockquote class="act__quote" data-en="«You hear it before you see it»">
                 «Его слышно раньше, чем видно»
               </blockquote>
               <div class="act__text">
-                <p>
+                <p data-en="A straight six runs smooth - without the shake that gives away any V engine. The turbo lies on top: on lift-off you hear it bleed, on the way up you hear it build.">
                   Рядная шестёрка работает ровно - без биения, которым выдаёт
                   себя любой V-образный мотор. Поверх ложится турбина: на
                   сбросе слышно, как она стравливает, на разгоне - как
                   набирает.
                 </p>
-                <p>
+                <p data-en="Everyone builds their own exhaust. Some keep it quiet so as not to gather attention, some do exactly the opposite. It is the first thing changed and the last thing given up.">
                   Выпуск каждый делает под себя. Кто-то оставляет тихо, чтобы
                   не собирать внимание, кто-то ровно наоборот. Это первое,
                   что меняют, и последнее, с чем расстаются.
@@ -967,16 +1018,16 @@
             <figure class="plate plate--tall">
               <img src="/street-shot-3.webp" srcset="/street-shot-3-828.webp 828w, /street-shot-3.webp 1080w"
                    sizes="(max-width: 860px) 90vw, 32vw"
-                   alt="Корма Mark II с фонарями и шильдиком"
+                   alt="Корма Mark II с фонарями и шильдиком" data-en-alt="The tail of a Mark II with its lamps and badge"
                    loading="lazy" decoding="async" />
             </figure>
             <figure class="plate plate--tall plate--offset">
               <img src="/street-shot-5.webp" srcset="/street-shot-5-828.webp 828w, /street-shot-5.webp 1080w"
                    sizes="(max-width: 860px) 90vw, 32vw"
-                   alt="Передок Mark II: решётка, фары и номер"
+                   alt="Передок Mark II: решётка, фары и номер" data-en-alt="The front of a Mark II: grille, headlights and plate"
                    loading="lazy" decoding="async" />
             </figure>
-            <p class="plate__note">
+            <p class="plate__note" data-en="The badge at the back and the grille at the front - the 100 is known by them from behind and head on.">
               Шильдик сзади и решётка спереди - по ним сотый узнают
               и со спины, и в лоб.
             </p>
@@ -990,17 +1041,17 @@
               poster="/street-clip-2-poster.webp"
               muted loop playsinline preload="none"
               data-src="/street-clip-2.mp4"
-              aria-label="Белый Mark II проезжает вдоль стены с граффити"
+              aria-label="Белый Mark II проезжает вдоль стены с граффити" data-en-aria-label="A white Mark II passing a wall covered in graffiti"
             ></video>
             <div class="band__text">
               <p class="act__num">03</p>
-              <h3 class="act__head">Дорога сюда</h3>
-              <p>
+              <h3 class="act__head" data-en="The road here">Дорога сюда</h3>
+              <p data-en="An auction, a grading sheet, a ferry to Vladivostok - and then across the whole country under its own power. Right-hand drive, Japanese mileage and someone else's plates, changed only here.">
                 Аукцион, лист с оценкой, паром до Владивостока - и дальше
                 своим ходом через всю страну. Правый руль, японский пробег
                 и чужие номера, которые меняют уже здесь.
               </p>
-              <p>
+              <p data-en="By the day the car first stands under your window it has more kilometres behind it than some cover in a year.">
                 К тому дню, когда машина впервые встаёт под окном, у неё за
                 спиной больше километров, чем иные проезжают за год.
               </p>
@@ -1016,7 +1067,7 @@
                расходились по высоте вдвое, и полоса переставала читаться
                как разворот. -->
           <section class="plates plates--raised plates--wide">
-            <p class="plate__note">
+            <p class="plate__note" data-en="Three weeks or so usually pass between Vladivostok and the first visit to a workshop.">
               Между Владивостоком и первым осмотром у сервиса проходит
               обычно недели три.
             </p>
@@ -1025,7 +1076,7 @@
               <img src="/street-shot-6.webp" srcset="/street-shot-6-828.webp 828w, /street-shot-6.webp 1080w"
                    sizes="(max-width: 860px) 90vw, 50vw"
                    width="1080" height="956"
-                   alt="Белый Mark II в заносе под эстакадой, чёрно-белый кадр"
+                   alt="Белый Mark II в заносе под эстакадой, чёрно-белый кадр" data-en-alt="A white Mark II sliding under a flyover, in black and white"
                    loading="lazy" decoding="async" />
             </figure>
 
@@ -1037,7 +1088,7 @@
                 poster="/street-clip-5-poster.webp"
                 muted loop playsinline preload="none"
                 data-src="/street-clip-5.mp4"
-                aria-label="Чёрный Mark II подъезжает по паркингу, крупно корма с фонарями"
+                aria-label="Чёрный Mark II подъезжает по паркингу, крупно корма с фонарями" data-en-aria-label="A black Mark II driving through a car park, its tail and lamps close up"
               ></video>
             </figure>
           </section>
@@ -1050,22 +1101,22 @@
                 poster="/street-clip-3-poster.webp"
                 muted loop playsinline preload="none"
                 data-src="/street-clip-3.mp4"
-                aria-label="Mark II на ночной городской площади, чёрно-белый кадр"
+                aria-label="Mark II на ночной городской площади, чёрно-белый кадр" data-en-aria-label="A Mark II on a city square at night, in black and white"
               ></video>
             </div>
             <div class="act__side">
               <p class="act__num">04</p>
-              <h3 class="act__head">Что смотреть</h3>
-              <blockquote class="act__quote">
+              <h3 class="act__head" data-en="What to check">Что смотреть</h3>
+              <blockquote class="act__quote" data-en="«The body matters more than the engine. An engine can be shipped in»">
                 «Кузов важнее мотора. Мотор можно привезти»
               </blockquote>
               <div class="act__text">
-                <p>
+                <p data-en="Sills, rails, strut towers and the bottom of the doors - where water stands the longest. Fresh underseal in the arches hides more often than it protects.">
                   Пороги, лонжероны, стаканы и низ дверей - там, где вода
                   стоит дольше всего. Свежая антигравийка в арках чаще
                   прячет, чем защищает.
                 </p>
-                <p>
+                <p data-en="Then the papers: the auction sheet, matching numbers, mileage history. The engine comes last on that list - a used 1JZ is still easier to find than a straight body.">
                   Дальше документы: аукционный лист, совпадение номеров,
                   история пробега. Мотор в этом списке идёт последним -
                   контрактный 1JZ найти всё ещё проще, чем целый кузов.
@@ -1080,8 +1131,8 @@
                  srcset="/street-promo-828.webp 828w, /street-promo-1280.webp 1280w, /street-promo.webp 1672w"
                  sizes="100vw" alt="" aria-hidden="true" loading="lazy" decoding="async" />
             <div class="act__open act__open--end">
-              <h3 class="street__title street__title--end">Ездить</h3>
-              <p class="street__lead">
+              <h3 class="street__title street__title--end" data-en="To drive">Ездить</h3>
+              <p class="street__lead" data-en="It is not bought to be parked and looked at. It is bought to be driven: to work, out of town, through the empty city at night for no reason at all.">
                 Её берут не для того, чтобы поставить и смотреть. Берут,
                 чтобы ездить: на работу, за город, ночью по пустому городу
                 без всякого повода.
@@ -1115,7 +1166,7 @@
          знаки, дерзость как язык, съёмка, зима. Ничего из этого нет ни
          на странице, ни в двух других пространствах. -->
     <div class="cult" data-cult hidden aria-modal="true" role="dialog"
-         aria-label="Культ JDM">
+         aria-label="Культ JDM" data-en-aria-label="JDM cult">
       <!-- Фон ленты. Лежит под содержимым и не прокручивается вместе с ним:
            лента едет, фон остаётся. -->
       <video
@@ -1129,8 +1180,8 @@
       <div class="cult__veil" aria-hidden="true"></div>
 
       <header class="cult__bar">
-        <p class="cult__brand"><span>Культ</span>JDM</p>
-        <button class="cult__close" data-cult-close type="button" aria-label="Закрыть">
+        <p class="cult__brand"><span data-en="Cult">Культ</span>JDM</p>
+        <button class="cult__close" data-cult-close type="button" aria-label="Закрыть" data-en-aria-label="Close">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M6 6l12 12M18 6L6 18" />
           </svg>
@@ -1143,13 +1194,13 @@
           <!-- ВСТУПЛЕНИЕ -->
           <section class="cult__open" data-cult-inner>
             <p class="cult__kana">カルト</p>
-            <h2 class="cult__title">Культ</h2>
-            <p class="cult__lead">
+            <h2 class="cult__title" data-en="Cult">Культ</h2>
+            <p class="cult__lead" data-en="The 100 body stopped being just a car long ago. A scene grew around it - with its own signs, its own rules and its own idea of what looks right.">
               Сотый кузов давно перестал быть просто машиной. Вокруг него
               выросла своя сцена - со своими знаками, своими правилами
               и своим представлением о том, что такое красиво.
             </p>
-            <p class="cult__lead cult__lead--dim">
+            <p class="cult__lead cult__lead--dim" data-en="Ahead - not about the machine. About the people who chose it.">
               Дальше - не про технику. Про людей, которые её выбрали.
             </p>
             <span class="cult__hint" aria-hidden="true">
@@ -1162,15 +1213,15 @@
           <!-- 01 — СВОИ -->
           <section class="leaf">
             <p class="leaf__num">01</p>
-            <h3 class="leaf__head">Свои</h3>
-            <blockquote class="leaf__quote">«Машину узнают раньше владельца»</blockquote>
+            <h3 class="leaf__head" data-en="Our own">Свои</h3>
+            <blockquote class="leaf__quote" data-en="«The car is recognised before the owner»">«Машину узнают раньше владельца»</blockquote>
             <div class="leaf__text">
-              <p>
+              <p data-en="A sticker on the glass, a flag on the aerial, a plate frame with kanji, a fabric tag on the mirror. Small things on their own, together a mark of belonging.">
                 Наклейка на стекле, флажок на антенне, рамка номера
                 с иероглифами, тканевая бирка на зеркале. По отдельности
                 мелочь, вместе - опознавательный знак.
               </p>
-              <p>
+              <p data-en="None of it adds power or speed. That is the point: you pay for belonging, not for numbers.">
                 Ничего из этого не прибавляет ни силы, ни скорости.
                 В этом и смысл: платят за принадлежность, а не за
                 характеристики.
@@ -1181,17 +1232,17 @@
           <section class="rack">
             <figure class="slab slab--square slab--up">
               <img src="/cult-shot-7.webp" sizes="34vw" width="828" height="828"
-                   alt="Белый Mark II на ночной стоянке под фиолетовым светом, рядом человек"
+                   alt="Белый Mark II на ночной стоянке под фиолетовым светом, рядом человек" data-en-alt="A white Mark II in a car park at night under purple light, a person beside it"
                    loading="lazy" decoding="async" />
             </figure>
-            <p class="rack__note">
+            <p class="rack__note" data-en="In a car park the details get read first and only then the whole car.">
               На стоянке сначала читают детали и только потом смотрят
               на машину целиком.
             </p>
             <figure class="slab slab--tall slab--down">
               <img src="/cult-shot-1.webp" srcset="/cult-shot-1-828.webp 828w, /cult-shot-1.webp 1080w"
                    sizes="26vw" width="1080" height="1439"
-                   alt="Белый Mark II стоит под путепроводом ночью"
+                   alt="Белый Mark II стоит под путепроводом ночью" data-en-alt="A white Mark II parked under an overpass at night"
                    loading="lazy" decoding="async" />
             </figure>
           </section>
@@ -1199,15 +1250,15 @@
           <!-- 02 — ДЕРЗОСТЬ -->
           <section class="leaf">
             <p class="leaf__num">02</p>
-            <h3 class="leaf__head">Дерзость</h3>
-            <blockquote class="leaf__quote">«Сделано, чтобы обернулись»</blockquote>
+            <h3 class="leaf__head" data-en="Nerve">Дерзость</h3>
+            <blockquote class="leaf__quote" data-en="«Made to be turned around for»">«Сделано, чтобы обернулись»</blockquote>
             <div class="leaf__text">
-              <p>
+              <p data-en="Ride height below reason, wheels past the arch, camber that wears a tyre from the inner edge, an exhaust louder than anyone needs. Not one of these choices is about comfort.">
                 Посадка ниже разумного, вылет за арку, развал, от которого
                 шина стирается внутренней кромкой, выхлоп громче, чем нужно
                 кому бы то ни было. Ни одно из этих решений - не про удобство.
               </p>
-              <p>
+              <p data-en="It is a language. It says the owner is ready to put up with discomfort for the look, and the whole point is in that readiness.">
                 Это язык. Он сообщает, что владелец готов терпеть неудобство
                 ради вида, и в этой готовности всё дело.
               </p>
@@ -1220,15 +1271,15 @@
                      poster="/cult-clip-1-poster.webp"
                      muted loop playsinline preload="none"
                      data-src="/cult-clip-1.mp4"
-                     aria-label="Чёрно-белые крупные планы Mark II: фара, передок, борт"></video>
+                     aria-label="Чёрно-белые крупные планы Mark II: фара, передок, борт" data-en-aria-label="Black and white close ups of a Mark II: headlight, front, flank"></video>
             </figure>
             <figure class="slab slab--wide slab--down">
               <img src="/cult-shot-4.webp" srcset="/cult-shot-4-828.webp 828w, /cult-shot-4.webp 1080w"
                    sizes="30vw" width="1080" height="720"
-                   alt="Передок Mark II в красной подсветке на ночной площадке"
+                   alt="Передок Mark II в красной подсветке на ночной площадке" data-en-alt="The front of a Mark II in red light on a lot at night"
                    loading="lazy" decoding="async" />
             </figure>
-            <p class="rack__note">
+            <p class="rack__note" data-en="Camber, offset and ride height - three numbers asked about here before anyone asks about the engine.">
               Развал, вылет и высота - три числа, которые здесь спрашивают
               раньше, чем про мотор.
             </p>
@@ -1237,15 +1288,15 @@
           <!-- 03 — КРАСНЫЙ СВЕТ -->
           <section class="leaf">
             <p class="leaf__num">03</p>
-            <h3 class="leaf__head">Красный свет</h3>
-            <blockquote class="leaf__quote">«Кадр важен не меньше машины»</blockquote>
+            <h3 class="leaf__head" data-en="Red light">Красный свет</h3>
+            <blockquote class="leaf__quote" data-en="«The shot matters no less than the car»">«Кадр важен не меньше машины»</blockquote>
             <div class="leaf__text">
-              <p>
+              <p data-en="The scene lives on filming. Lights in the arches, smoke off warmed tyres, street lamps, reflections on wet asphalt - none of it is set up for the road, it is set up for the camera.">
                 Сцена живёт съёмкой. Подсветка в арках, дым от прогретых шин,
                 фонари, отражения на мокром асфальте - всё это ставится
                 не для дороги, а для камеры.
               </p>
-              <p>
+              <p data-en="Red holds better than other colours: it reads in the dark and does not argue with headlights. Hence the whole palette of night shots.">
                 Красный держится дольше остальных цветов: он читается
                 в темноте и не спорит с фарами. Отсюда и вся палитра
                 ночных кадров.
@@ -1257,19 +1308,19 @@
             <figure class="slab slab--wide slab--up">
               <img src="/cult-shot-2.webp" srcset="/cult-shot-2-828.webp 828w, /cult-shot-2.webp 1080w"
                    sizes="28vw" width="1080" height="720"
-                   alt="Корма Mark II в красном свете, виден номер"
+                   alt="Корма Mark II в красном свете, виден номер" data-en-alt="The tail of a Mark II in red light, the plate in view"
                    loading="lazy" decoding="async" />
             </figure>
             <figure class="slab slab--tall">
               <img src="/cult-shot-5.webp" srcset="/cult-shot-5-828.webp 828w, /cult-shot-5.webp 1080w"
                    sizes="24vw" width="1080" height="1441"
-                   alt="Задние фонари Mark II крупным планом в красной дымке"
+                   alt="Задние фонари Mark II крупным планом в красной дымке" data-en-alt="The tail lamps of a Mark II close up in red haze"
                    loading="lazy" decoding="async" />
             </figure>
             <figure class="slab slab--wide slab--down">
               <img src="/cult-shot-3.webp" srcset="/cult-shot-3-828.webp 828w, /cult-shot-3.webp 1080w"
                    sizes="28vw" width="1080" height="720"
-                   alt="Mark II в дыму от прогретых шин, красная подсветка"
+                   alt="Mark II в дыму от прогретых шин, красная подсветка" data-en-alt="A Mark II in tyre smoke under red light"
                    loading="lazy" decoding="async" />
             </figure>
           </section>
@@ -1277,14 +1328,14 @@
           <!-- 04 — КРУГЛЫЙ ГОД -->
           <section class="leaf">
             <p class="leaf__num">04</p>
-            <h3 class="leaf__head">Круглый год</h3>
-            <blockquote class="leaf__quote">«Кто сдал машину на зиму, тот выпал»</blockquote>
+            <h3 class="leaf__head" data-en="All year round">Круглый год</h3>
+            <blockquote class="leaf__quote" data-en="«Park it for the winter and you are out»">«Кто сдал машину на зиму, тот выпал»</blockquote>
             <div class="leaf__text">
-              <p>
+              <p data-en="Snow, salt and road chemicals eat the sills faster than any mileage. Logic says park the car until spring.">
                 Снег, соль и реагенты стачивают пороги быстрее любого пробега.
                 Логика подсказывает поставить машину до весны.
               </p>
-              <p>
+              <p data-en="Logic is not followed here. Car parks do not empty in winter: the scene rests on those who drive all year, not on those who show up for two warm months.">
                 Логике здесь не следуют. Зимой стоянки не пустеют: сцена
                 держится на тех, кто выезжает круглый год, а не появляется
                 на два тёплых месяца.
@@ -1298,20 +1349,20 @@
                      poster="/cult-clip-2-poster.webp"
                      muted loop playsinline preload="none"
                      data-src="/cult-clip-2.mp4"
-                     aria-label="Mark II ночью на заснеженной площадке, горят задние фонари"></video>
+                     aria-label="Mark II ночью на заснеженной площадке, горят задние фонари" data-en-aria-label="A Mark II at night on a snow covered lot, tail lamps lit"></video>
             </figure>
             <figure class="slab slab--wide slab--down">
               <img src="/cult-shot-6.webp" srcset="/cult-shot-6-828.webp 828w, /cult-shot-6.webp 1080w"
                    sizes="30vw" width="1080" height="720"
-                   alt="След фар от проехавшей мимо машины на длинной выдержке"
+                   alt="След фар от проехавшей мимо машины на длинной выдержке" data-en-alt="Headlight trails from a passing car on a long exposure"
                    loading="lazy" decoding="async" />
             </figure>
           </section>
 
           <!-- ФИНАЛ -->
           <section class="cult__end">
-            <h3 class="cult__title cult__title--end">Это не про машину</h3>
-            <p class="cult__lead">
+            <h3 class="cult__title cult__title--end" data-en="It is not about the car">Это не про машину</h3>
+            <p class="cult__lead" data-en="Sooner or later the body will run out its life. What stays is the habit of driving at night, of knowing your own by small details and of doing things awkwardly but your own way.">
               Кузов рано или поздно доедет своё. Останется привычка выезжать
               ночью, узнавать своих по мелочам и делать неудобно, но по-своему.
             </p>
@@ -1340,7 +1391,7 @@
          акцента почти нет — только волосяная черта над текстом и иероглиф.
          Тема требует спокойствия, а не дерзости. -->
     <div class="soul" data-soul hidden aria-modal="true" role="dialog"
-         aria-label="Душа машины">
+         aria-label="Душа машины" data-en-aria-label="The soul of the car">
       <video
         class="soul__bg"
         data-soul-bg
@@ -1352,8 +1403,8 @@
       <div class="soul__veil" aria-hidden="true"></div>
 
       <header class="soul__bar">
-        <p class="soul__brand"><span>Душа</span>машины</p>
-        <button class="soul__close" data-soul-close type="button" aria-label="Закрыть">
+        <p class="soul__brand"><span data-en="The soul">Душа</span><span data-en="of the car">машины</span></p>
+        <button class="soul__close" data-soul-close type="button" aria-label="Закрыть" data-en-aria-label="Close">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M6 6l12 12M18 6L6 18" />
           </svg>
@@ -1366,13 +1417,13 @@
           <!-- ВСТУПЛЕНИЕ -->
           <section class="soul__open" data-soul-inner>
             <p class="soul__kana">たましい</p>
-            <h2 class="soul__title">Душа</h2>
-            <p class="soul__lead">
+            <h2 class="soul__title" data-en="The soul">Душа</h2>
+            <p class="soul__lead" data-en="At some point you stop saying «the car» and start saying «she». It is not a slip - by then you simply have a history together.">
               В какой-то момент перестаёшь говорить «машина» и начинаешь
               говорить «она». Это не оговорка - просто к этому времени
               у вас уже есть общая история.
             </p>
-            <p class="soul__lead soul__lead--dim">
+            <p class="soul__lead soul__lead--dim" data-en="Ahead - about what that history is made of.">
               Дальше - про то, из чего эта история складывается.
             </p>
             <span class="soul__hint" aria-hidden="true">
@@ -1385,15 +1436,15 @@
           <!-- 01 -->
           <section class="verse">
             <p class="verse__num">01</p>
-            <h3 class="verse__head">Первая своя</h3>
+            <h3 class="verse__head" data-en="The first one of your own">Первая своя</h3>
             <div class="verse__text">
-              <p>
+              <p data-en="For many the 100 body is the first car with more than time put into it. Before it there were other people's, company ones, a father's. This one is yours, with everything that follows: a wrong choice, money that ran short, that very first drive.">
                 Для многих сотый кузов - первая машина, в которую вложено
                 не только время. До неё были чужие, служебные, отцовские.
                 Эта - своя, со всеми последствиями: с ошибкой в выборе,
                 с деньгами, которых не хватило, с тем самым первым выездом.
               </p>
-              <p>Именно поэтому её потом не меняют легко.</p>
+              <p data-en="That is exactly why it is not swapped easily afterwards.">Именно поэтому её потом не меняют легко.</p>
             </div>
           </section>
 
@@ -1403,28 +1454,28 @@
                      poster="/soul-clip-6-poster.webp"
                      muted loop playsinline preload="none"
                      data-src="/soul-clip-6.mp4"
-                     aria-label="Mark II на закате у моря, дальше во дворе"></video>
-              <figcaption>Первый долгий выезд, за который потом отвечаешь сам</figcaption>
+                     aria-label="Mark II на закате у моря, дальше во дворе" data-en-aria-label="A Mark II at sunset by the sea, then in a yard"></video>
+              <figcaption data-en="The first long drive you answer for yourself">Первый долгий выезд, за который потом отвечаешь сам</figcaption>
             </figure>
             <figure class="piece piece--wide piece--low">
               <img src="/soul-shot-2.webp" sizes="30vw" width="736" height="552"
-                   alt="Белый Mark II стоит на улице в сумерках"
+                   alt="Белый Mark II стоит на улице в сумерках" data-en-alt="A white Mark II parked on a street at dusk"
                    loading="lazy" decoding="async" />
-              <figcaption>Двор, с которого всё начинается</figcaption>
+              <figcaption data-en="The yard where it all begins">Двор, с которого всё начинается</figcaption>
             </figure>
           </section>
 
           <!-- 02 -->
           <section class="verse">
             <p class="verse__num">02</p>
-            <h3 class="verse__head">Гараж</h3>
+            <h3 class="verse__head" data-en="The garage">Гараж</h3>
             <div class="verse__text">
-              <p>
+              <p data-en="A bay, a lamp under the ceiling, spanners laid out in order. Hours in which the car does not move a metre and gets closer.">
                 Бокс, лампа под потолком, ключи, разложенные по порядку.
                 Часы, за которые машина не проезжает ни метра, а становится
                 ближе.
               </p>
-              <p>
+              <p data-en="Fixing it yourself is not about saving money. It is the only way to know it as you never will from the driver's seat.">
                 Чинить самому - это не про экономию. Это единственный способ
                 узнать её так, как не узнаешь за рулём.
               </p>
@@ -1437,29 +1488,29 @@
                      poster="/soul-clip-2-poster.webp"
                      muted loop playsinline preload="none"
                      data-src="/soul-clip-2.mp4"
-                     aria-label="Колесо и борт чёрного Mark II крупным планом"></video>
-              <figcaption>То, что видно только вблизи</figcaption>
+                     aria-label="Колесо и борт чёрного Mark II крупным планом" data-en-aria-label="The wheel and flank of a black Mark II close up"></video>
+              <figcaption data-en="What is only visible up close">То, что видно только вблизи</figcaption>
             </figure>
             <figure class="piece piece--square piece--high">
               <img src="/soul-shot-3.webp" srcset="/soul-shot-3-828.webp 828w, /soul-shot-3.webp 1080w"
                    sizes="26vw" width="1080" height="1080"
-                   alt="Чёрный Mark II на стоянке"
+                   alt="Чёрный Mark II на стоянке" data-en-alt="A black Mark II in a car park"
                    loading="lazy" decoding="async" />
-              <figcaption>Между работой и работой</figcaption>
+              <figcaption data-en="Between one job and the next">Между работой и работой</figcaption>
             </figure>
           </section>
 
           <!-- 03 -->
           <section class="verse">
             <p class="verse__num">03</p>
-            <h3 class="verse__head">Четыре утра</h3>
+            <h3 class="verse__head" data-en="Four in the morning">Четыре утра</h3>
             <div class="verse__text">
-              <p>
+              <p data-en="An empty city, green at every junction, nobody in the mirrors. You drive with no destination - just because the road belongs to you at this hour.">
                 Пустой город, зелёный на всех перекрёстках, никого в зеркалах.
                 Едешь без цели - просто потому, что в это время дорога
                 принадлежит тебе.
               </p>
-              <p>
+              <p data-en="Nobody asks about it in the morning, and there is no explaining it to someone who does not do the same.">
                 Утром об этом никто не спросит, и объяснить это тому, кто так
                 не делает, невозможно.
               </p>
@@ -1469,31 +1520,31 @@
           <section class="pieces">
             <figure class="piece piece--wide">
               <img src="/soul-shot-6.webp" sizes="30vw" width="735" height="551"
-                   alt="Вид из машины ночью, впереди горят стоп-сигналы"
+                   alt="Вид из машины ночью, впереди горят стоп-сигналы" data-en-alt="The view from inside a car at night, brake lights ahead"
                    loading="lazy" decoding="async" />
-              <figcaption>Из-за руля в это время видно немного и этого хватает</figcaption>
+              <figcaption data-en="From behind the wheel at this hour you see little, and that is enough">Из-за руля в это время видно немного и этого хватает</figcaption>
             </figure>
             <figure class="piece piece--tall piece--high">
               <video data-soul-video width="720" height="1280"
                      poster="/soul-clip-4-poster.webp"
                      muted loop playsinline preload="none"
                      data-src="/soul-clip-4.mp4"
-                     aria-label="Ночная дорога в дымке, дальше серпантин в сумерках"></video>
-              <figcaption>Дорога, по которой едут не куда-то, а просто едут</figcaption>
+                     aria-label="Ночная дорога в дымке, дальше серпантин в сумерках" data-en-aria-label="A hazy road at night, then a mountain road at dusk"></video>
+              <figcaption data-en="A road people drive not to get somewhere, but just to drive">Дорога, по которой едут не куда-то, а просто едут</figcaption>
             </figure>
           </section>
 
           <!-- 04 -->
           <section class="verse">
             <p class="verse__num">04</p>
-            <h3 class="verse__head">Она помнит</h3>
+            <h3 class="verse__head" data-en="She remembers">Она помнит</h3>
             <div class="verse__text">
-              <p>
+              <p data-en="A chip on the bonnet from that trip, leather worn on the wheel where it is held, a scrape on the sill from a kerb you missed. All of it can be put right - and almost nobody does.">
                 Скол на капоте с той поездки, потёртая кожа на руле там,
                 где держат, царапина на пороге от бордюра, который не заметил.
                 Всё это можно убрать - и почти никто не убирает.
               </p>
-              <p>
+              <p data-en="A car without marks looks new. A car with marks looks yours.">
                 Машина без следов выглядит новой. Машина со следами выглядит
                 своей.
               </p>
@@ -1503,31 +1554,31 @@
           <section class="pieces">
             <figure class="piece piece--tall">
               <img src="/soul-shot-1.webp" sizes="24vw" width="736" height="981"
-                   alt="Белый Mark II на заснеженной ночной дороге"
+                   alt="Белый Mark II на заснеженной ночной дороге" data-en-alt="A white Mark II on a snowy road at night"
                    loading="lazy" decoding="async" />
-              <figcaption>Зима, соль и всё, что она оставляет на порогах</figcaption>
+              <figcaption data-en="Winter, salt and everything it leaves on the sills">Зима, соль и всё, что она оставляет на порогах</figcaption>
             </figure>
             <figure class="piece piece--square piece--low">
               <video data-soul-video width="684" height="576"
                      poster="/soul-clip-7-poster.webp"
                      muted loop playsinline preload="none"
                      data-src="/soul-clip-7.mp4"
-                     aria-label="Mark II идёт по ночному мосту под фонарями"></video>
-              <figcaption>Каждый день, а не по случаю</figcaption>
+                     aria-label="Mark II идёт по ночному мосту под фонарями" data-en-aria-label="A Mark II crossing a bridge at night under street lamps"></video>
+              <figcaption data-en="Every day, not for special occasions">Каждый день, а не по случаю</figcaption>
             </figure>
           </section>
 
           <!-- 05 -->
           <section class="verse">
             <p class="verse__num">05</p>
-            <h3 class="verse__head">Имя</h3>
+            <h3 class="verse__head" data-en="The name">Имя</h3>
             <div class="verse__text">
-              <p>
+              <p data-en="People call it by something of their own rather than the model, and say «she» in conversation. From the outside that is funny right up to the moment you get one too.">
                 Её называют не моделью, а как-то по-своему, и в разговоре
                 говорят «она». Со стороны это смешно ровно до того момента,
                 пока такая же не появится у тебя.
               </p>
-              <p>
+              <p data-en="The name does not come at once. Usually after the first breakdown you got through together.">
                 Имя приходит не сразу. Обычно после первой поломки, которую
                 пережили вместе.
               </p>
@@ -1538,24 +1589,24 @@
             <figure class="piece piece--portrait">
               <img src="/soul-shot-4.webp" srcset="/soul-shot-4-828.webp 828w, /soul-shot-4.webp 1080w"
                    sizes="24vw" width="1080" height="1441"
-                   alt="Ночная стоянка, машины в розовом свете"
+                   alt="Ночная стоянка, машины в розовом свете" data-en-alt="A car park at night, cars in pink light"
                    loading="lazy" decoding="async" />
-              <figcaption>Свои узнаются раньше, чем начинается разговор</figcaption>
+              <figcaption data-en="Your own are recognised before a word is said">Свои узнаются раньше, чем начинается разговор</figcaption>
             </figure>
             <figure class="piece piece--tall piece--low">
               <video data-soul-video width="720" height="1280"
                      poster="/soul-clip-3-poster.webp"
                      muted loop playsinline preload="none"
                      data-src="/soul-clip-3.mp4"
-                     aria-label="Машины у старого здания в сумерках"></video>
-              <figcaption>Вечер, который никто не назначал</figcaption>
+                     aria-label="Машины у старого здания в сумерках" data-en-aria-label="Cars by an old building at dusk"></video>
+              <figcaption data-en="An evening nobody arranged">Вечер, который никто не назначал</figcaption>
             </figure>
             <figure class="piece piece--portrait">
               <img src="/soul-shot-5.webp" srcset="/soul-shot-5-828.webp 828w, /soul-shot-5.webp 960w"
                    sizes="22vw" width="960" height="1200"
-                   alt="Белые Mark II ночью на площадке"
+                   alt="Белые Mark II ночью на площадке" data-en-alt="White Mark IIs on a lot at night"
                    loading="lazy" decoding="async" />
-              <figcaption>Их ставят рядом и стоят рядом сами</figcaption>
+              <figcaption data-en="They park them side by side and stand side by side themselves">Их ставят рядом и стоят рядом сами</figcaption>
             </figure>
           </section>
 
@@ -1566,10 +1617,10 @@
                      poster="/soul-clip-1-poster.webp"
                      muted loop playsinline preload="none"
                      data-src="/soul-clip-1.mp4"
-                     aria-label="Чёрно-белая заставка: Mark II и надпись 1JZ-GTE"></video>
+                     aria-label="Чёрно-белая заставка: Mark II и надпись 1JZ-GTE" data-en-aria-label="A black and white title card: a Mark II and the words 1JZ-GTE"></video>
             </figure>
-            <h3 class="soul__title soul__title--end">Пока её заводят</h3>
-            <p class="soul__lead">
+            <h3 class="soul__title soul__title--end" data-en="As long as she is started">Пока её заводят</h3>
+            <p class="soul__lead" data-en="The body will run out its life, parts will run out, someone will strip her for spares. But while she is started in the mornings and listened to as she warms up - she is alive.">
               Кузов доедет своё, детали кончатся, кто-то разберёт её
               на запчасти. Но пока по утрам её заводят и слушают, как она
               прогревается, - она живая.
@@ -1598,10 +1649,10 @@
          Тексты - про самурайскую натуру кузова и его внешность. Ни того,
          ни другого нет ни на странице, ни в остальных пространствах. -->
     <div class="saku" data-saku hidden aria-modal="true" role="dialog"
-         aria-label="Самурай в цветах сакуры">
+         aria-label="Самурай в цветах сакуры" data-en-aria-label="A samurai in cherry blossom">
       <header class="saku__bar">
-        <p class="saku__brand"><span>Самурай</span>в цветах сакуры</p>
-        <button class="saku__close" data-saku-close type="button" aria-label="Закрыть">
+        <p class="saku__brand"><span data-en="A samurai">Самурай</span><span data-en="in cherry blossom">в цветах сакуры</span></p>
+        <button class="saku__close" data-saku-close type="button" aria-label="Закрыть" data-en-aria-label="Close">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M6 6l12 12M18 6L6 18" />
           </svg>
@@ -1617,12 +1668,12 @@
           <section class="gate">
             <div class="gate__text" data-saku-inner>
               <p class="saku__kana">サムライ</p>
-              <h2 class="saku__title">Самурай<br />в цветах сакуры</h2>
-              <p class="saku__lead">
+              <h2 class="saku__title"><span data-en="A samurai">Самурай</span><br /><span data-en="in cherry blossom">в цветах сакуры</span></h2>
+              <p class="saku__lead" data-en="The 100 body is easy to take for a quiet car. And quiet it is - right up to the moment the opposite is needed.">
                 Сотый кузов легко принять за тихую машину. Он и есть тихий -
                 ровно до того момента, пока не понадобится обратное.
               </p>
-              <p class="saku__lead saku__lead--dim">
+              <p class="saku__lead saku__lead--dim" data-en="Ahead - about how it stands, what its restraint is made of and why a bloom that lasts a week suits it.">
                 Дальше - о том, как он стоит, из чего сделана его сдержанность
                 и почему ему идёт цветение, которое держится неделю.
               </p>
@@ -1630,7 +1681,7 @@
 
             <!-- Короткая подпись между заголовком и роликами: на скриншоте
                  заказчика её место отмечено волнистыми линиями. -->
-            <p class="gate__note">
+            <p class="gate__note" data-en="April, an avenue along the river and the ten minutes people drive a hundred kilometres for. The car is parked so the tree gets into the frame, not the other way round.">
               Апрель, аллея вдоль реки и десять минут, ради которых едут
               за сто километров. Машину ставят так, чтобы в кадр попало
               дерево, а не наоборот.
@@ -1644,7 +1695,7 @@
                 poster="/saku-clip-1-poster.webp"
                 muted loop playsinline preload="none"
                 data-src="/saku-clip-1.mp4"
-                aria-label="Снимки белого Mark II под ночной сакурой сменяют друг друга"
+                aria-label="Снимки белого Mark II под ночной сакурой сменяют друг друга" data-en-aria-label="Photographs of a white Mark II under cherry blossom at night, one after another"
               ></video>
             </figure>
 
@@ -1656,7 +1707,7 @@
                 poster="/saku-intro-poster.webp"
                 muted loop playsinline preload="none"
                 data-src="/saku-intro.mp4"
-                aria-label="Белый Mark II стоит на аллее цветущей сакуры, камера медленно обходит его"
+                aria-label="Белый Mark II стоит на аллее цветущей сакуры, камера медленно обходит его" data-en-aria-label="A white Mark II on an avenue of cherry blossom, the camera slowly circling it"
               ></video>
             </figure>
 
@@ -1673,14 +1724,14 @@
           <section class="column">
             <p class="column__num">01</p>
             <div class="column__body">
-              <h3 class="column__head">Осанка</h3>
-              <p>
+              <h3 class="column__head" data-en="Posture">Осанка</h3>
+              <p data-en="The measure is simple: first they look at how it stands. A long bonnet, a short rear overhang, a low narrow roof and one line that runs from headlight to tail lamp and never breaks. The body does not try to look wider than it is.">
                 Мерка простая: сначала смотрят, как стоит. Длинный капот,
                 короткий задний свес, низкая узкая крыша и одна линия, которая
                 идёт от фары до фонаря и нигде не ломается. Кузов не пытается
                 казаться шире, чем он есть.
               </p>
-              <p>
+              <p data-en="Hence the sense of bearing. The 100 does not squat on its rear wheels or lift its nose - it stands level, like someone taught to keep their back straight.">
                 Отсюда и ощущение выправки. Сотый не приседает на задние
                 колёса и не задирает нос - он стоит ровно, как человек,
                 которого учили держать спину.
@@ -1694,22 +1745,22 @@
             <figure class="fan__frame fan__frame--near">
               <img src="/saku-shot-5.webp" sizes="(max-width: 860px) 44vw, 22vw"
                    width="736" height="920"
-                   alt="Передняя часть серебристого Mark II на фоне цветущих ветвей"
+                   alt="Передняя часть серебристого Mark II на фоне цветущих ветвей" data-en-alt="The front of a silver Mark II against blossoming branches"
                    loading="lazy" decoding="async" />
             </figure>
             <figure class="fan__frame fan__frame--far">
               <img src="/saku-shot-1.webp" sizes="(max-width: 860px) 46vw, 26vw"
                    width="736" height="736"
-                   alt="Белый Mark II под сплошным пологом цветущей сакуры"
+                   alt="Белый Mark II под сплошным пологом цветущей сакуры" data-en-alt="A white Mark II under a solid canopy of cherry blossom"
                    loading="lazy" decoding="async" />
             </figure>
             <figure class="fan__frame fan__frame--lead">
               <img src="/saku-shot-3.webp" sizes="(max-width: 860px) 60vw, 30vw"
                    width="736" height="1304"
-                   alt="Белый Mark II стоит под розовым деревом у обочины"
+                   alt="Белый Mark II стоит под розовым деревом у обочины" data-en-alt="A white Mark II parked under a pink tree by the roadside"
                    loading="lazy" decoding="async" />
             </figure>
-            <p class="fan__note">
+            <p class="fan__note" data-en="Three quarters, profile and head on - three positions in which the body reads whole. Not one of them holds a single accidental line.">
               Три четверти, профиль и лоб - три положения, по которым кузов
               читают целиком. Ни в одном из них нет ни одной случайной линии.
             </p>
@@ -1723,7 +1774,7 @@
                  sizes="100vw" width="1200" height="800"
                  alt="" aria-hidden="true" loading="lazy" decoding="async" />
             <div class="crest__text">
-              <p class="crest__line">Сила, которая не повышает голоса</p>
+              <p class="crest__line" data-en="Strength that never raises its voice">Сила, которая не повышает голоса</p>
               <p class="crest__sub">武士は食わねど高楊枝</p>
             </div>
           </section>
@@ -1732,14 +1783,14 @@
           <section class="column">
             <p class="column__num">02</p>
             <div class="column__body">
-              <h3 class="column__head">Клинок</h3>
-              <p>
+              <h3 class="column__head" data-en="The blade">Клинок</h3>
+              <p data-en="Under the bonnet a straight six and rear wheels that get all the drive. Neither is shown on the outside: no wings, no lettering, no grilles that have no business being there. The reserve is there, it is just not displayed.">
                 Под капотом рядная шестёрка и задние колёса, которым отдают
                 всю тягу. Ни то, ни другое не выведено наружу: ни крыльев,
                 ни надписей, ни решёток, которых там быть не должно. Запас
                 есть, но его не показывают.
               </p>
-              <p>
+              <p data-en="A blade is kept in its scabbard not because it is blunt. It is drawn rarely, and that is exactly why a drawn one means something.">
                 Клинок держат в ножнах не потому, что он тупой. Вынимают
                 редко, и именно поэтому вынутый он что-то значит.
               </p>
@@ -1754,18 +1805,18 @@
                    srcset="/saku-shot-6-828.webp 828w, /saku-shot-6.webp 1080w"
                    sizes="(max-width: 860px) 88vw, 46vw"
                    width="1080" height="1440"
-                   alt="Бежевый Mark II на дороге у леса, вид спереди сбоку"
+                   alt="Бежевый Mark II на дороге у леса, вид спереди сбоку" data-en-alt="A beige Mark II on a road by a forest, front three quarters"
                    loading="lazy" decoding="async" />
             </figure>
             <figure class="pair__detail">
               <img src="/saku-shot-11.webp" sizes="(max-width: 860px) 40vw, 18vw"
                    width="736" height="736"
-                   alt="Задний фонарь и шильдик Mark II крупным планом"
+                   alt="Задний фонарь и шильдик Mark II крупным планом" data-en-alt="The tail lamp and badge of a Mark II close up"
                    loading="lazy" decoding="async" />
             </figure>
             <div class="pair__text">
-              <p class="pair__head">Доспех</p>
-              <p>
+              <p class="pair__head" data-en="Armour">Доспех</p>
+              <p data-en="Chrome along the lower edge, a lamp across the whole tail, a thin window frame. All of it is trim, not decoration: it holds the shape the way plates hold armour.">
                 Хром по нижнему краю, фонарь во всю корму, тонкая рамка окна.
                 Всё это - отделка, а не украшение: она держит форму так же,
                 как пластины держат доспех.
@@ -1778,23 +1829,23 @@
             <figure class="strip__frame">
               <img src="/saku-shot-8.webp" sizes="30vw"
                    width="750" height="562"
-                   alt="Два Mark II цвета шампанского ночью на заправке"
+                   alt="Два Mark II цвета шампанского ночью на заправке" data-en-alt="Two champagne coloured Mark IIs at a petrol station at night"
                    loading="lazy" decoding="async" />
             </figure>
             <figure class="strip__frame">
               <img src="/saku-shot-9.webp"
                    srcset="/saku-shot-9-828.webp 828w, /saku-shot-9.webp 960w"
                    sizes="34vw" width="960" height="1200"
-                   alt="Вишнёвый Mark II у дома, вид спереди сбоку"
+                   alt="Вишнёвый Mark II у дома, вид спереди сбоку" data-en-alt="A cherry red Mark II by a house, front three quarters"
                    loading="lazy" decoding="async" />
             </figure>
             <figure class="strip__frame strip__frame--dark">
               <img src="/saku-shot-12.webp" sizes="30vw"
                    width="640" height="645"
-                   alt="Ночная улица в фиолетовом свете, машина с включённой аварийкой"
+                   alt="Ночная улица в фиолетовом свете, машина с включённой аварийкой" data-en-alt="A street at night in purple light, a car with its hazards on"
                    loading="lazy" decoding="async" />
             </figure>
-            <p class="strip__note">
+            <p class="strip__note" data-en="In a row of identical saloons three things give it away: height, offset and how evenly it holds the line of the sill.">
               В ряду одинаковых седанов его выдают три вещи: высота, вылет
               и то, как ровно он держит линию порога.
             </p>
@@ -1804,14 +1855,14 @@
           <section class="column">
             <p class="column__num">03</p>
             <div class="column__body">
-              <h3 class="column__head">Церемония</h3>
-              <p>
+              <h3 class="column__head" data-en="The ceremony">Церемония</h3>
+              <p data-en="A cloth in the boot, water before setting off, order inside kept not for guests. Care here is not housework but a form of courtesy: the car is made ready to go out the way you make yourself ready.">
                 Тряпка в багажнике, вода перед выездом, порядок в салоне,
                 который держат не для гостей. Уход тут не работа по дому,
                 а форма вежливости: машину готовят к выезду так же, как
                 готовят себя.
               </p>
-              <p>
+              <p data-en="The sense is exactly that of a tea ceremony. The action is simple, it repeats the same way every time, and it is in the repetition that it stops being ordinary.">
                 Смысл ровно тот же, что у чайной церемонии. Действие простое,
                 повторяется каждый раз одинаково, и именно в повторении
                 оно перестаёт быть бытовым.
@@ -1825,7 +1876,7 @@
             <figure class="fan__frame fan__frame--lead">
               <img src="/saku-shot-2.webp" sizes="(max-width: 860px) 60vw, 28vw"
                    width="736" height="1308"
-                   alt="Белый Mark II на закате под осыпающейся сакурой, лепестки на капоте"
+                   alt="Белый Mark II на закате под осыпающейся сакурой, лепестки на капоте" data-en-alt="A white Mark II at sunset under falling blossom, petals on the bonnet"
                    loading="lazy" decoding="async" />
             </figure>
             <figure class="fan__frame fan__frame--far">
@@ -1833,7 +1884,7 @@
                    srcset="/saku-shot-10-828.webp 828w, /saku-shot-10.webp 900w"
                    sizes="(max-width: 860px) 46vw, 26vw"
                    width="900" height="1200"
-                   alt="Mark II в боксе под розовой подсветкой"
+                   alt="Mark II в боксе под розовой подсветкой" data-en-alt="A Mark II in a workshop bay under pink light"
                    loading="lazy" decoding="async" />
             </figure>
             <figure class="fan__frame fan__frame--near">
@@ -1841,10 +1892,10 @@
                    srcset="/saku-shot-7-828.webp 828w, /saku-shot-7.webp 1080w"
                    sizes="(max-width: 860px) 44vw, 22vw"
                    width="1080" height="810"
-                   alt="Задняя четверть белого Mark II на весенней парковке"
+                   alt="Задняя четверть белого Mark II на весенней парковке" data-en-alt="The rear quarter of a white Mark II in a car park in spring"
                    loading="lazy" decoding="async" />
             </figure>
-            <p class="fan__note fan__note--mirror">
+            <p class="fan__note fan__note--mirror" data-en="Petals stay on the bonnet until the first hard pull. That is no reason not to drive.">
               Лепестки на капоте держатся до первого разгона. Это не повод
               не выезжать.
             </p>
@@ -1854,12 +1905,12 @@
           <section class="column">
             <p class="column__num">04</p>
             <div class="column__body">
-              <h3 class="column__head">Цветение</h3>
-              <p>
+              <h3 class="column__head" data-en="Blossom">Цветение</h3>
+              <p data-en="Cherry blossom lasts a week. That is why people go to look at it: were it in bloom all year, nobody would lift their head.">
                 Сакура держится неделю. Из-за этого на неё и ходят смотреть:
                 будь цветение круглый год, никто не поднимал бы головы.
               </p>
-              <p>
+              <p data-en="It turned out much the same with this body. It was built for five years, thirty years ago, and every year fewer intact ones remain. Part of what makes it beautiful is that it is running out.">
                 С кузовом получилось похоже. Его выпускали пять лет, тридцать
                 лет назад, и с каждым годом целых остаётся меньше. Красивым
                 его делает в том числе то, что он кончается.
@@ -1875,8 +1926,8 @@
                  sizes="100vw" width="1080" height="1439"
                  alt="" aria-hidden="true" loading="lazy" decoding="async" />
             <div class="saku__end-text">
-              <h3 class="saku__title saku__title--end">Цветёт недолго</h3>
-              <p class="saku__lead">
+              <h3 class="saku__title saku__title--end" data-en="It blooms briefly">Цветёт недолго</h3>
+              <p class="saku__lead" data-en="None of these cars will get any newer. There will be fewer every year, and one day a white saloon under a tree will be as rare a sight as the tree itself at the end of April.">
                 Ни одна из этих машин не станет новее. Их будет меньше каждый
                 год, и однажды белый седан под деревом станет таким же редким
                 зрелищем, как само дерево в конце апреля.
@@ -1891,7 +1942,7 @@
 
     <!-- Раскрытая карточка -->
     <div class="lightbox" data-lightbox hidden>
-      <button class="lightbox__close" data-lightbox-close type="button">Закрыть</button>
+      <button class="lightbox__close" data-lightbox-close type="button" data-en="Close">Закрыть</button>
       <div class="lightbox__slot" data-lightbox-slot></div>
     </div>
 
@@ -1932,10 +1983,10 @@
         />
 
         <div class="player__meta">
-          <p class="player__name" data-player-name>Тишина</p>
+          <p class="player__name" data-player-name data-en="Silence">Тишина</p>
 
           <label class="player__seek">
-            <span class="visually-hidden">Перемотка трека</span>
+            <span class="visually-hidden" data-en="Track position">Перемотка трека</span>
             <input
               class="player__range"
               data-player-seek
@@ -1956,13 +2007,13 @@
       </div>
 
       <div class="player__controls">
-        <button class="player__btn" data-player-prev type="button" aria-label="Предыдущий трек">
+        <button class="player__btn" data-player-prev type="button" aria-label="Предыдущий трек" data-en-aria-label="Previous track">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M18 5v14L8 12zM6 5v14" />
           </svg>
         </button>
 
-        <button class="player__btn player__btn--play" data-player-play type="button" aria-label="Играть">
+        <button class="player__btn player__btn--play" data-player-play type="button" aria-label="Играть" data-en-aria-label="Play">
           <svg class="player__icon player__icon--play" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M8 5v14l11-7z" />
           </svg>
@@ -1971,7 +2022,7 @@
           </svg>
         </button>
 
-        <button class="player__btn" data-player-next type="button" aria-label="Следующий трек">
+        <button class="player__btn" data-player-next type="button" aria-label="Следующий трек" data-en-aria-label="Next track">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M6 5v14l10-7zM18 5v14" />
           </svg>
@@ -1979,11 +2030,11 @@
 
         <button class="sound" data-sound-toggle type="button" aria-pressed="true">
           <span class="sound__bars" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="visually-hidden" data-sound-label>Звук вкл</span>
+          <span class="visually-hidden" data-sound-label data-en="Sound on">Звук вкл</span>
         </button>
 
         <label class="mixer">
-          <span class="visually-hidden">Громкость</span>
+          <span class="visually-hidden" data-en="Volume">Громкость</span>
           <input
             class="mixer__range"
             data-sound-volume
@@ -2010,7 +2061,24 @@
         <span class="tacho__needle" data-preloader-needle></span>
         <span class="tacho__number" data-preloader-number>000</span>
       </div>
-      <button class="preloader__enter" data-preloader-enter type="button">Войти</button>
+      <!-- Вход и выбор языка одной парой кнопок: любая из них и открывает
+           сайт, и задаёт язык. Отдельным экраном выбор делать незачем -
+           это лишний шаг там, где всё равно нужно нажать, чтобы войти
+           (кнопка входа - ещё и то действие пользователя, после которого
+           браузер разрешает звук). -->
+      <div class="preloader__enter-row">
+        <button class="preloader__enter" data-preloader-enter data-lang-pick="ru" type="button">
+          <span class="preloader__code">RU</span>
+          <!-- Подпись на кнопке не переводится: она и есть выбор языка.
+               Русская кнопка всегда говорит по-русски, английская - по-английски,
+               иначе после захода на английском обе стали бы одинаковыми. -->
+          <span class="preloader__word">Войти</span>
+        </button>
+        <button class="preloader__enter" data-preloader-enter data-lang-pick="en" type="button">
+          <span class="preloader__code">ENG</span>
+          <span class="preloader__word">Enter</span>
+        </button>
+      </div>
     </div>
   </body>
 </html>

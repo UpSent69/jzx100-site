@@ -2,6 +2,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ease, isMobile, reducedMotion, lenisInstance } from "./motion.js";
 import { fadeVolume, onSoundChange, soundAllowed, soundVolume, unlockSound } from "./audio.js";
+import { applyLang } from "./i18n.js";
 
 const HOVER_DELAY = 120;   // мс: без задержки при быстром проходе курсора обе карточки дёргаются
 const FADE_IN = 120;       // мс: звук вводится почти мгновенно
@@ -216,6 +217,9 @@ function initLightbox(root) {
     returnFocus = document.activeElement;
 
     clone = card.querySelector("[data-card-video]").cloneNode(true);
+    // Копия унесла с собой атрибуты перевода, но не текущий язык:
+    // приводим её к нему до того, как она попадёт на экран.
+    applyLang(clone);
     clone.removeAttribute("data-card-video");
     clone.loop = true;
     clone.controls = false;

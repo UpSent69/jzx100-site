@@ -80,6 +80,56 @@
   transform: translateX(0.25rem);
 }
 
+/* ПЕРВАЯ КАРТОЧКА ПАУЗЫ ----------------------------------------------------
+   Название и обе строки раньше были впечатаны в саму картинку. Теперь это
+   живой текст поверх чистого кадра: впечатанный не переводится, и английская
+   версия карточки оставалась бы русской.
+
+   Место то же, что было на картинке: левая половина, где за машиной пустая
+   мокрая площадка и склон горы. Отступы в процентах - блок держит пропорции
+   файла и остаётся на том же месте кадра при любой ширине. */
+.promo--drift .promo__pitch {
+  position: absolute;
+  left: 5%;
+  right: auto;
+  top: 7%;
+  width: 46%;
+  display: grid;
+  gap: 0.5rem;
+  text-align: left;
+  text-shadow: 0 0.1em 1em rgba(0, 0, 0, 0.85);
+}
+
+/* Название набрано тем же узким гротеском и тем же размером, каким было
+   впечатано: оно и есть главное пятно кадра. */
+/* Селектор с двумя классами намеренно: у соседней карточки правило
+   .promo__pitch p задаёт мелкий размер, и оно перебивало одиночный класс. */
+.promo--drift .promo__wordmark {
+  margin: 0 0 0.1em;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.5rem, 8vw, 6.5rem);
+  line-height: 0.86;
+  letter-spacing: var(--track-display);
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.promo--drift .promo__kicker {
+  font-family: var(--font-text);
+  font-size: clamp(1rem, 1.5vw, 1.4rem);
+  line-height: 1.25;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text);
+}
+
+.promo--drift .promo__pitch p:last-child {
+  font-size: clamp(0.85rem, 1.05vw, 1.05rem);
+  line-height: 1.55;
+  color: var(--text-dim);
+}
+
 @media (max-width: 860px) {
   /* На вертикальном экране половина высоты — это узкая полоса, в которую
      широкий кадр не помещается по ширине. Здесь ведёт ширина, а высота
@@ -372,5 +422,28 @@
 
   .gallery__note {
     width: 16rem;
+  }
+}
+
+@media (max-width: 860px) {
+  /* На вертикальном экране кадр занимает всю ширину, и текст на нём
+     не помещается: он встаёт под кадром обычным блоком. */
+  .promo--drift .promo__pitch {
+    position: static;
+    width: 100%;
+    padding-top: var(--space-s);
+    text-shadow: none;
+  }
+
+  /* Коробке кадра на вертикальном экране задана пропорция картинки, и всё,
+     что не помещается, она обрезает. Текст лежит внутри неё, поэтому здесь
+     пропорцию снимаем: коробка растёт под кадр и текст под ним. */
+  .promo--drift .promo__frame {
+    aspect-ratio: auto;
+    height: auto;
+  }
+
+  .promo--drift .promo__wordmark {
+    font-size: clamp(2.25rem, 12vw, 3.5rem);
   }
 }

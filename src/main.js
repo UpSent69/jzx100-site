@@ -31,6 +31,7 @@ import { initStreet } from "./js/street.js";
 import { initCult } from "./js/cult.js";
 import { initSoul } from "./js/soul.js";
 import { initMusic } from "./js/music.js";
+import { initLang } from "./js/i18n.js";
 import { initSaku } from "./js/sakura.js";
 
 initScroll();
@@ -51,6 +52,10 @@ run(screen("final"), initFinal);
 //
 // Первому экрану появляться неоткуда, он и есть начало страницы;
 // финалу неоткуда уходить — за ним конец.
+// Язык - первым делом: до того, как сцены померят текст и разложат его
+// по экрану. Если переставить строки после раскладки, высоты уедут.
+initLang();
+
 const scenes = [
   ["hero", ".hero__stage", { fadeIn: false }],
   ["jzx100", ".jzx__stage", {}],

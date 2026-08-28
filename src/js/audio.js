@@ -8,6 +8,8 @@
  * чтобы выбор можно было поменять и он запомнился.
  */
 
+import { onLangChange, t } from "./i18n.js";
+
 const KEY = "markii:sound";
 const VOL_KEY = "markii:volume";
 
@@ -142,12 +144,12 @@ export function initSoundToggle(button) {
     button.setAttribute("aria-pressed", String(state.enabled));
     button.setAttribute(
       "aria-label",
-      state.enabled ? "Выключить звук" : "Включить звук"
+      state.enabled ? t("soundDisable") : t("soundEnable")
     );
     // Состояние пишем словом. С одной подписью «Звук» непонятно, включён он
     // сейчас или это предложение включить, — и тот, у кого звука нет, жмёт
     // на кнопку и выключает его окончательно.
-    if (label) label.textContent = state.enabled ? "Звук вкл" : "Звук выкл";
+    if (label) label.textContent = state.enabled ? t("soundOn") : t("soundOff");
   };
 
   button.addEventListener("click", () => {
@@ -158,6 +160,7 @@ export function initSoundToggle(button) {
   });
 
   onSoundChange(paint);
+  onLangChange(paint); // подписи ставит скрипт, значит и менять их ему
   paint();
 }
 
@@ -207,7 +210,7 @@ export function initSoundMixer(input) {
   const paint = () => {
     const pct = Math.round(state.volume * 100);
     if (document.activeElement !== input) input.value = String(pct);
-    input.setAttribute("aria-valuetext", `${pct} процентов`);
+    input.setAttribute("aria-valuetext", t("percent", pct));
     // Заливка дорожки до бегунка — иначе на тонкой полоске не видно,
     // где стоит уровень.
     input.style.setProperty("--fill", `${pct}%`);
@@ -223,5 +226,6 @@ export function initSoundMixer(input) {
   });
 
   onSoundChange(paint);
+  onLangChange(paint);
   paint();
 }

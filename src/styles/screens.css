@@ -294,20 +294,6 @@
   background: linear-gradient(to top, rgba(0, 0, 0, 0.72), transparent 42%);
 }
 
-.card__caption {
-  position: absolute;
-  left: var(--space-xs);
-  right: var(--space-xs);
-  bottom: var(--space-xs);
-  z-index: 4;
-  transform: translateY(0.5rem);
-  transition: transform var(--dur-reveal) var(--ease-out);
-}
-
-.card[data-playing="true"] .card__caption {
-  transform: translateY(0);
-}
-
 /* Подсказка, что карточка живая: кнопок нет, иначе это неочевидно.
    Тонкая линия по нижнему краю, ползущая в такт длительности ролика. */
 .card__progress {
@@ -519,8 +505,88 @@ body[data-locked] {
   padding: 0;
 }
 
+/* Авторы роликов. Строка на каждого: имя и слово «ссылка» за ним.
+   Имена авторов набраны их же начертанием - так они подписываются сами,
+   и переводить или переписывать их незачем. */
+.final__credits {
+  display: grid;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--step-small);
+  text-shadow: 0 0.1em 0.9em rgba(0, 0, 0, 0.9);
+}
+
+.final__credits li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.final__credits-head {
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Имя автора акцентом, слово «ссылка» - обычным светлым: так видно, где имя,
+   а где то, на что нажимать. */
+.final__author {
+  color: var(--accent);
+}
+
+.final__credits a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1px;
+  transition: color var(--dur-hover) var(--ease-out),
+    border-color var(--dur-hover) var(--ease-out);
+}
+
+.final__credits a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* На узком экране плеер лежит во всю ширину внизу, уводить контакты вбок
+   некуда - поднимаем их над ним. */
+@media (max-width: 860px) {
+  /* Отступ считается от плеера: он лежит внизу во всю ширину и занимает
+     около 140 точек вместе с зазором от края. */
+  .final__credits {
+    /* Содержимое финала стоит по центру секции, поэтому отступ снизу
+       поднимает его только на половину своей высоты - отсюда и число. */
+    margin-bottom: 16rem;
+  }
+}
+
+/* На широком экране контакты уходят к правому краю. Слева внизу закреплён
+   плеер, и оставленные под названием они попадали ровно под него. */
+@media (min-width: 861px) {
+  .final__contacts,
+  .final__credits {
+    justify-self: end;
+  }
+
+  .final__contacts li {
+    justify-items: end;
+  }
+
+  .final__credits li {
+    justify-content: flex-end;
+  }
+}
+
+/* Контакты лежат прямо на кадре, а кадр здесь светлее большинства: без тени
+   и на приглушённом сером они тонули в машине и траве. */
+.final__contacts {
+  text-shadow: 0 0.1em 0.9em rgba(0, 0, 0, 0.9);
+}
+
 .final__contacts a {
-  color: var(--text-dim);
+  color: var(--text);
   text-decoration: none;
   border-bottom: 1px solid var(--line);
   padding-bottom: 2px;
@@ -533,15 +599,21 @@ body[data-locked] {
   border-color: var(--accent);
 }
 
-/* Заглушка на то, чего ещё нет от заказчика. Держится тихо: это временный
-   текст, он не должен спорить с кадром за внимание. */
-.stub {
-  display: block;
-  border-left: 1px solid var(--line);
-  padding: 0.25rem 0 0.25rem var(--space-xs);
-  color: var(--text-faint);
+/* Контакты: подпись над почтой. Подпись мелкая и тихая - она объясняет,
+   кто это, а не спорит с самой почтой за внимание. */
+.final__contacts li {
+  display: grid;
+  gap: 0.3rem;
+  justify-items: start;
+}
+
+/* Подписи - тем же акцентом, что и остальные метки на сайте: они называют,
+   что перед тобой, а не сообщают содержание. Сам контакт остаётся светлым. */
+.final__role {
   font-size: var(--step-small);
-  opacity: 0.75;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--accent);
 }
 
 /* МОБИЛЬНЫЕ ----------------------------------------------------------------

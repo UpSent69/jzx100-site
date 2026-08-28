@@ -92,6 +92,36 @@
   border-color: var(--accent);
 }
 
+/* Кнопок входа две - по одной на язык. Отдельного экрана выбора нет:
+   войти всё равно нужно нажатием, и этим же нажатием выбирается язык. */
+.preloader__enter-row {
+  display: flex;
+  gap: var(--space-xs);
+}
+
+.preloader__enter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Код языка - единственное, что отличает кнопки друг от друга,
+   поэтому он и выделен акцентом. */
+.preloader__code {
+  color: var(--accent);
+}
+
+.preloader__enter:hover .preloader__code {
+  color: var(--text);
+}
+
+@media (max-width: 600px) {
+  .preloader__enter-row {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 /* Переключатель звука и ползунок громкости. Оба живут в плеере
    (см. player.css) - там их место с присланного образца. Сам плеер
    закреплён в левом нижнем углу и всплывает над раскрытыми слоями.

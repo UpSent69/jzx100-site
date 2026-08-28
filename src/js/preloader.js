@@ -2,6 +2,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ease, lenisInstance, reducedMotion } from "./motion.js";
 import { unlockSound } from "./audio.js";
+import { setLang } from "./i18n.js";
 
 const SWEEP = 250; // градусов на шкале тахометра — как у стрелочного прибора
 
@@ -15,7 +16,10 @@ export function initPreloader(root) {
 
   const needle = root.querySelector("[data-preloader-needle]");
   const number = root.querySelector("[data-preloader-number]");
-  const enter = root.querySelector("[data-preloader-enter]");
+  // Кнопок входа теперь две - по одной на язык. Фокус ставим на первую,
+  // остальное у них общее.
+  const enters = [...root.querySelectorAll("[data-preloader-enter]")];
+  const enter = enters[0];
 
   lenisInstance()?.stop(); // пока шторка на месте, страница не листается
   document.body.dataset.locked = "true";
@@ -56,7 +60,9 @@ export function initPreloader(root) {
   // Страховка: если какой-то файл не отдастся, кнопка всё равно появится
   setTimeout(ready, 8000);
 
-  enter?.addEventListener("click", () => {
+  const go = (btn) => {
+    // Язык выбирают той же кнопкой, которой входят: RU или ENG
+    setLang(btn.dataset.langPick === "en" ? "en" : "ru");
     unlockSound(); // это и есть то действие пользователя, после которого можно звук
 
     const finish = () => {
@@ -77,7 +83,9 @@ export function initPreloader(root) {
       ease: ease.inOut,
       onComplete: finish,
     });
-  });
+  };
+
+  enters.forEach((b) => b.addEventListener("click", () => go(b)));
 }
 
 /**
